@@ -89,7 +89,7 @@
 <meta property="og:image" content="c:/Users/asus/Desktop/Hu3sky.github.io/source/翻译图片/firebug1.png">
 <meta property="og:image" content="c:/Users/asus/Desktop/Hu3sky.github.io/source/翻译图片/firebug2.png">
 <meta property="og:image" content="c:/Users/asus/Desktop/Hu3sky.github.io/source/翻译图片/firebug3.png">
-<meta property="og:updated_time" content="2018-04-18T15:39:07.340Z">
+<meta property="og:updated_time" content="2018-04-21T08:09:21.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hu3sky">
 <meta name="twitter:description" content="通用爬虫(Broad Crawls)Scrapy默认对特定爬取进行优化。这些站点一般被一个单独的Scrapy spider进行处理， 不过这并不是必须或要求的(例如，也有通用的爬虫能处理任何给定的站点)。 除了这种爬取完某个站点或没有更多请求就停止的”专注的爬虫”，还有一种通用的爬取类型，其能爬取大量(甚至是无限)的网站， 仅仅受限于时间或其他的限制。 这种爬虫叫做”通用爬虫(broad craw">
@@ -507,13 +507,13 @@
 <p>管道还保留当前正在计划下载的那些媒体URL的内部队列，并将包含相同媒体到达的那些响应连接到该队列。这避免了多个项目共享多次下载相同的媒体。</p>
 <h2 id="使用文件管道"><a href="#使用文件管道" class="headerlink" title="使用文件管道"></a>使用文件管道</h2><p>典型的工作流程<code>FilesPipeline</code>如下所示：</p>
 <ol>
-<li>在Spider中，您刮取一个项目并将所需的URL放入一个 <code>file_urls</code>字段中。</li>
-<li>该物品从蜘蛛中返回并转到物品管道。</li>
-<li>当该项目到达时<code>FilesPipeline</code>，该<code>file_urls</code>字段中的URL 将使用标准的Scrapy调度程序和下载程序（这意味着调度程序和下载程序中间件被重新使用）计划下载，但具有更高的优先级，在其他页面被删除之前处理它们。该项目在该特定管道阶段保持“锁定”状态，直到文件完成下载（或由于某种原因失败）。</li>
-<li>下载文件时，另一个字段（<code>files</code>）将填充结果。该字段将包含一个含有下载文件信息的词典列表，例如下载的路径，原始抓取的URL（从<code>file_urls</code>现场获取）和文件校验和。该<code>files</code>字段列表中的文件将保留原始<code>file_urls</code>字段的相同顺序。如果某个文件下载失败，则会记录一个错误并且该文件不会出现在该<code>files</code>字段中。</li>
+<li>在一个爬虫里，您抓取一个项目并将所需的URL放入一个 <code>file_urls</code>字段中。</li>
+<li>该项目从爬虫内返回并转到物品管道。</li>
+<li>当该项目进入<code>FilesPipeline</code>，该<code>file_urls</code>字段中的URL 将使用标准的Scrapy调度器和下载器（这意味着调度器和下载器中间件可以重复使用）计划下载，但具有更高的优先级，会在其他页面被抓取前处理。该项目在该特定管道阶段保持“锁定(locker)”状态，直到文件完成下载（或由于某种原因未完成下载）。</li>
+<li>下载文件时，另一个字段（<code>files</code>）将被更新到结构中。该字段将包含一个含有下载文件信息的字典列表，例如下载的路径，原始抓取的URL（从<code>file_urls</code>字段获取）和文件校验码。该<code>files</code>字段列表中的文件将保留原始<code>file_urls</code>字段的相同顺序。如果某个文件下载失败，则会记录下错误信息并且该文件不会出现在该<code>files</code>字段中。</li>
 </ol>
-<h2 id="使用图像管道"><a href="#使用图像管道" class="headerlink" title="使用图像管道"></a>使用图像管道</h2><p>使用这<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#scrapy.pipelines.images.ImagesPipeline" target="_blank" rel="noopener"><code>ImagesPipeline</code></a>很像使用<code>FilesPipeline</code>，除了使用的默认字段名称不同：您<code>image_urls</code>用于项目的图像URL，它将填充<code>images</code>字段以获取有关下载图像的信息。</p>
-<p>使用<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#scrapy.pipelines.images.ImagesPipeline" target="_blank" rel="noopener"><code>ImagesPipeline</code></a>for图像文件的优点是，您可以配置一些额外的功能，例如生成缩略图和根据图像大小过滤图像。</p>
+<h2 id="使用图像管道"><a href="#使用图像管道" class="headerlink" title="使用图像管道"></a>使用图像管道</h2><p>使用<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#scrapy.pipelines.images.ImagesPipeline" target="_blank" rel="noopener"><code>ImagesPipeline</code></a>很像使用<code>FilesPipeline</code>，除了使用的默认字段名称不同：您的<code>image_urls</code>用于项目的图像URL，它将填充<code>images</code>字段以获取有关下载图像的信息。</p>
+<p>对图像文件使用<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#scrapy.pipelines.images.ImagesPipeline" target="_blank" rel="noopener"><code>ImagesPipeline</code></a>的优点是，您可以配置一些额外的功能，例如生成缩略图和根据图像大小过滤图像。</p>
 <p>Images Pipeline使用<a href="https://github.com/python-pillow/Pillow" target="_blank" rel="noopener">Pillow</a>将图像缩略图和规格化为JPEG / RGB格式，因此您需要安装此库才能使用它。 在大多数情况下，<a href="http://www.pythonware.com/products/pil/" target="_blank" rel="noopener">Python成像库</a>（PIL）也应该可以工作，但是在某些设置中会导致麻烦，所以我们建议使用<a href="https://github.com/python-pillow/Pillow" target="_blank" rel="noopener">Pillow</a>而不是PIL。</p>
 <h2 id="启用媒体管道"><a href="#启用媒体管道" class="headerlink" title="启用媒体管道"></a>启用媒体管道</h2><p>要启用媒体管道，您必须先将其添加到您的项目 <a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-ITEM_PIPELINES" target="_blank" rel="noopener"><code>ITEM_PIPELINES</code></a>设置中。</p>
 <p>对于图像管道，请使用：</p>
@@ -540,13 +540,13 @@
 <li><code>&lt;IMAGES_STORE&gt;</code>是<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-IMAGES_STORE" target="_blank" rel="noopener"><code>IMAGES_STORE</code></a>图像管道设置中定义的目录。</li>
 <li><code>full</code>是将完整图像与缩略图分开的子目录（如果使用的话）。有关更多信息，请参阅<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#topics-images-thumbnails" target="_blank" rel="noopener">图像的缩略图生成</a>。</li>
 </ul>
-<h3 id="Amazon-S3存储"><a href="#Amazon-S3存储" class="headerlink" title="Amazon S3存储"></a>Amazon S3存储</h3><p><a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-FILES_STORE" target="_blank" rel="noopener"><code>FILES_STORE</code></a>并<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-IMAGES_STORE" target="_blank" rel="noopener"><code>IMAGES_STORE</code></a>可以代表Amazon S3存储桶。Scrapy会自动将文件上传到存储桶。</p>
+<h3 id="Amazon-S3存储"><a href="#Amazon-S3存储" class="headerlink" title="Amazon S3存储"></a>Amazon S3存储</h3><p><a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-FILES_STORE" target="_blank" rel="noopener"><code>FILES_STORE</code></a>和<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-IMAGES_STORE" target="_blank" rel="noopener"><code>IMAGES_STORE</code></a>可以代表Amazon S3存储桶。Scrapy会自动将文件上传到存储桶。</p>
 <p>例如，这是一个有效的<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-IMAGES_STORE" target="_blank" rel="noopener"><code>IMAGES_STORE</code></a>值：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IMAGES_STORE = &apos;s3://bucket/images&apos;</span><br></pre></td></tr></table></figure>
 <p>您可以修改用于存储文件的访问控制列表（ACL）策略，这是由<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-FILES_STORE_S3_ACL" target="_blank" rel="noopener"><code>FILES_STORE_S3_ACL</code></a>和 <a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-IMAGES_STORE_S3_ACL" target="_blank" rel="noopener"><code>IMAGES_STORE_S3_ACL</code></a>设置定义的。默认情况下，ACL被设置为 <code>private</code>。要使文件公开可用，请使用以下<code>public-read</code> 策略：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IMAGES_STORE_S3_ACL = &apos;public-read&apos;</span><br></pre></td></tr></table></figure>
 <p>有关更多信息，请参阅Amazon S3开发人员指南中的<a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl" target="_blank" rel="noopener">预装ACL</a>。</p>
-<h3 id="Google云端存储"><a href="#Google云端存储" class="headerlink" title="Google云端存储"></a>Google云端存储</h3><p><a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-FILES_STORE" target="_blank" rel="noopener"><code>FILES_STORE</code></a>并<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-IMAGES_STORE" target="_blank" rel="noopener"><code>IMAGES_STORE</code></a>可以代表Google云存储存储分区。Scrapy会自动将文件上传到存储桶。（需要<a href="https://cloud.google.com/storage/docs/reference/libraries#client-libraries-install-python" target="_blank" rel="noopener">谷歌云存储</a>）</p>
+<h3 id="Google云端存储"><a href="#Google云端存储" class="headerlink" title="Google云端存储"></a>Google云端存储</h3><p><a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-FILES_STORE" target="_blank" rel="noopener"><code>FILES_STORE</code></a>和<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-IMAGES_STORE" target="_blank" rel="noopener"><code>IMAGES_STORE</code></a>可以代表Google云存储存储分区。Scrapy会自动将文件上传到存储桶。（需要<a href="https://cloud.google.com/storage/docs/reference/libraries#client-libraries-install-python" target="_blank" rel="noopener">谷歌云存储</a>）</p>
 <p>例如，这些是有效的<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-IMAGES_STORE" target="_blank" rel="noopener"><code>IMAGES_STORE</code></a>和<a href="https://doc.scrapy.org/en/latest/topics/media-pipeline.html#std:setting-GCS_PROJECT_ID" target="_blank" rel="noopener"><code>GCS_PROJECT_ID</code></a>设置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IMAGES_STORE = &apos;gs://bucket/images/&apos;</span><br><span class="line">GCS_PROJECT_ID = &apos;project_id&apos;</span><br></pre></td></tr></table></figure>
 <p>有关身份验证的信息，请参阅此<a href="https://cloud.google.com/docs/authentication/production" target="_blank" rel="noopener">文档</a>。</p>
