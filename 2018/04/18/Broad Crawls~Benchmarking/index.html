@@ -89,7 +89,7 @@
 <meta property="og:image" content="c:/Users/asus/Desktop/Hu3sky.github.io/source/翻译图片/firebug1.png">
 <meta property="og:image" content="c:/Users/asus/Desktop/Hu3sky.github.io/source/翻译图片/firebug2.png">
 <meta property="og:image" content="c:/Users/asus/Desktop/Hu3sky.github.io/source/翻译图片/firebug3.png">
-<meta property="og:updated_time" content="2018-04-24T15:28:09.230Z">
+<meta property="og:updated_time" content="2018-04-25T15:22:20.407Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hu3sky">
 <meta name="twitter:description" content="通用爬虫(Broad Crawls)Scrapy默认对特定爬取进行优化。这些站点一般被一个单独的Scrapy spider进行处理， 不过这并不是必须或要求的(例如，也有通用的爬虫能处理任何给定的站点)。 除了这种爬取完某个站点或没有更多请求就停止的”专注的爬虫”，还有一种通用的爬取类型，其能爬取大量(甚至是无限)的网站， 仅仅受限于时间或其他的限制。 这种爬虫叫做”通用爬虫(broad craw">
@@ -455,22 +455,22 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from scrapy.spiders import Spider</span><br><span class="line">&gt;&gt;&gt; prefs(ignore=Spider)</span><br></pre></td></tr></table></figure>
 <h3 id="scrapy-utils-trackref模块"><a href="#scrapy-utils-trackref模块" class="headerlink" title="scrapy.utils.trackref模块"></a>scrapy.utils.trackref模块</h3><p>以下是 <a href="http://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/leaks.html#module-scrapy.utils.trackref" target="_blank" rel="noopener"><code>trackref</code></a> 模块中可用的方法。</p>
 <ul>
-<li><p><em>class</em><code>scrapy.utils.trackref.`</code>object_ref`</p>
+<li><p><em>class</em><code>scrapy.utils.trackref.object_ref</code></p>
 <p>如果您想通过 <code>trackref</code> 模块追踪活跃的实例，继承该类(而不是对象)。</p>
 </li>
 </ul>
 <ul>
-<li><p><code>scrapy.utils.trackref.`</code>print_live_refs`(<em>class_name</em>, <em>ignore=NoneType</em>)</p>
+<li><p><code>scrapy.utils.trackref.print_live_refs</code>(<em>class_name</em>, <em>ignore=NoneType</em>)</p>
 <p>打印活跃引用的报告，以类名分类。参数:<strong>ignore</strong> (<em>类或者类的元组</em>) – 如果给定，所有指定类(或者类的元组)的对象将会被忽略。</p>
 </li>
 </ul>
 <ul>
-<li><p><code>scrapy.utils.trackref.`</code>get_oldest`(<em>class_name</em>)</p>
+<li><p><code>scrapy.utils.trackref.get_oldest</code>(<em>class_name</em>)</p>
 <p>返回给定类名的最老活跃(alive)对象，如果没有则返回 <code>None</code> 。首先使用<a href="http://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/leaks.html#scrapy.utils.trackref.print_live_refs" target="_blank" rel="noopener"><code>print_live_refs()</code></a> 来获取每个类所跟踪的所有活跃(live)对象的列表。</p>
 </li>
 </ul>
 <ul>
-<li><p><code>scrapy.utils.trackref.`</code>iter_all`(<em>class_name</em>)</p>
+<li><p><code>scrapy.utils.trackref.iter_all</code>(<em>class_name</em>)</p>
 <p>返回一个能给定类名的所有活跃对象的迭代器，如果没有则返回 <code>None</code>。首先使用 <a href="http://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/leaks.html#scrapy.utils.trackref.print_live_refs" target="_blank" rel="noopener"><code>print_live_refs()</code></a> 来获取每个类所跟踪的所有活跃(live)对象的列表。</p>
 </li>
 </ul>
@@ -692,7 +692,7 @@
 <p>默认： <code>1.0</code></p>
 <p>Scrapy应平行发送到远程网站的平均请求数量。</p>
 <p>默认情况下，AutoThrottle调整延迟以向每个远程网站发送单个并发请求。将此选项设置为更高的值（例如<code>2.0</code>）以增加吞吐量和远程服务器的负载。较低的<code>AUTOTHROTTLE_TARGET_CONCURRENCY</code>值（例如<code>0.5</code>）会使抓取工具更加保守和礼貌。</p>
-<p>请注意，<a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_DOMAIN" target="_blank" rel="noopener"><code>CONCURRENT_REQUESTS_PER_DOMAIN</code></a> 并<a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_IP" target="_blank" rel="noopener"><code>CONCURRENT_REQUESTS_PER_IP</code></a>在启用自动油门扩展选项仍然尊重。这意味着如果 <code>AUTOTHROTTLE_TARGET_CONCURRENCY</code>设置的值高于 <a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_DOMAIN" target="_blank" rel="noopener"><code>CONCURRENT_REQUESTS_PER_DOMAIN</code></a>或者<a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_IP" target="_blank" rel="noopener"><code>CONCURRENT_REQUESTS_PER_IP</code></a>，搜寻器将不会达到这个并发请求数。</p>
+<p>请注意，<a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_DOMAIN" target="_blank" rel="noopener"><code>CONCURRENT_REQUESTS_PER_DOMAIN</code></a> 和<a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_IP" target="_blank" rel="noopener"><code>CONCURRENT_REQUESTS_PER_IP</code></a>在启用AutoThrottle扩展选项仍然遵守。这意味着如果 <code>AUTOTHROTTLE_TARGET_CONCURRENCY</code>设置的值高于 <a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_DOMAIN" target="_blank" rel="noopener"><code>CONCURRENT_REQUESTS_PER_DOMAIN</code></a>或者<a href="https://doc.scrapy.org/en/latest/topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_IP" target="_blank" rel="noopener"><code>CONCURRENT_REQUESTS_PER_IP</code></a>，搜寻器将不会达到这个并发请求数。</p>
 <p>在每个给定的时间点，Scrapy可以发送比或多或少的并发请求<code>AUTOTHROTTLE_TARGET_CONCURRENCY</code>; 它是爬虫尝试接近的建议值，而不是硬限制。</p>
 <h3 id="AUTOTHROTTLE-DEBUG"><a href="#AUTOTHROTTLE-DEBUG" class="headerlink" title="AUTOTHROTTLE_DEBUG"></a>AUTOTHROTTLE_DEBUG</h3><p>默认： <code>False</code></p>
 <p>启用AutoThrottle调试模式，该模式将显示收到的每个响应的统计数据，以便您可以看到如何实时调整调节参数。</p>
@@ -821,7 +821,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
