@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="学习了XXE漏洞，自己来总结一下 0x00 XXE漏洞XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导">
+<meta name="description" content="学习了XXE漏洞,自己来总结一下,如果有什么写的不到位，不够好的地方，还请师傅们指出。 0x00 XXE漏洞XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。xxe漏洞触发的点往往是可以上">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XXE漏洞的学习">
+<meta property="og:title" content="浅谈XML实体注入漏洞">
 <meta property="og:url" content="http://yoursite.com/2018/05/27/xxe学习/index.html">
 <meta property="og:site_name" content="Hu3sky">
-<meta property="og:description" content="学习了XXE漏洞，自己来总结一下 0x00 XXE漏洞XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导">
+<meta property="og:description" content="学习了XXE漏洞,自己来总结一下,如果有什么写的不到位，不够好的地方，还请师傅们指出。 0x00 XXE漏洞XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。xxe漏洞触发的点往往是可以上">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/xxe/1.png">
 <meta property="og:image" content="http://yoursite.com/xxe/2.png">
@@ -107,10 +107,10 @@
 <meta property="og:image" content="http://yoursite.com/xxe/15.png">
 <meta property="og:image" content="http://yoursite.com/xxe/16.png">
 <meta property="og:image" content="http://yoursite.com/xxe/14.png">
-<meta property="og:updated_time" content="2018-06-15T14:23:00.444Z">
+<meta property="og:updated_time" content="2018-06-21T15:39:40.897Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XXE漏洞的学习">
-<meta name="twitter:description" content="学习了XXE漏洞，自己来总结一下 0x00 XXE漏洞XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导">
+<meta name="twitter:title" content="浅谈XML实体注入漏洞">
+<meta name="twitter:description" content="学习了XXE漏洞,自己来总结一下,如果有什么写的不到位，不够好的地方，还请师傅们指出。 0x00 XXE漏洞XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。xxe漏洞触发的点往往是可以上">
 <meta name="twitter:image" content="http://yoursite.com/xxe/1.png">
 
 
@@ -147,7 +147,7 @@
 
 
 
-  <title>XXE漏洞的学习 | Hu3sky</title>
+  <title>浅谈XML实体注入漏洞 | Hu3sky</title>
   
 
 
@@ -302,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">XXE漏洞的学习</h1>
+          <h1 class="post-title" itemprop="name headline">浅谈XML实体注入漏洞</h1>
         
 
         <div class="post-meta">
@@ -374,7 +374,7 @@
       
 
       
-        <p>学习了XXE漏洞，自己来总结一下</p>
+        <p>学习了XXE漏洞,自己来总结一下,如果有什么写的不到位，不够好的地方，还请师傅们指出。</p>
 <h1 id="0x00-XXE漏洞"><a href="#0x00-XXE漏洞" class="headerlink" title="0x00 XXE漏洞"></a>0x00 XXE漏洞</h1><p>XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。xxe漏洞触发的点往往是可以上传xml文件的位置，没有对上传的xml文件进行过滤，导致可上传恶意xml文件。</p>
 <h1 id="0x01-XML"><a href="#0x01-XML" class="headerlink" title="0x01 XML"></a>0x01 XML</h1><p>既然说到XML，就先学习一波XML。</p>
 <ul>
