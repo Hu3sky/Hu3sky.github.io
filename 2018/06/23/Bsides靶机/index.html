@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="信息收集这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段 主机发现先用NMAP扫描上线主机。nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而192.168.107.254是结束ip。所以说我们的靶机ip就是192.168.107.131 端口扫描接下来进行端口扫描。nmap -sS 192.168.10">
+<meta name="description" content="#环境https://www.vulnhub.com/entry/bsides-vancouver-2018-workshop,231/ 信息收集这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段 主机发现先用NMAP扫描上线主机。nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而192.168.107.2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vulnhub Bsides靶机">
 <meta property="og:url" content="http://yoursite.com/2018/06/23/Bsides靶机/index.html">
 <meta property="og:site_name" content="Hu3sky">
-<meta property="og:description" content="信息收集这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段 主机发现先用NMAP扫描上线主机。nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而192.168.107.254是结束ip。所以说我们的靶机ip就是192.168.107.131 端口扫描接下来进行端口扫描。nmap -sS 192.168.10">
+<meta property="og:description" content="#环境https://www.vulnhub.com/entry/bsides-vancouver-2018-workshop,231/ 信息收集这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段 主机发现先用NMAP扫描上线主机。nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而192.168.107.2">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/bj/1.png">
 <meta property="og:image" content="http://yoursite.com/bj/2.png">
@@ -104,10 +104,10 @@
 <meta property="og:image" content="http://yoursite.com/bj/15.png">
 <meta property="og:image" content="http://yoursite.com/bj/16.png">
 <meta property="og:image" content="http://yoursite.com/bj/17.png">
-<meta property="og:updated_time" content="2018-06-23T15:35:15.048Z">
+<meta property="og:updated_time" content="2018-06-24T04:30:30.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vulnhub Bsides靶机">
-<meta name="twitter:description" content="信息收集这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段 主机发现先用NMAP扫描上线主机。nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而192.168.107.254是结束ip。所以说我们的靶机ip就是192.168.107.131 端口扫描接下来进行端口扫描。nmap -sS 192.168.10">
+<meta name="twitter:description" content="#环境https://www.vulnhub.com/entry/bsides-vancouver-2018-workshop,231/ 信息收集这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段 主机发现先用NMAP扫描上线主机。nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而192.168.107.2">
 <meta name="twitter:image" content="http://yoursite.com/bj/1.png">
 
 
@@ -371,7 +371,8 @@
       
 
       
-        <h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><p>这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段</p>
+        <p>#环境<br><a href="https://www.vulnhub.com/entry/bsides-vancouver-2018-workshop,231/" target="_blank" rel="noopener">https://www.vulnhub.com/entry/bsides-vancouver-2018-workshop,231/</a></p>
+<h1 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h1><p>这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段</p>
 <h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><p>先用NMAP扫描上线主机。<code>nmap -sP 192.168.107.1/24</code><br><img src="/bj/1.png" alt="1">。<br>192.168.107.1是我物理机的ip，而192.168.107.254是结束ip。所以说我们的靶机ip就是192.168.107.131</p>
 <h2 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h2><p>接下来进行端口扫描。<br><code>nmap -sS 192.168.107.131</code><br><img src="/bj/2.png" alt="2">。可以看到开放了21，22，80三个端口。我们访问192.168.107.131:80，理所当然，这是web服务。<img src="/bj/3.png" alt="3">。是一个默认的界面，只有从目录入手。</p>
 <h2 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h2><p>我这里，用的是御剑，对网站目录进行扫描，<img src="/bj/4.png" alt="4">。发现了一个robots.txt，一般来说robots.txt里面都还是有点东西的.我们试着去访问,<img src="/bj/5.png" alt="5">，可以看到有个路径，这下好办了，很明显，wordpress框架，我们访问，是一个正常的wordpress界面。在最下面能发现一个登陆选项。<img src="/bj/19.png" alt="19"></p>
