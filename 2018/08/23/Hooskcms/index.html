@@ -88,13 +88,13 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/hoosk/phpinfo.png">
 <meta property="og:image" content="http://yoursite.com/hoosk/install.png">
-<meta property="og:image" content="http://yoursite.com/hoosk/config.php">
+<meta property="og:image" content="http://yoursite.com/hoosk/config.png">
 <meta property="og:image" content="http://yoursite.com/hoosk/result.png">
 <meta property="og:image" content="http://yoursite.com/hoosk/post3.png">
 <meta property="og:image" content="http://yoursite.com/hoosk/page_new.png">
 <meta property="og:image" content="http://yoursite.com/hoosk/pages.png">
-<meta property="og:image" content="http://yoursite.com/hoosk/TIM截图20180819142913">
-<meta property="og:updated_time" content="2018-08-23T15:35:50.703Z">
+<meta property="og:image" content="http://yoursite.com/hoosk/TIM截图20180819142913.png">
+<meta property="og:updated_time" content="2018-08-24T01:04:05.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hooskcms 几个小洞">
 <meta name="twitter:description" content="没什么用的代码执行。。这个洞之所以说没用，是因为。先看吧 漏洞出现在/install/index.php  对我们的输入没有做任何过滤  接着直接写入config.php。  访问/config.php  但是安装完后删除了install，所以说没什么用，本地拿着玩吧。。 XSS输入  在page_new.php的90行。 我们输入的navTitle，也没有过滤，之后直接输出在页面上  只要是添加">
@@ -377,14 +377,14 @@
 <p>对我们的输入没有做任何过滤</p>
 <p><img src="/hoosk/install.png" alt="2"></p>
 <p>接着直接写入config.php。</p>
-<p><img src="/hoosk/config.php" alt="3"></p>
+<p><img src="/hoosk/config.png" alt="3"></p>
 <p>访问/config.php</p>
 <p><img src="/hoosk/result.png" alt="4"></p>
 <p>但是安装完后删除了install，所以说没什么用，本地拿着玩吧。。</p>
 <h1 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h1><p>输入 <img src="/hoosk/post3.png" alt="0"></p>
 <p>在page_new.php的90行。<img src="/hoosk/page_new.png" alt="1"></p>
 <p>我们输入的navTitle，也没有过滤，之后直接输出在页面上<img src="/hoosk/pages.png" alt="2"></p>
-<p><img src="/hoosk/TIM截图20180819142913" alt="3"></p>
+<p><img src="/hoosk/TIM截图20180819142913.png" alt="3"></p>
 <p>只要是添加新的项目，都存在XSS</p>
 
       
