@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Hu3sky&#39;s blog</title>
+    <title>php-security-calendar-2017 · Hu3sky&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -196,12 +196,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Hu3sky&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">php-security-calendar-2017</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Hu3sky's blog</a>
 </header>
@@ -215,24 +226,68 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/tupian/123.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            php-security-calendar-2017
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">1,170</span> / Reading time: <span class="post-count">5 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/08/25</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -333,289 +388,83 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/25/php-security-calendar-2017/" >
-            
-                <span>php-security-calendar-2017</span>
-        </a>
-        <div class="abstract-content">
-            学习网站https://www.ripstech.com/php-security-calendar-2017/一个学习代码审计的平台，每一关都是一个函数产生的漏洞，值得学习
-Day 1 - Wish List123456789101112131415161718192021class Challenge &#123;    const UPLOAD_DIRECTORY = &apos;./solutions/&apos;;    private $file;    private $whitelist;    public function __construct($file) &#1...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/25</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/25/eyou前台getshell/" >
-            
-                <span>eyoucms前台getshell复现</span>
-        </a>
-        <div class="abstract-content">
-            既然自己挖不到getshell的洞，就来复现一下别人的，学习学习思路。
-cms官网：http://www.eyoucms.com/download/Cms下载地址：http://www.eyoucms.com/eyoucms1.0.zip
-漏洞出现位置页面：http://127.0.0.1/index.php/api/Uploadify/preview代码位置 application\api\controller\Uploadify.php
-漏洞分析漏洞在第201行的preview函数开始
-1234567891011121314151617181920212223242526272829...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/25</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/23/Hooskcms/" >
-            
-                <span>Hooskcms 几个小洞</span>
-        </a>
-        <div class="abstract-content">
-            没什么用的代码执行。。这个洞之所以说没用，是因为。先看吧
-漏洞出现在/install/index.php
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="学习网站"><a href="#学习网站" class="headerlink" title="学习网站"></a>学习网站</h1><p><a href="https://www.ripstech.com/php-security-calendar-2017/" target="_blank" rel="noopener">https://www.ripstech.com/php-security-calendar-2017/</a><br>一个学习代码审计的平台，每一关都是一个函数产生的漏洞，值得学习</p>
+<h1 id="Day-1-Wish-List"><a href="#Day-1-Wish-List" class="headerlink" title="Day 1 - Wish List"></a>Day 1 - Wish List</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Challenge &#123;</span><br><span class="line">    const UPLOAD_DIRECTORY = &apos;./solutions/&apos;;</span><br><span class="line">    private $file;</span><br><span class="line">    private $whitelist;</span><br><span class="line"></span><br><span class="line">    public function __construct($file) &#123;</span><br><span class="line">        $this-&gt;file = $file;</span><br><span class="line">        $this-&gt;whitelist = range(1, 24);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __destruct() &#123;</span><br><span class="line">        if (in_array($this-&gt;file[&apos;name&apos;], $this-&gt;whitelist)) &#123;</span><br><span class="line">            move_uploaded_file(</span><br><span class="line">                $this-&gt;file[&apos;tmp_name&apos;],</span><br><span class="line">                self::UPLOAD_DIRECTORY . $this-&gt;file[&apos;name&apos;]</span><br><span class="line">            );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$challenge = new Challenge($_FILES[&apos;solution&apos;]);</span><br></pre></td></tr></table></figure>
+<p>这是一个判断文件上传的，使用了in_array来检测文件名，whitelist是(1,24)的数字，而上传的文件名也必须是数字比如1,2,3…24,所以说想上传一个webshell.php就不行，我们来看一下in_array函数的定义<br><code>bool in_array ( mixed $needle , array $haystack [, bool $strict = FALSE ] )</code>，文档说明（strict）：<br>在 $haystack 中搜索 $needle ，如果第三个参数 $strict 的值为 TRUE ，则 in_array() 函数会进行强检查，检查 $needle 的类型是否和 $haystack 中的相同。如果找到 $haystack ，则返回 TRUE，否则返回 FALSE。但是默认这个参数为False，这里并没有设置strict的值，所以如果我们上传一个文件是3webshell.php，就会自动转换为3，这样，就成功绕过了。</p>
+<h1 id="Day-2-Twig"><a href="#Day-2-Twig" class="headerlink" title="Day 2 - Twig"></a>Day 2 - Twig</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">// composer require &quot;twig/twig&quot;</span><br><span class="line">require &apos;vendor/autoload.php&apos;;</span><br><span class="line"></span><br><span class="line">class Template &#123;</span><br><span class="line">    private $twig;</span><br><span class="line"></span><br><span class="line">    public function __construct() &#123;</span><br><span class="line">        $indexTemplate = &apos;&lt;img &apos; .</span><br><span class="line">            &apos;src=&quot;https://loremflickr.com/320/240&quot;&gt;&apos; .</span><br><span class="line">            &apos;&lt;a href=&quot;&#123;&#123;link|escape&#125;&#125;&quot;&gt;Next slide »&lt;/a&gt;&apos;;</span><br><span class="line"></span><br><span class="line">        // Default twig setup, simulate loading</span><br><span class="line">        // index.html file from disk</span><br><span class="line">        $loader = new Twig\Loader\ArrayLoader([</span><br><span class="line">            &apos;index.html&apos; =&gt; $indexTemplate</span><br><span class="line">        ]);</span><br><span class="line">        $this-&gt;twig = new Twig\Environment($loader);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function getNexSlideUrl() &#123;</span><br><span class="line">        $nextSlide = $_GET[&apos;nextSlide&apos;];</span><br><span class="line">        return filter_var($nextSlide, FILTER_VALIDATE_URL);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function render() &#123;</span><br><span class="line">        echo $this-&gt;twig-&gt;render(</span><br><span class="line">            &apos;index.html&apos;,</span><br><span class="line">            [&apos;link&apos; =&gt; $this-&gt;getNexSlideUrl()]</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(new Template())-&gt;render();</span><br></pre></td></tr></table></figure>
+<p>这一关题目实际上用的是PHP的一个模板引擎 Twig ，本题考察XSS漏洞，第10行使用了 Twig 模板引擎定义的 escape 过滤器来过滤link,而实际上这里的 escape 过滤器，是用PHP内置函数 htmlspecialchars(<a href="https://twig.symfony.com/doc/2.x/filters/escape.html" target="_blank" rel="noopener">https://twig.symfony.com/doc/2.x/filters/escape.html</a>) 来实现的.</p>
+<p>link生成的方式为getNexSlideUrl()，这个主要是让我们绕<code>filter_var($nextSlide, FILTER_VALIDATE_URL);</code>,此函数用来检测$nextSlide变量是否是url格式的，也就是我们提交的参数只能是url，例如 <a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a> 。而提交其他的就返回bool(False)。所以考虑javascript协议</p>
+<p>简化代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$url=filter_var($_GET[&apos;url&apos;],FILTER_VALIDATE_URL);</span><br><span class="line">var_dump($url);</span><br><span class="line">$url=htmlspecialchars($url);</span><br><span class="line">var_dump($url);</span><br><span class="line">echo &quot;&lt;a href=&apos;$url&apos;&gt;aaaaaaa &lt;/a&gt;&quot;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>payload为<code>?url=javascript://comment％250aalert(1)</code>.</p>
+<p>这里的 // 在JavaScript中表示单行注释，所以后面的内容均为注释，那为什么会执行 alert 函数呢？那是因为我们这里用了字符 %0a ，该字符为换行符，所以 alert 语句与注释符 // 就不在同一行，就能执行。当然，这里我们要对 % 百分号编码成 %25 ，因为程序将浏览器发来的payload：javascript://comment％250aalert(1) 先解码成： javascript://comment%0aalert(1) 存储在变量 $url 中（上图第二行代码），然后用户点击aaaaaaa标签链接就会触发 alert 函数。</p>
+<h1 id="Day-3-Snow-Flake"><a href="#Day-3-Snow-Flake" class="headerlink" title="Day 3 - Snow Flake"></a>Day 3 - Snow Flake</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">function __autoload($className) &#123;</span><br><span class="line">    include $className;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$controllerName = $_GET[&apos;c&apos;];</span><br><span class="line">$data = $_GET[&apos;d&apos;];</span><br><span class="line"></span><br><span class="line">if (class_exists($controllerName)) &#123;</span><br><span class="line">    $controller = new $controllerName($data[&apos;t&apos;], $data[&apos;v&apos;]);</span><br><span class="line">    $controller-&gt;render();</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    echo &apos;There is no page with this name&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HomeController &#123;</span><br><span class="line">    private $template;</span><br><span class="line">    private $variables;</span><br><span class="line"></span><br><span class="line">    public function __construct($template, $variables) &#123;</span><br><span class="line">        $this-&gt;template = $template;</span><br><span class="line">        $this-&gt;variables = $variables;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function render() &#123;</span><br><span class="line">        if ($this-&gt;variables[&apos;new&apos;]) &#123;</span><br><span class="line">            echo &apos;controller rendering new response&apos;;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            echo &apos;controller rendering old response&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>bool class_exists ( string $class_name [, bool $autoload = true ] )</code>检查指定的类是否已定义。参数 ¶<br>class_name 类名。名字的匹配是不分区大小写的。autoload 是否默认调用 __autoload。所以此题会默认调用__autoload，此题的包含漏洞也出现在这，攻击者可以使用 路径穿越 来包含任意文件，当然使用路径穿越符号的前提是 PHP5~5.3(包含5.3版本)版本 之间才可以。例如类名为： ../../../../etc/passwd 的查找，将查看passwd文件内容<br>第二个漏洞，在代码第九行，我们发现实例化类的类名和传入类的参数均在用户的控制之下，攻击者可以通过该漏洞，调用PHP代码库的任意构造函数。即使代码本身不包含易受攻击的构造函数，我们也可以使用PHP的内置类 SimpleXMLElement 来进行 XXE 攻击</p>
+<h1 id="Day-4-False-Beard"><a href="#Day-4-False-Beard" class="headerlink" title="Day 4 - False Beard"></a>Day 4 - False Beard</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Login &#123;</span><br><span class="line">    public function __construct($user, $pass) &#123;</span><br><span class="line">        $this-&gt;loginViaXml($user, $pass);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function loginViaXml($user, $pass) &#123;</span><br><span class="line">        if (</span><br><span class="line">            (!strpos($user, &apos;&lt;&apos;) || !strpos($user, &apos;&gt;&apos;)) &amp;&amp;</span><br><span class="line">            (!strpos($pass, &apos;&lt;&apos;) || !strpos($pass, &apos;&gt;&apos;))</span><br><span class="line">        ) &#123;</span><br><span class="line">            $format = &apos;&lt;?xml version=&quot;1.0&quot;?&gt;&apos; .</span><br><span class="line">                      &apos;&lt;user v=&quot;%s&quot;/&gt;&lt;pass v=&quot;%s&quot;/&gt;&apos;;</span><br><span class="line">            $xml = sprintf($format, $user, $pass);</span><br><span class="line">            $xmlElement = new SimpleXMLElement($xml);</span><br><span class="line">            // Perform the actual login.</span><br><span class="line">            $this-&gt;login($xmlElement);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">new Login($_POST[&apos;username&apos;], $_POST[&apos;password&apos;]);</span><br></pre></td></tr></table></figure>
 
-对我们的输入没有做任何过滤
-
-接着直接写入config.php。
-
-访问/config.php
-
-但是安装完后删除了install，所以说没什么用，本地拿着玩吧。。
-XSS输入 
-在page_new.php的90行。
-我们输入的navTitle，也没有过滤，之后直接输出在页面上
-
-只要是添加新的项目，都存在XSS
-
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/23</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/18/bugku sql2/" >
-            
-                <span>Bugku sql注入2</span>
-        </a>
-        <div class="abstract-content">
-            网上没有一个正常做出来了的看了叶师傅的wp，跟着学一遍username的注入，盲注根据username的返回不同fuzz，几乎都过滤完了。没过滤的 !,!=,=,+,-,^,%数字型时，可以用^进行闭合and这些也被过滤。
-需要用到-1-&#39;admin&#39;-1-&#39;&#39; =  -1&#39;admin&#39;-0-&#39;&#39; =  0
-我们发现-0的时候，为true，-1的时候为false那么这是为什么呢？我们猜想后台sql语句构造为
-$sql = select * from users where username=$username;在字符串use...
+        <div class="license-wrapper">
+            <p>原文作者: <a href="http://yoursite.com">Hu3sky</a>
+            <p>原文链接: <a href="http://yoursite.com/2018/08/25/php-security-calendar-2017/">http://yoursite.com/2018/08/25/php-security-calendar-2017/</a>
+            <p>发表日期: <a href="http://yoursite.com/2018/08/25/php-security-calendar-2017/">August 25th 2018, 10:36:59 pm</a>
+            <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/18</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/17/Hack the ch4inrulz of Vulnhub/" >
-            
-                <span>[Untitled Post]</span>
-        </a>
-        <div class="abstract-content">
-            首发于先知社区 https://xz.aliyun.com/t/2593环境说明靶机环境 192.168.107.128攻击机kali 192.168.107.129
-主机发现首先用nmap进行主机发现，因为都在同一网段，所以nmap -sP 192.168.107.1/24可以看到，本机ip是129，所以靶机自然就确定为192.168.107.128。
-端口扫描确定了靶机ip，就来确认一下开放的端口，使用nmap -sS -A 192.168.107.128靶机开放了4个端口，web80端口，ftp21端口，ssh22端口，还有一个8011端口，我们一个一个看，先从web服务入手，
-目...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/17</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/07/Cyberry/" >
-            
-                <span>Vulnhub\|Cyberry靶机</span>
-        </a>
-        <div class="abstract-content">
-            本文由安全客原创发布 转载，请参考转载声明，注明出处：https://www.anquanke.com/post/id/154504环境准备靶机ip：192.168.107.132攻击机kali：192.168.107.134说明：目的是拿下靶机并获取root权限
-渗透测试首先nmap开路，找一下靶机的ip地址nmap -sP 192.168.107.1/24 既然确定了ip，接着我们扫一下端口。 。开了三个端口，1个web端口80，1个ssh端口22，1个ftp端口21.我们先从web服务开始。. 一个静态页面，没什么搞头，扫一下目录。.我先从phpmyadmin下手，. 这里尝试爆破...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/07</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/07/17/JAVA学习情况/" >
-            
-                <span>java学习笔记</span>
-        </a>
-        <div class="abstract-content">
-            java
-分布性：操作分布，数据分布
-
-堆和栈
-存储内容：堆：由new等指令创建的对象和数组栈：基本类型的变量和对象的引用变量，还会储存对象的引用变量JRE 和 JDK
-JDK，开发java程序用的开发包，JDK里面有java的运行环境(JRE)，包括client和server端的。需要配置环境变量。。。。
-
-JRE，运行java程序的环境，JVM，JRE里面只有client运行环境，安装过程中，会自动添加PATH。
-
-
-基础语法
-对象：对象是类的一个实例，有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。
-类：类是一个模板，它描述一类对象的行...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/17</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/29/The game of bob/" >
-            
-                <span>Bob 1.0.1</span>
-        </a>
-        <div class="abstract-content">
-            本文由安全客原创发布 转载，请参考转载声明，注明出处： https://www.anquanke.com/post/id/150194题记最近在打靶机，发现了一个挺有意思又挺有技巧性的靶机，这里想跟大家分享一下，各位大佬轻喷。
-环境准备https://download.vulnhub.com/bob/Bob_v1.0.1.ova (靶机下载地址)攻击机 Kali IP 192.168.107.129靶机在同一C段下
-主机发现使用命令nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而192.168.107.254是结束ip。所以说我们的靶机i...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/29</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/29/xxe学习/" >
-            
-                <span>浅谈XML实体注入漏洞</span>
-        </a>
-        <div class="abstract-content">
-            本文作者：Hu3sky@D0g3，本文属FreeBuf原创奖励计划，未经许可禁止转载FreeBuf：http://www.freebuf.com/vuls/175451.html题记学习了XXE漏洞,自己来总结一下,如果有什么写的不到位，不够好的地方，还请师傅们指出。
-0x00 XXE漏洞XXE漏洞全称XML External Entity Injection即xml外部实体注入漏洞，XXE漏洞发生在应用程序解析XML输入时，没有禁止外部实体的加载，导致可加载恶意外部文件，造成文件读取、命令执行、内网端口扫描、攻击内网网站、发起dos攻击等危害。xxe漏洞触发的点往往是可以上传xml文件...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/29</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/23/Bsides靶机/" >
-            
-                <span>Vulnhub Bsides靶机</span>
-        </a>
-        <div class="abstract-content">
-            环境https://www.vulnhub.com/entry/bsides-vancouver-2018-workshop,231/
-信息收集这里我使用的攻击机是kali，NAT模式，ip是192.168.107.129，靶机在同一C段
-主机发现先用NMAP扫描上线主机。nmap -sP 192.168.107.1/24。192.168.107.1是我物理机的ip，而192.168.107.254是结束ip。所以说我们的靶机ip就是192.168.107.131
-端口扫描接下来进行端口扫描。nmap -sS 192.168.107.131。可以看到开放了21，22，80三个端口。我们访...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/23</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2022/07/05/暑假学习计划/" title= 暑假学习计划 >
+                    <div class="nextTitle">暑假学习计划</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/08/25/eyou前台getshell/" title= eyoucms前台getshell复现 >
+                    <div class="prevTitle">eyoucms前台getshell复现</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2018/page/2/">2</a><a class="page-number" href="/archives/2018/page/3/">3</a><a class="extend next" rel="next" href="/archives/2018/page/2/">NEXT &#62;</a>
-    </nav>
     
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "php-security-calendar-2017", // 可选。默认为 location.href
+        owner: 'Hu3sky',
+        repo: 'gitment-comments',
+        oauth: {
+            client_id: '7b315f10a637afb815a9',
+            client_secret: 'f151efdf48db67e59ed518492bbd1ef12b680a00',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC和WAP自适应版-->
+
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -691,6 +540,24 @@ JRE，运行java程序的环境，JVM，JRE里面只有client运行环境，安�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#学习网站"><span class="toc-number">1.</span> <span class="toc-text">学习网站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-1-Wish-List"><span class="toc-number">2.</span> <span class="toc-text">Day 1 - Wish List</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-2-Twig"><span class="toc-number">3.</span> <span class="toc-text">Day 2 - Twig</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-3-Snow-Flake"><span class="toc-number">4.</span> <span class="toc-text">Day 3 - Snow Flake</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-4-False-Beard"><span class="toc-number">5.</span> <span class="toc-text">Day 4 - False Beard</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1493,6 +1360,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
