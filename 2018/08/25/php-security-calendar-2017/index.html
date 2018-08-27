@@ -261,7 +261,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,170</span> / Reading time: <span class="post-count">5 min</span></span>
+                        <span>Word count: <span class="post-count">2,673</span> / Reading time: <span class="post-count">13 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -403,6 +403,30 @@ height:50vh;
 <h1 id="Day-3-Snow-Flake"><a href="#Day-3-Snow-Flake" class="headerlink" title="Day 3 - Snow Flake"></a>Day 3 - Snow Flake</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">function __autoload($className) &#123;</span><br><span class="line">    include $className;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$controllerName = $_GET[&apos;c&apos;];</span><br><span class="line">$data = $_GET[&apos;d&apos;];</span><br><span class="line"></span><br><span class="line">if (class_exists($controllerName)) &#123;</span><br><span class="line">    $controller = new $controllerName($data[&apos;t&apos;], $data[&apos;v&apos;]);</span><br><span class="line">    $controller-&gt;render();</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    echo &apos;There is no page with this name&apos;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class HomeController &#123;</span><br><span class="line">    private $template;</span><br><span class="line">    private $variables;</span><br><span class="line"></span><br><span class="line">    public function __construct($template, $variables) &#123;</span><br><span class="line">        $this-&gt;template = $template;</span><br><span class="line">        $this-&gt;variables = $variables;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function render() &#123;</span><br><span class="line">        if ($this-&gt;variables[&apos;new&apos;]) &#123;</span><br><span class="line">            echo &apos;controller rendering new response&apos;;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            echo &apos;controller rendering old response&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>bool class_exists ( string $class_name [, bool $autoload = true ] )</code>检查指定的类是否已定义。参数 ¶<br>class_name 类名。名字的匹配是不分区大小写的。autoload 是否默认调用 __autoload。所以此题会默认调用__autoload，此题的包含漏洞也出现在这，攻击者可以使用 路径穿越 来包含任意文件，当然使用路径穿越符号的前提是 PHP5~5.3(包含5.3版本)版本 之间才可以。例如类名为： ../../../../etc/passwd 的查找，将查看passwd文件内容<br>第二个漏洞，在代码第九行，我们发现实例化类的类名和传入类的参数均在用户的控制之下，攻击者可以通过该漏洞，调用PHP代码库的任意构造函数。即使代码本身不包含易受攻击的构造函数，我们也可以使用PHP的内置类 SimpleXMLElement 来进行 XXE 攻击</p>
 <h1 id="Day-4-False-Beard"><a href="#Day-4-False-Beard" class="headerlink" title="Day 4 - False Beard"></a>Day 4 - False Beard</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Login &#123;</span><br><span class="line">    public function __construct($user, $pass) &#123;</span><br><span class="line">        $this-&gt;loginViaXml($user, $pass);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function loginViaXml($user, $pass) &#123;</span><br><span class="line">        if (</span><br><span class="line">            (!strpos($user, &apos;&lt;&apos;) || !strpos($user, &apos;&gt;&apos;)) &amp;&amp;</span><br><span class="line">            (!strpos($pass, &apos;&lt;&apos;) || !strpos($pass, &apos;&gt;&apos;))</span><br><span class="line">        ) &#123;</span><br><span class="line">            $format = &apos;&lt;?xml version=&quot;1.0&quot;?&gt;&apos; .</span><br><span class="line">                      &apos;&lt;user v=&quot;%s&quot;/&gt;&lt;pass v=&quot;%s&quot;/&gt;&apos;;</span><br><span class="line">            $xml = sprintf($format, $user, $pass);</span><br><span class="line">            $xmlElement = new SimpleXMLElement($xml);</span><br><span class="line">            // Perform the actual login.</span><br><span class="line">            $this-&gt;login($xmlElement);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">new Login($_POST[&apos;username&apos;], $_POST[&apos;password&apos;]);</span><br></pre></td></tr></table></figure>
+<p>strpos — 查找字符串首次出现的位置,<br>函数说明<br>int strpos ( string $haystack , mixed $needle [, int $offset = 0 ] )。<br>参数  haystack  在该字符串中进行查找。<br>needle   如果 needle 不是一个字符串，那么它将被转换为整型并被视为字符的顺序值。<br>offset   如果提供了此参数，搜索会从字符串该字符数的起始位置开始统计。 如果是负数，搜索会从字符串结尾指定字符数开始。<br>strpos 函数返回查找到的子字符串的下标。如果字符串开头就是我们要搜索的目标，则返回下标 0 ；如果搜索不到，则返回 false<br>所以payload <code>user=&lt;&quot;&gt;&lt;injected-tag%20property=&quot;&amp;pass=&lt;injected-tag&gt;</code></p>
+<h1 id="Day-5-Postcard"><a href="#Day-5-Postcard" class="headerlink" title="Day 5 - Postcard"></a>Day 5 - Postcard</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">class Mailer &#123;</span><br><span class="line">    private function sanitize($email) &#123;</span><br><span class="line">        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) &#123;</span><br><span class="line">            return &apos;&apos;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return escapeshellarg($email);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function send($data) &#123;</span><br><span class="line">        if (!isset($data[&apos;to&apos;])) &#123;</span><br><span class="line">            $data[&apos;to&apos;] = &apos;none@ripstech.com&apos;;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $data[&apos;to&apos;] = $this-&gt;sanitize($data[&apos;to&apos;]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (!isset($data[&apos;from&apos;])) &#123;</span><br><span class="line">            $data[&apos;from&apos;] = &apos;none@ripstech.com&apos;;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $data[&apos;from&apos;] = $this-&gt;sanitize($data[&apos;from&apos;]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (!isset($data[&apos;subject&apos;])) &#123;</span><br><span class="line">            $data[&apos;subject&apos;] = &apos;No Subject&apos;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (!isset($data[&apos;message&apos;])) &#123;</span><br><span class="line">            $data[&apos;message&apos;] = &apos;&apos;;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mail($data[&apos;to&apos;], $data[&apos;subject&apos;], $data[&apos;message&apos;],</span><br><span class="line">             &apos;&apos;, &quot;-f&quot; . $data[&apos;from&apos;]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$mailer = new Mailer();</span><br><span class="line">$mailer-&gt;send($_POST);</span><br></pre></td></tr></table></figure>
+<p>此题是mali函数导致的代码执行<br>函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bool mail (</span><br><span class="line">    string $to ,</span><br><span class="line">    string $subject ,</span><br><span class="line">    string $message [,</span><br><span class="line">    string $additional_headers [,</span><br><span class="line">    string $additional_parameters ]]</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>to，指定邮件接收者，即接收人<br>subject，邮件的标题<br>message，邮件的正文内容<br>additional_headers，指定邮件发送时其他的额外头部，如发送者From，抄送CC，隐藏抄送BCC<br>additional_parameters，指定传递给发送程序sendmail的额外参数。</p>
+<p>举例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">	$to=&apos;hu3sky111@d0g3.cn&apos;;</span><br><span class="line">	$subject=&apos;hello hu3sky&apos;;</span><br><span class="line">	$message=&apos;&lt;?php phpinfo();?&gt;&apos;;</span><br><span class="line">	$headers=&apos;CC:test@d0g3.cn&apos;;</span><br><span class="line">	$options=&apos;-OQueueDirectory=/tmp -X /var/www/html/shell.php&apos;;</span><br><span class="line">	mail($to,$subject,$message,$headers,$options);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>-X 参数指定日志文件。最终会在 /var/www/html/shell.php 中写入如下数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">17220 &lt;&lt;&lt; To: hu3sky111@d0g3.cn</span><br><span class="line">17220 &lt;&lt;&lt; Subject: hello hu3sky</span><br><span class="line">17220 &lt;&lt;&lt; X-PHP-Originating-Script: 0:test.php</span><br><span class="line">17220 &lt;&lt;&lt; CC: test@d0g3.cn</span><br><span class="line">17220 &lt;&lt;&lt;</span><br><span class="line">17220 &lt;&lt;&lt; &lt;?php phpinfo(); ?&gt;</span><br><span class="line">17220 &lt;&lt;&lt; [EOF]</span><br></pre></td></tr></table></figure>
+<h2 id="一个小例子"><a href="#一个小例子" class="headerlink" title="一个小例子"></a>一个小例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$param=&quot;127.0.0.1&apos; -v -d a=1&quot;;</span><br><span class="line">$a=escapeshellarg($param);</span><br><span class="line">$b=escapeshellcmd($a);</span><br><span class="line">$cmd=&quot;curl &quot;.$b;</span><br><span class="line">var_dump($a).&quot;\n&quot;;</span><br><span class="line">var_dump($b).&quot;\n&quot;;</span><br><span class="line">var_dump($cmd).&quot;\n&quot;;</span><br><span class="line">system($cmd);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>mail()函数在底层调用了 escapeshellcmd() 函数对用户输入的邮箱地址进行处理,此题又用了escapeshellarg函数处理，所以可以构造传入的参数为<br><code>127.0.0.1&#39; -v -d a=1</code><br>由于escapeshellarg()先对单引号转义再在两边加单引号，在对本来的单引号进行转义<br><code>&#39;127.0.0.1&#39;\&#39;&#39; -v -d a=1&#39;</code><br>接着escapeshellcmd() 函数再对字符串中的\,’进行转义<br><code>&#39;127.0.0.1&#39;\\&#39;&#39; -v -d a=1\&#39;</code><br>由于第三步处理之后的payload中的 <code>\\</code> 被解释成了 \ 而不再是转义字符，所以单引号配对连接之后将payload分割为三个部分，具体如下所示：<br><code>&#39;127.0.0.1&#39;   \\ &#39;&#39;    -v -d           a=1\&#39;</code><br>所以这个payload可以简化为 curl 127.0.0.1\ -v -d a=1’ ，即向 127.0.0.1\ 发起请求，POST 数据为 a=1’ 。</p>
+<h1 id="Day-6-Frost-Pattern"><a href="#Day-6-Frost-Pattern" class="headerlink" title="Day 6 - Frost Pattern"></a>Day 6 - Frost Pattern</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class TokenStorage &#123;</span><br><span class="line">    public function performAction($action, $data) &#123;</span><br><span class="line">        switch ($action) &#123;</span><br><span class="line">            case &apos;create&apos;:</span><br><span class="line">                $this-&gt;createToken($data);</span><br><span class="line">                break;</span><br><span class="line">            case &apos;delete&apos;:</span><br><span class="line">                $this-&gt;clearToken($data);</span><br><span class="line">                break;</span><br><span class="line">            default:</span><br><span class="line">                throw new Exception(&apos;Unknown action&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function createToken($seed) &#123;</span><br><span class="line">        $token = md5($seed);</span><br><span class="line">        file_put_contents(&apos;/tmp/tokens/&apos; . $token, &apos;...data&apos;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function clearToken($token) &#123;</span><br><span class="line">        $file = preg_replace(&quot;/[^a-z.-_]/&quot;, &quot;&quot;, $token);</span><br><span class="line">        unlink(&apos;/tmp/tokens/&apos; . $file);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$storage = new TokenStorage();</span><br><span class="line">$storage-&gt;performAction($_GET[&apos;action&apos;], $_GET[&apos;data&apos;]);</span><br></pre></td></tr></table></figure>
+<p>这明显是个任意文件删除，这里的正则中，减号并不是减号的意思，而是至，就像a-z一样，从a至z的所有字母，同理.-_就是从点(46)到下划线(95)的所有符号,按设计者的思路应该是想表示减号。</p>
+<h2 id="正则题目"><a href="#正则题目" class="headerlink" title="正则题目"></a>正则题目</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// index.php</span><br><span class="line">&lt;?php</span><br><span class="line">include &apos;f1agi3hEre.php&apos;;</span><br><span class="line">if  (&quot;POST&quot; == $_SERVER[&apos;REQUEST_METHOD&apos;])</span><br><span class="line">&#123;</span><br><span class="line">    $password = $_POST[&apos;password&apos;];</span><br><span class="line">    if (0 &gt;= preg_match(&apos;/^[[:graph:]]&#123;12,&#125;$/&apos;, $password))</span><br><span class="line">    &#123;</span><br><span class="line">        echo &apos;Wrong Format&apos;;</span><br><span class="line">        exit;</span><br><span class="line">    &#125;</span><br><span class="line">    while (TRUE)</span><br><span class="line">    &#123;</span><br><span class="line">        $reg = &apos;/([[:punct:]]+|[[:digit:]]+|[[:upper:]]+|[[:lower:]]+)/&apos;;</span><br><span class="line">        if (6 &gt; preg_match_all($reg, $password, $arr))</span><br><span class="line">            break;</span><br><span class="line">        $c = 0;</span><br><span class="line">        $ps = array(&apos;punct&apos;, &apos;digit&apos;, &apos;upper&apos;, &apos;lower&apos;);</span><br><span class="line">        foreach ($ps as $pt)</span><br><span class="line">        &#123;</span><br><span class="line">            if (preg_match(&quot;/[[:$pt:]]+/&quot;, $password))</span><br><span class="line">            $c += 1;</span><br><span class="line">        &#125;</span><br><span class="line">        if ($c &lt; 3) break;</span><br><span class="line">        if (&quot;42&quot; == $password) echo $flag;</span><br><span class="line">        else echo &apos;Wrong password&apos;;</span><br><span class="line">        exit;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>一些说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">alpha	字母</span><br><span class="line">ascii	0 - 127的ascii字符</span><br><span class="line">blank	空格和水平制表符</span><br><span class="line">cntrl	控制字符</span><br><span class="line">digit	十进制数(same as \d)</span><br><span class="line">graph	打印字符, 不包括空格</span><br><span class="line">lower	小写字母</span><br><span class="line">print	打印字符,包含空格</span><br><span class="line">punct	打印字符, 不包括字母和数字</span><br><span class="line">space	空白字符 (比\s多垂直制表符)</span><br><span class="line">upper	大写字母</span><br><span class="line">word	单词字符(same as \w)</span><br><span class="line">xdigit	十六进制数字</span><br></pre></td></tr></table></figure></p>
+<p>题目中总共有三处正则匹配，我们分别来看一下其对应的含义。第一处的正则 /^[[:graph:]]{12,}$/ 为：匹配到可打印字符12个以上(包含12)，^ 号表示必须以某类字符开头，$ 号表示必须以某类字符结尾<br>第二处正则表达式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$reg = &apos;/([[:punct:]]+|[[:digit:]]+|[[:upper:]]+|[[:lower:]]+)/&apos;;</span><br><span class="line">if (6 &gt; preg_match_all($reg, $password, $arr))</span><br><span class="line">    break;</span><br></pre></td></tr></table></figure>
+<p>表示字符串中，把连续的符号、数字、大写、小写，作为一段，至少分六段，例如我们输入 <code>H0ng+Ri</code> 则匹配到的子串为 <code>H 0 ng + R i</code></p>
+<p>第三处的正则表达式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ps = array(&apos;punct&apos;, &apos;digit&apos;, &apos;upper&apos;, &apos;lower&apos;);</span><br><span class="line">foreach ($ps as $pt)</span><br><span class="line">&#123;</span><br><span class="line">    if (preg_match(&quot;/[[:$pt:]]+/&quot;, $password))</span><br><span class="line">    $c += 1;</span><br><span class="line">&#125;</span><br><span class="line">if ($c &lt; 3) break;</span><br></pre></td></tr></table></figure>
+<p>表示为输入的字符串至少含有符号、数字、大写、小写中的三种类型。然后题目最后将 $password 与42进行了弱比较。所以我们的payload为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">password=42.00e+00000</span><br><span class="line">password=420.00000e-1</span><br></pre></td></tr></table></figure>
+<h1 id="Day-7-Bells"><a href="#Day-7-Bells" class="headerlink" title="Day 7 - Bells"></a>Day 7 - Bells</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function getUser($id) &#123;</span><br><span class="line">    global $config, $db;</span><br><span class="line">    if (!is_resource($db)) &#123;</span><br><span class="line">        $db = new MySQLi(</span><br><span class="line">            $config[&apos;dbhost&apos;],</span><br><span class="line">            $config[&apos;dbuser&apos;],</span><br><span class="line">            $config[&apos;dbpass&apos;],</span><br><span class="line">            $config[&apos;dbname&apos;]</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">    $sql = &quot;SELECT username FROM users WHERE id = ?&quot;;</span><br><span class="line">    $stmt = $db-&gt;prepare($sql);</span><br><span class="line">    $stmt-&gt;bind_param(&apos;i&apos;, $id);</span><br><span class="line">    $stmt-&gt;bind_result($name);</span><br><span class="line">    $stmt-&gt;execute();</span><br><span class="line">    $stmt-&gt;fetch();</span><br><span class="line">    return $name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$var = parse_url($_SERVER[&apos;HTTP_REFERER&apos;]);</span><br><span class="line">parse_str($var[&apos;query&apos;]);</span><br><span class="line">$currentUser = getUser($id);</span><br><span class="line">echo &apos;&lt;h1&gt;&apos;.htmlspecialchars($currentUser).&apos;&lt;/h1&gt;&apos;;</span><br></pre></td></tr></table></figure>
+<p>看到这个还以为是个sql注入，原来是parse_str()的变量覆盖</p>
 
     </article>
     <!-- license  -->
@@ -556,7 +580,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#学习网站"><span class="toc-number">1.</span> <span class="toc-text">学习网站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-1-Wish-List"><span class="toc-number">2.</span> <span class="toc-text">Day 1 - Wish List</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-2-Twig"><span class="toc-number">3.</span> <span class="toc-text">Day 2 - Twig</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-3-Snow-Flake"><span class="toc-number">4.</span> <span class="toc-text">Day 3 - Snow Flake</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-4-False-Beard"><span class="toc-number">5.</span> <span class="toc-text">Day 4 - False Beard</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#学习网站"><span class="toc-number">1.</span> <span class="toc-text">学习网站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-1-Wish-List"><span class="toc-number">2.</span> <span class="toc-text">Day 1 - Wish List</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-2-Twig"><span class="toc-number">3.</span> <span class="toc-text">Day 2 - Twig</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-3-Snow-Flake"><span class="toc-number">4.</span> <span class="toc-text">Day 3 - Snow Flake</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-4-False-Beard"><span class="toc-number">5.</span> <span class="toc-text">Day 4 - False Beard</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-5-Postcard"><span class="toc-number">6.</span> <span class="toc-text">Day 5 - Postcard</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个小例子"><span class="toc-number">6.1.</span> <span class="toc-text">一个小例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-6-Frost-Pattern"><span class="toc-number">7.</span> <span class="toc-text">Day 6 - Frost Pattern</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正则题目"><span class="toc-number">7.1.</span> <span class="toc-text">正则题目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-7-Bells"><span class="toc-number">8.</span> <span class="toc-text">Day 7 - Bells</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -569,6 +593,54 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1019,6 +1091,34 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
     
@@ -1093,34 +1193,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2018/05/03/渗透测试/" >记一次kali渗透测试靶机</a>
         </li>
     
@@ -1155,23 +1227,45 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
-            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
         </li>
     
     
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
-        </li>
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     
@@ -1222,40 +1316,27 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> Invalid date </div>
+    <div class="archive-year"> 2018 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
+        </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
         </li>
     
     </div>
@@ -1298,25 +1379,27 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
+        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
+    
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
-    
-        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
-    
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
-    
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+    
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
+    
+        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
@@ -1325,8 +1408,6 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
-    
-        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
