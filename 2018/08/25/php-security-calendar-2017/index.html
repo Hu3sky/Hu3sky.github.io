@@ -261,7 +261,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">3,728</span> / Reading time: <span class="post-count">17 min</span></span>
+                        <span>Word count: <span class="post-count">4,545</span> / Reading time: <span class="post-count">21 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -444,7 +444,17 @@ height:50vh;
 <p>需要在burpsuit中发包才能看到phpinfo执行</p>
 <h1 id="Day-11-Pumpkin-Pie（暂时过）"><a href="#Day-11-Pumpkin-Pie（暂时过）" class="headerlink" title="Day 11 - Pumpkin Pie（暂时过）"></a>Day 11 - Pumpkin Pie（暂时过）</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">class Template &#123;</span><br><span class="line">    public $cacheFile = &apos;/tmp/cachefile&apos;;</span><br><span class="line">    public $template = &apos;&lt;div&gt;Welcome back %s&lt;/div&gt;&apos;;</span><br><span class="line"></span><br><span class="line">    public function __construct($data = null) &#123;</span><br><span class="line">        $data = $this-&gt;loadData($data);</span><br><span class="line">        $this-&gt;render($data);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function loadData($data) &#123;</span><br><span class="line">        if (substr($data, 0, 2) !== &apos;O:&apos;</span><br><span class="line">        &amp;&amp; !preg_match(&apos;/O:\d:\/&apos;, $data)) &#123;</span><br><span class="line">            return unserialize($data);</span><br><span class="line">        &#125;</span><br><span class="line">        return [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function createCache($file = null, $tpl = null) &#123;</span><br><span class="line">        $file = $file ?? $this-&gt;cacheFile;</span><br><span class="line">        $tpl = $tpl ?? $this-&gt;template;</span><br><span class="line">        file_put_contents($file, $tpl);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function render($data) &#123;</span><br><span class="line">        echo sprintf(</span><br><span class="line">            $this-&gt;template,</span><br><span class="line">            htmlspecialchars($data[&apos;name&apos;])</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __destruct() &#123;</span><br><span class="line">        $this-&gt;createCache();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">new Template($_COOKIE[&apos;data&apos;]);</span><br></pre></td></tr></table></figure>
 <h1 id="Day-12-String-Lights"><a href="#Day-12-String-Lights" class="headerlink" title="Day 12 - String Lights"></a>Day 12 - String Lights</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$sanitized = [];</span><br><span class="line"></span><br><span class="line">foreach ($_GET as $key =&gt; $value) &#123;</span><br><span class="line">    $sanitized[$key] = intval($value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$queryParts = array_map(function ($key, $value) &#123;</span><br><span class="line">    return $key . &apos;=&apos; . $value;</span><br><span class="line">&#125;, array_keys($sanitized), array_values($sanitized));</span><br><span class="line"></span><br><span class="line">$query = implode(&apos;&amp;&apos;, $queryParts);</span><br><span class="line"></span><br><span class="line">echo &quot;&lt;a href=&apos;/images/size.php?&quot; .</span><br><span class="line">    htmlentities($query) . &quot;&apos;&gt;link&lt;/a&gt;&quot;;</span><br></pre></td></tr></table></figure>
-<p>这题是个XSS，最终我们的输入会拼接到href标签，htmlentities对单引号不会过滤，要求我们的value必须为数字，所以payload<code>/?a&#39;onclick%3dalert(1)//=s</code></p>
+<p>这题是个XSS，最终我们的输入会拼接到href标签，htmlentities对单引号不会过滤，要求我们的value必须为数字，所以payload<code>/?a&#39;onclick%3dalert(1)//=s</code>.我用的火狐才能弹窗，Chorme浏览器对单引号进行了拦截，会失败。</p>
+<h1 id="Day-13-Turkey-Baster"><a href="#Day-13-Turkey-Baster" class="headerlink" title="Day 13 - Turkey Baster"></a>Day 13 - Turkey Baster</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">class LoginManager &#123;</span><br><span class="line">    private $em;</span><br><span class="line">    private $user;</span><br><span class="line">    private $password;</span><br><span class="line"></span><br><span class="line">    public function __construct($user, $password) &#123;</span><br><span class="line">        $this-&gt;em = DoctrineManager::getEntityManager();</span><br><span class="line">        $this-&gt;user = $user;</span><br><span class="line">        $this-&gt;password = $password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function isValid() &#123;</span><br><span class="line">        $user = $this-&gt;sanitizeInput($this-&gt;user);</span><br><span class="line">        $pass = $this-&gt;sanitizeInput($this-&gt;password);</span><br><span class="line"></span><br><span class="line">        $queryBuilder = $this-&gt;em-&gt;createQueryBuilder()</span><br><span class="line">            -&gt;select(&quot;COUNT(p)&quot;)</span><br><span class="line">            -&gt;from(&quot;User&quot;, &quot;u&quot;)</span><br><span class="line">            -&gt;where(&quot;user = &apos;$user&apos; AND password = &apos;$pass&apos;&quot;);</span><br><span class="line">        $query = $queryBuilder-&gt;getQuery();</span><br><span class="line">        return boolval($query-&gt;getSingleScalarResult());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function sanitizeInput($input, $length = 20) &#123;</span><br><span class="line">        $input = addslashes($input);</span><br><span class="line">        if (strlen($input) &gt; $length) &#123;</span><br><span class="line">            $input = substr($input, 0, $length);</span><br><span class="line">        &#125;</span><br><span class="line">        return $input;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$auth = new LoginManager($_POST[&apos;user&apos;], $_POST[&apos;passwd&apos;]);</span><br><span class="line">if (!$auth-&gt;isValid()) &#123;</span><br><span class="line">    exit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里是个DQL（Doctrine Query Language）注入漏洞，DQL注入类似于SQL注入。</p>
+<p>这里user跟pass虽然看上去经过了过滤，但是这个过滤函数有问题，如果我们传递\作为输入，它将被转义为\。但是，该substr()函数用于截断转义字符串。这使攻击者能够发送足够长的字符串，以避免转义反斜杠被切断，并且在字符串末尾留下一个\。这将打破WHERE语句并允许注入自己的DQL语法。</p>
+<p>所以payload：<code>user = &#39;1234567890123456789\&#39; AND password = &#39; OR 1=1-&#39;</code></p>
+<h1 id="Day-14-Snowman"><a href="#Day-14-Snowman" class="headerlink" title="Day 14 - Snowman"></a>Day 14 - Snowman</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Carrot &#123;</span><br><span class="line">    const EXTERNAL_DIRECTORY = &apos;/tmp/&apos;;</span><br><span class="line">    private $id;</span><br><span class="line">    private $lost = 0;</span><br><span class="line">    private $bought = 0;</span><br><span class="line"></span><br><span class="line">    public function __construct($input) &#123;</span><br><span class="line">        $this-&gt;id = rand(1, 1000);</span><br><span class="line"></span><br><span class="line">        foreach ($input as $field =&gt; $count) &#123;</span><br><span class="line">            $this-&gt;$field = $count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function __destruct() &#123;</span><br><span class="line">        file_put_contents(</span><br><span class="line">            self::EXTERNAL_DIRECTORY . $this-&gt;id,</span><br><span class="line">            var_export(get_object_vars($this), true)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$carrot = new Carrot($_GET);</span><br></pre></td></tr></table></figure>
+<p>此处是一个任意文件写入，虽然id做了rand处理，但get传入一个id参数，可覆盖原来的id，配合get_object_var跟var_export这样就可以在目录下写shell了</p>
+<h1 id="Day-15-Sleigh-Ride"><a href="#Day-15-Sleigh-Ride" class="headerlink" title="Day 15 - Sleigh Ride"></a>Day 15 - Sleigh Ride</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">class Redirect &#123;</span><br><span class="line">    private $websiteHost = &apos;www.example.com&apos;;</span><br><span class="line"></span><br><span class="line">    private function setHeaders($url) &#123;</span><br><span class="line">        $url = urldecode($url);</span><br><span class="line">        header(&quot;Location: $url&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function startRedirect($params) &#123;</span><br><span class="line">        $parts = explode(&apos;/&apos;, $_SERVER[&apos;PHP_SELF&apos;]);</span><br><span class="line">        $baseFile = end($parts);</span><br><span class="line">        $url = sprintf(</span><br><span class="line">            &quot;%s?%s&quot;,</span><br><span class="line">            $baseFile,</span><br><span class="line">            http_build_query($params)</span><br><span class="line">        );</span><br><span class="line">        $this-&gt;setHeaders($url);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if ($_GET[&apos;redirect&apos;]) &#123;</span><br><span class="line">    (new Redirect())-&gt;startRedirect($_GET[&apos;params&apos;]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>$\_SERVER[&#39;PHP_SELF&#39;]</code>,获取当前执行脚本的文件名，与 document root 有关。例如，在地址为 <code>http://example.com/foo/bar.php</code> 的脚本中使用 <code>$\_SERVER[&#39;PHP_SELF&#39;]</code> 将得到 /foo/bar.php 。<br>而<code>end()</code>是将数组的内部指针指向最后一个单元，<code>end(/foo/bar.php)</code>就是bar.php<br>在第五行会进行解码，所以我们传入的时候先编码一次。<br>最终payload为<code>/http:%252f%252fhu3sky.ooo?redirect</code>。就会跳转到我们提交的网页上<code>http://hu3sky.ooo</code></p>
+<h1 id="Day-16-Poem"><a href="#Day-16-Poem" class="headerlink" title="Day 16 - Poem"></a>Day 16 - Poem</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class FTP &#123;</span><br><span class="line">    public $sock;</span><br><span class="line"></span><br><span class="line">    public function __construct($host, $port, $user, $pass) &#123;</span><br><span class="line">        $this-&gt;sock = fsockopen($host, $port);</span><br><span class="line"></span><br><span class="line">        $this-&gt;login($user, $pass);</span><br><span class="line">        $this-&gt;cleanInput();</span><br><span class="line">        $this-&gt;mode($_REQUEST[&apos;mode&apos;]);</span><br><span class="line">        $this-&gt;send($_FILES[&apos;file&apos;]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private function cleanInput() &#123;</span><br><span class="line">        $_GET = array_map(&apos;intval&apos;, $_GET);</span><br><span class="line">        $_POST = array_map(&apos;intval&apos;, $_POST);</span><br><span class="line">        $_COOKIE = array_map(&apos;intval&apos;, $_COOKIE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function login($username, $password) &#123;</span><br><span class="line">        fwrite($this-&gt;sock, &quot;USER &quot; . $username . &quot;\n&quot;);</span><br><span class="line">        fwrite($this-&gt;sock, &quot;PASS &quot; . $password . &quot;\n&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function mode($mode) &#123;</span><br><span class="line">        if ($mode == 1 || $mode == 2 || $mode == 3) &#123;</span><br><span class="line">            fputs($this-&gt;sock, &quot;MODE $mode\n&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public function send($data) &#123;</span><br><span class="line">        fputs($this-&gt;sock, $data);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">new FTP(&apos;localhost&apos;, 21, &apos;user&apos;, &apos;password&apos;);</span><br></pre></td></tr></table></figure>
+<p><code>fsockopen</code> — 打开一个网络连接或者一个Unix套接字连接<br><code>array array_map ( callable $callback , array $array1 [, array $... ] )</code><br><code>intval</code> 获取变量的整数值<br>第八行 <code>cleanInput()</code> 看似对GET,POST,COOKIE都过滤了，但是$_REQUEST请求包含了GET,COOKIE,POST。<br>又mode()使用的==，可绕过检测。<br>payload <code>?mode=1%0a%0dDELETE%20test.file</code></p>
 
     </article>
     <!-- license  -->
@@ -598,7 +608,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#学习网站"><span class="toc-number">1.</span> <span class="toc-text">学习网站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-1-Wish-List"><span class="toc-number">2.</span> <span class="toc-text">Day 1 - Wish List</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-2-Twig"><span class="toc-number">3.</span> <span class="toc-text">Day 2 - Twig</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-3-Snow-Flake"><span class="toc-number">4.</span> <span class="toc-text">Day 3 - Snow Flake</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-4-False-Beard"><span class="toc-number">5.</span> <span class="toc-text">Day 4 - False Beard</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-5-Postcard"><span class="toc-number">6.</span> <span class="toc-text">Day 5 - Postcard</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个小例子"><span class="toc-number">6.1.</span> <span class="toc-text">一个小例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-6-Frost-Pattern"><span class="toc-number">7.</span> <span class="toc-text">Day 6 - Frost Pattern</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正则题目"><span class="toc-number">7.1.</span> <span class="toc-text">正则题目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-7-Bells"><span class="toc-number">8.</span> <span class="toc-text">Day 7 - Bells</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-8-Candle"><span class="toc-number">9.</span> <span class="toc-text">Day 8 - Candle</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-9-Rabbit"><span class="toc-number">10.</span> <span class="toc-text">Day 9 - Rabbit</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-10-Anticipation"><span class="toc-number">11.</span> <span class="toc-text">Day 10 - Anticipation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-11-Pumpkin-Pie（暂时过）"><span class="toc-number">12.</span> <span class="toc-text">Day 11 - Pumpkin Pie（暂时过）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-12-String-Lights"><span class="toc-number">13.</span> <span class="toc-text">Day 12 - String Lights</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#学习网站"><span class="toc-number">1.</span> <span class="toc-text">学习网站</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-1-Wish-List"><span class="toc-number">2.</span> <span class="toc-text">Day 1 - Wish List</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-2-Twig"><span class="toc-number">3.</span> <span class="toc-text">Day 2 - Twig</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-3-Snow-Flake"><span class="toc-number">4.</span> <span class="toc-text">Day 3 - Snow Flake</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-4-False-Beard"><span class="toc-number">5.</span> <span class="toc-text">Day 4 - False Beard</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-5-Postcard"><span class="toc-number">6.</span> <span class="toc-text">Day 5 - Postcard</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个小例子"><span class="toc-number">6.1.</span> <span class="toc-text">一个小例子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-6-Frost-Pattern"><span class="toc-number">7.</span> <span class="toc-text">Day 6 - Frost Pattern</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正则题目"><span class="toc-number">7.1.</span> <span class="toc-text">正则题目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-7-Bells"><span class="toc-number">8.</span> <span class="toc-text">Day 7 - Bells</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-8-Candle"><span class="toc-number">9.</span> <span class="toc-text">Day 8 - Candle</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-9-Rabbit"><span class="toc-number">10.</span> <span class="toc-text">Day 9 - Rabbit</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-10-Anticipation"><span class="toc-number">11.</span> <span class="toc-text">Day 10 - Anticipation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-11-Pumpkin-Pie（暂时过）"><span class="toc-number">12.</span> <span class="toc-text">Day 11 - Pumpkin Pie（暂时过）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-12-String-Lights"><span class="toc-number">13.</span> <span class="toc-text">Day 12 - String Lights</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-13-Turkey-Baster"><span class="toc-number">14.</span> <span class="toc-text">Day 13 - Turkey Baster</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-14-Snowman"><span class="toc-number">15.</span> <span class="toc-text">Day 14 - Snowman</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-15-Sleigh-Ride"><span class="toc-number">16.</span> <span class="toc-text">Day 15 - Sleigh Ride</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Day-16-Poem"><span class="toc-number">17.</span> <span class="toc-text">Day 16 - Poem</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -611,6 +621,60 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1169,8 +1233,55 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
             <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2018/04/15/线下赛总结/" >线下赛总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
         </li>
     
     
@@ -1193,18 +1304,50 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> 2018 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
         </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
         </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -1237,77 +1380,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
         </li>
     
     </div>
@@ -1354,29 +1427,29 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
-    
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
-    
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
-        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
+        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+    
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
