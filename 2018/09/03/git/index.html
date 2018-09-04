@@ -397,7 +397,7 @@ height:50vh;
 <p><code>git commit</code>命令，-m后面输入的是本次提交的说明，可以输入任意内容，当然最好是有意义的，这样你就能从历史记录里方便地找到改动记录。<br><code>git add</code>可以一次添加多个文件<br>目录结构类似于</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">├── HEAD   </span><br><span class="line">├── config # 存放git的一些信息</span><br><span class="line">├── description</span><br><span class="line">├── hooks</span><br><span class="line">├── index</span><br><span class="line">├── info</span><br><span class="line">│   └── exclude</span><br><span class="line">├── objects # 存放对象文件</span><br><span class="line">│   ├── 0c</span><br><span class="line">│   │   └── 14454dd8d472ef27843ac8c86bdba161c27a03</span><br><span class="line">│   ├── info</span><br><span class="line">│   └── pack</span><br><span class="line">└── refs</span><br><span class="line">    ├── heads</span><br><span class="line">    └── tags</span><br></pre></td></tr></table></figure>
 <p><code>git status</code> 查看</p>
-<h1 id="版本库、工作区、暂存区-stage"><a href="#版本库、工作区、暂存区-stage" class="headerlink" title="版本库、工作区、暂存区(stage)"></a>版本库、工作区、暂存区(stage)</h1><p>在这里要区分三个概念词：版本库、工作区、暂存区(stage)<br><img src="/git/2.png" alt="1"><br>提交一个文件的时候是分为git add、git commit两步的<br>当git add的时候，是把文件临时放在临时区stage中<br>当git commit的时候，是把临时区stage的所有内容提交到当前分支<br>当然这两个在objects目录都会生成一个对象文件，来存储数据。<br>其中index的内容其中就包含了一些当前版本下的文件信息以及对应的objects目录下的对象文件<br><img src="/git/1.png" alt="2"></p>
+<h1 id="版本库、工作区、暂存区-stage"><a href="#版本库、工作区、暂存区-stage" class="headerlink" title="版本库、工作区、暂存区(stage)"></a>版本库、工作区、暂存区(stage)</h1><p>在这里要区分三个概念词：版本库、工作区、暂存区(stage)<br><img src="/git/2.png" alt="1"><br>提交一个文件的时候是分为git add、git commit两步的<br>当git add的时候，是把文件临时放在临时区stage中<br>当git commit的时候，是把临时区stage的所有内容提交到当前分支<br>当然这两个在objects目录都会生成一个对象文件，来存储数据。<br>其中index的内容其中就包含了一些当前版本下的文件信息以及对应的objects目录下的对象文件<br><img src="/git/1.png" alt="2">*</p>
 <h1 id="git-对象模型"><a href="#git-对象模型" class="headerlink" title="git 对象模型"></a>git 对象模型</h1><p>所有用来表示项目历史信息的文件,是通过一个40个字符的（40-digit）“对象名”来索引的，对象名如<br>上图的一串hash 155b5cc95e7a704d137ce66bb73371a814d45aa1（SHA1哈希计算得来的）<br>这里15是目录而5b5cc95e7a704d137ce66bb73371a814d45aa1是文件名<br>但是所有git对象都是zlib压缩过的。</p>
 <h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>每个对象(object) 包括三个部分：类型，大小和内容。大小就是指内容的大小，内容取决于对象的类型，有四种类型的对象：”blob”、”tree”、 “commit” 和”tag”。</p>
 <ul>
@@ -1075,6 +1075,36 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 34
@@ -1207,12 +1237,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
         </li>
     
     
@@ -1228,25 +1258,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     
@@ -1288,7 +1299,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
         </li>
     
     
@@ -1302,7 +1313,21 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
         </li>
     
     
@@ -1325,12 +1350,26 @@ top:50vh;
     
         </ul>
     
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     </div>
@@ -1379,31 +1418,31 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
-    
-        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+    
+        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
-        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
-    
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
-    
-        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
-    
-        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
     
         <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+    
+        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
     
