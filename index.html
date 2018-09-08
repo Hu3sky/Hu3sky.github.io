@@ -389,7 +389,9 @@ https://xz.aliyun.com/t/2593 【先知社区】【Hack the ch4inrulz of Vulnhub�
                 <span>反序列化之phar://学习</span>
         </a>
         <div class="abstract-content">
-            
+            概要来自Secarma的安全研究员Sam Thomas发现了一种新的漏洞利用方式，可以在不使用php函数unserialize()的前提下，引起严重的php对象注入漏洞。这个新的攻击方式被他公开在了美国的BlackHat会议演讲上，演讲主题为：”不为人所知的php反序列化漏洞”。它可以使攻击者将相关漏洞的严重程度升级为远程代码执行。我们在RIPS代码分析引擎中添加了对这种新型攻击的检测。
+流包装大多数PHP文件操作允许使用各种URL协议去访问文件路径：如data://，zlib://或php://。例如
+12include(&apos;php://filter/read=convert....
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1325,66 +1327,6 @@ $sql = select * from users where username=$username;在字符串use...
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 36
@@ -1397,34 +1339,6 @@ $sql = select * from users where username=$username;在字符串use...
     
     
     
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/php反序列化学习/" >ctf一道题目。php反序列化学习</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
     
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
@@ -1520,6 +1434,11 @@ $sql = select * from users where username=$username;在字符串use...
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/php反序列化学习/" >ctf一道题目。php反序列化学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2018/05/03/渗透测试/" >记一次kali渗透测试靶机</a>
         </li>
     
@@ -1555,35 +1474,12 @@ $sql = select * from users where username=$username;在字符串use...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
         </li>
     
     
@@ -1598,6 +1494,48 @@ $sql = select * from users where username=$username;在字符串use...
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     
@@ -1634,18 +1572,22 @@ $sql = select * from users where username=$username;在字符串use...
     
         </ul>
     
-    <div class="archive-year"> 2018 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
         </li>
     
     
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
-        </li>
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -1668,7 +1610,7 @@ $sql = select * from users where username=$username;在字符串use...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
         </li>
     
     </div>
@@ -1713,39 +1655,39 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
-        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
-    
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+    
+        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
     
         <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
-        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
-    
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
-    
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

