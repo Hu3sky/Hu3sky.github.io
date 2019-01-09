@@ -261,7 +261,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,223</span> / Reading time: <span class="post-count">5 min</span></span>
+                        <span>Word count: <span class="post-count">1,193</span> / Reading time: <span class="post-count">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -401,6 +401,7 @@ height:50vh;
 <p>等价于 </p>
 <p><code>function f() { $GET_[&#39;fname&#39;]; }</code></p>
 <p>于是传入参数为 <code>1;}phpinfo();/*</code>即 </p>
+<p><code>function f(){1；}phpinfo();/*}</code></p>
 <p>即可造成命令执行<br>于是构造payload<br><img src="/code/1.png" alt="1"></p>
 <p>禁用了系统命令函数，只能去读flag，首先获取当前文件下的文件，找到flag文件名,用<code>scandir()</code>函数，列出当前目录下文件，发现只有index.php文件，再找上级目录。<br><code>http://51.158.75.42:8087/?action=\create_function&amp;arg=2;}print_r(scandir(%27/var/www/%27));/*</code><br><img src="/code/2.png" alt="1"></p>
 <p>发现flag文件,getflag<br><code>http://51.158.75.42:8087/?action=\create_function&amp;arg=2;}echo%20file_get_contents(%27/var/www/flag_h0w2execute_arb1trary_c0de%27);/*</code></p>
@@ -421,7 +422,15 @@ height:50vh;
 <p>去匹配<code>&lt;?php phpinfo(); ?&gt;//aaaa</code></p>
 <p><img src="/code/5.png" alt="1"></p>
 <p>可以看到先是<code>.*</code>匹配了所有字符串，但是为了匹配</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">(`;?&gt;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">就得回溯直到回溯到`;`之前，就能匹配上`[]`里的了，接着再去匹配下一个`.*` </span><br><span class="line">于是</span><br><span class="line"></span><br><span class="line">构造表单直接上传</span><br><span class="line">![1](/code/6.png)</span><br><span class="line"></span><br><span class="line">上传后，直接跳转到生成的php下</span><br><span class="line"></span><br><span class="line">![1](/code/7.png)</span><br><span class="line"></span><br><span class="line">然后再读flag</span><br><span class="line"></span><br><span class="line">![1](/code/8.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">### 如何防御 </span><br><span class="line">用全等号来判断返回值，preg_match返回值为0或1 </span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">function is_php($data)&#123;</span><br><span class="line">return preg_match(&apos;/&lt;\?.*[(`;?&gt;].*/is&apos;, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if(is_php($input) === 0) &#123;</span><br><span class="line">// fwrite($f, $input); ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>(;?&gt;</code></p>
+<p>就得回溯直到回溯到<code>;</code>之前，就能匹配上<code>[]</code>里的了，接着再去匹配下一个<code>.*</code><br>于是</p>
+<p>构造表单直接上传<br><img src="/code/6.png" alt="1"></p>
+<p>上传后，直接跳转到生成的php下</p>
+<p><img src="/code/7.png" alt="1"></p>
+<p>然后再读flag</p>
+<p><img src="/code/8.png" alt="1"></p>
+<h3 id="如何防御"><a href="#如何防御" class="headerlink" title="如何防御"></a>如何防御</h3><p>用全等号来判断返回值，preg_match返回值为0或1 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">function is_php($data)&#123;</span><br><span class="line">return preg_match(&apos;/&lt;\?.*[(`;?&gt;].*/is&apos;, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if(is_php($input) === 0) &#123;</span><br><span class="line">// fwrite($f, $input); ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="easy-phplimit"><a href="#easy-phplimit" class="headerlink" title="easy - phplimit"></a>easy - phplimit</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(&apos;;&apos; === preg_replace(&apos;/[^\W]+\((?R)?\)/&apos;, &apos;&apos;, $_GET[&apos;code&apos;])) &#123;</span><br><span class="line">eval($_GET[&apos;code&apos;]);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">show_source(__FILE__);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>正则的意思 比如传入一个 <code>phpinfo();</code> 然后将<code>;</code>之前的置为空，如果结果全等于<code>;</code>，就执行<code>eval</code>函数，前面<code>/[^\W]+\((?R)?\)/</code>需要匹配到以数字，字母，下划线开头的函数，并且函数不能有参数，而这个<code>(?R)</code>是正则里的递归匹配 能匹配<code>asd(asd(ads()));</code>也就是说我们只能传进去这种嵌套的函数，而且还不能有参数</p>
 <h3 id="getflag-name"><a href="#getflag-name" class="headerlink" title="getflag_name"></a>getflag_name</h3><p>于是，获取flag名称的payload<br><code>print_r(scandir(dirname(getcwd())));</code><br><code>getcwd()</code>:获取当前工作目录，本题就是<code>/var/www/html</code><br><code>dirname()</code> 获取上级目录，于是<code>dirname(getcwd())</code>就是 <code>/var/www</code>,<br>并且得用<code>chdir()</code>函数切换到这个目录来读取这个目录下的文件<br>接着获取当前目录下的所有文件<code>scandir()</code> 但是返回的是一个数组 <code>Array ( [0] =&gt; . [1] =&gt; .. [2] =&gt; flag_phpbyp4ss [3] =&gt; html )</code><br>所以得获得<code>flag_phpbyp4ss</code>这个字符串</p>
@@ -574,7 +583,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Code-Breaking-Puzzles"><span class="toc-number">1.</span> <span class="toc-text">Code-Breaking Puzzles</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-function"><span class="toc-number">1.1.</span> <span class="toc-text">easy - function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-pcrewaf"><span class="toc-number">1.2.</span> <span class="toc-text">easy - pcrewaf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phplimit"><span class="toc-number">1.3.</span> <span class="toc-text">easy - phplimit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getflag-name"><span class="toc-number">1.3.1.</span> <span class="toc-text">getflag_name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-flag"><span class="toc-number">1.3.2.</span> <span class="toc-text">get_flag</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Code-Breaking-Puzzles"><span class="toc-number">1.</span> <span class="toc-text">Code-Breaking Puzzles</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-function"><span class="toc-number">1.1.</span> <span class="toc-text">easy - function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-pcrewaf"><span class="toc-number">1.2.</span> <span class="toc-text">easy - pcrewaf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何防御"><span class="toc-number">1.2.1.</span> <span class="toc-text">如何防御</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phplimit"><span class="toc-number">1.3.</span> <span class="toc-text">easy - phplimit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getflag-name"><span class="toc-number">1.3.1.</span> <span class="toc-text">getflag_name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-flag"><span class="toc-number">1.3.2.</span> <span class="toc-text">get_flag</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -587,6 +596,80 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1208,6 +1291,34 @@ top:50vh;
     
     
     
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/php反序列化学习/" >ctf一道题目。php反序列化学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
     
@@ -1316,13 +1427,31 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
-            <span class="archive-post-date">05/10</span><a class="archive-post-title" href= "/2018/05/10/jarvisoj wp/" >jarvisoj WP</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
-            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/php反序列化学习/" >ctf一道题目。php反序列化学习</a>
+            <span class="archive-post-date">05/10</span><a class="archive-post-title" href= "/2018/05/10/jarvisoj wp/" >jarvisoj WP</a>
         </li>
     
     
@@ -1351,45 +1480,13 @@ top:50vh;
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
         <li class="archive-post-item">
             <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2018/04/15/线下赛总结/" >线下赛总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
         </li>
     
     
@@ -1412,27 +1509,12 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> 2018 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     
@@ -1446,7 +1528,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/09/Code_breaking/" >Code-Breaking Puzzles</a>
         </li>
     
     
@@ -1455,12 +1537,12 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> 2018 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
         </li>
     
     
@@ -1502,35 +1584,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/09/Code_breaking/" >Code-Breaking Puzzles</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
         </li>
     
     
@@ -1541,6 +1595,26 @@ top:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/代码执行/" >rnpnet tiki-calendar.php页面存在代码执行漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1585,27 +1659,27 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
-    
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
+    
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
-    
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
