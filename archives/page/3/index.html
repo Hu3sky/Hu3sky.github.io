@@ -351,6 +351,60 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/01/29/discuz_ssrf/" >
+            
+                <span>DiscuzX 3.4 前台SSRF</span>
+        </a>
+        <div class="abstract-content">
+            discuz 3.4 前台SSRF复现并分析一下之前l3m0n师傅的SSRF。膜。
+漏洞分析补丁链接https://gitee.com/ComsenzDiscuz/DiscuzX/commit/41eb5bb0a3a716f84b0ce4e4feb41e6f25a980a3?view=parallel
+漏洞主要发生在参数cutimg,一个远程下载功能直接看到漏洞点source目录下是程序模块功能处理目录
+12文件：source/module/misc/misc_imgcropper.php：55
+代码
+1234$prefix = $_GET[&apos;picflag&apos;] ==...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/29</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/01/28/qibocms/" >
+            
+                <span>齐博CMSv7审计</span>
+        </a>
+        <div class="abstract-content">
+            齐博CMSv7太菜了。。目前暂时只找到了一些后台的洞。。既然后台不是getshell，个人感觉都较鸡肋，希望师傅们轻喷。
+初步了解数据库类$db为数据库操作类类的一些方法在inc/mysql_class.php 的MYSQL_DB 类中定义
+函数核心系统要调用的一些函数与类的文件存放在inc目录下
+过滤函数123456789101112function filtrate($msg)&#123;	//$msg = str_replace(&apos;&amp;&apos;,&apos;&amp;amp;&apos;,$msg);	//$msg = str_replace(&apos; &a...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/28</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/01/28/nginx/" >
             
                 <span>从SCTF看nginx配置问题</span>
@@ -556,61 +610,10 @@ p师傅的代码审计题
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/09/12/YXcms分析/" >
-            
-                <span>YXCMS 1.4.7</span>
-        </a>
-        <div class="abstract-content">
-            CMS说明Yxcms是一款高效,灵活,实用,免费的企业建站系统,基于PHP和mysql技术,让您拥有更加专业的企业建站和企业网站制作服务
-这个cms采用mvc框架，入口文件为index.php，后台功能url为/index.php?r=admin/控制器/方法
-任意文件删除定位到photo控制器，此控制器对图片进行处理，对应的文件为photoController.php，在\protected\apps\admin\controller下。漏洞发生在第355行的delpic()方法可以看到，需要我们post传入一个picname，虽然说这里要求我们删除图片用file_exists对文件进...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/12</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/09/12/YXcms/" >
-            
-                <span>YXCMS 1.4.7 - Arbitrary file deletion</span>
-        </a>
-        <div class="abstract-content">
-            ExplainThe Arbitrary file deletion is on the page http://127.0.0.1/cms/YXcms/index.php?r=admin/photo/delpic
-POC
-
-1234567891011121314POST /cms/YXcms/index.php?r=admin/photo/delpic HTTP/1.1Host: 127.0.0.1User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0Accep...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/12</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/page/2/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/7/">7</a><a class="extend next" rel="next" href="/archives/page/4/">NEXT &#62;</a>
+        <a class="extend prev" rel="prev" href="/archives/page/2/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/8/">8</a><a class="extend next" rel="next" href="/archives/page/4/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1817,9 +1820,35 @@ POC
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 69
+        Total : 71
         </div>
         <!-- search  -->
         
@@ -1832,6 +1861,16 @@ POC
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2019/05/07/proto2/" >JavaScript Prototype 污染攻击之 Code-Breaking-TheJS篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2019/05/06/proto1/" >JavaScript Prototype 污染攻击之 基础篇</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2134,12 +2173,12 @@ POC
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
         </li>
     
     
@@ -2168,6 +2207,29 @@ POC
         </li>
     
     
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
         <li class="archive-post-item">
             <span class="archive-post-date">01/13</span><a class="archive-post-title" href= "/2018/01/13/flask_SSIT/" >Flask_SSTI</a>
         </li>
@@ -2180,20 +2242,6 @@ POC
     
         <li class="archive-post-item">
             <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2018/01/11/PHPCMS2008/" >PHPCMS2008_getshell</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     </div>
@@ -2236,43 +2284,47 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
     
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
-        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
-    
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
+    
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
+        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
+    
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+        <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
+    
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+    
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+    
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
+        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+    
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
-        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
-    
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
@@ -2282,9 +2334,7 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     
-        <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
-    
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
