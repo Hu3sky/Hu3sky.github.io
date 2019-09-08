@@ -364,6 +364,155 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2018/08/23/Hooskcms/" >
+            
+                <span>Hooskcms 几个小洞</span>
+        </a>
+        <div class="abstract-content">
+            没什么用的代码执行。。这个洞之所以说没用，是因为。先看吧
+漏洞出现在/install/index.php
+
+对我们的输入没有做任何过滤
+
+接着直接写入config.php。
+
+访问/config.php
+
+但是安装完后删除了install，所以说没什么用，本地拿着玩吧。。
+XSS输入 
+在page_new.php的90行。
+我们输入的navTitle，也没有过滤，之后直接输出在页面上
+
+只要是添加新的项目，都存在XSS
+
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/23</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/08/18/Hack the ch4inrulz of Vulnhub/" >
+            
+                <span>Hack the ch4inrulz of Vulnhub</span>
+        </a>
+        <div class="abstract-content">
+            首发于先知社区 https://xz.aliyun.com/t/2593环境说明靶机环境 192.168.107.128攻击机kali 192.168.107.129
+主机发现首先用nmap进行主机发现，因为都在同一网段，所以nmap -sP 192.168.107.1/24可以看到，本机ip是129，所以靶机自然就确定为192.168.107.128。
+端口扫描确定了靶机ip，就来确认一下开放的端口，使用nmap -sS -A 192.168.107.128靶机开放了4个端口，web80端口，ftp21端口，ssh22端口，还有一个8011端口，我们一个一个看，先从web服务入手，
+目...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/18</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/08/18/bugku sql2/" >
+            
+                <span>Bugku sql注入2</span>
+        </a>
+        <div class="abstract-content">
+            网上没有一个正常做出来了的看了叶师傅的wp，跟着学一遍username的注入，盲注根据username的返回不同fuzz，几乎都过滤完了。没过滤的 !,!=,=,+,-,^,%数字型时，可以用^进行闭合and这些也被过滤。
+需要用到-1-&#39;admin&#39;-1-&#39;&#39; =  -1&#39;admin&#39;-0-&#39;&#39; =  0
+我们发现-0的时候，为true，-1的时候为false那么这是为什么呢？我们猜想后台sql语句构造为
+$sql = select * from users where username=$username;在字符串use...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/18</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/08/07/Cyberry/" >
+            
+                <span>Vulnhub\|Cyberry靶机</span>
+        </a>
+        <div class="abstract-content">
+            本文由安全客原创发布 转载，请参考转载声明，注明出处：https://www.anquanke.com/post/id/154504环境准备靶机ip：192.168.107.132攻击机kali：192.168.107.134说明：目的是拿下靶机并获取root权限
+渗透测试首先nmap开路，找一下靶机的ip地址nmap -sP 192.168.107.1/24 既然确定了ip，接着我们扫一下端口。 。开了三个端口，1个web端口80，1个ssh端口22，1个ftp端口21.我们先从web服务开始。. 一个静态页面，没什么搞头，扫一下目录。.我先从phpmyadmin下手，. 这里尝试爆破...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/07</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/07/17/JAVA学习情况/" >
+            
+                <span>java学习笔记</span>
+        </a>
+        <div class="abstract-content">
+            java
+分布性：操作分布，数据分布
+
+堆和栈
+存储内容：堆：由new等指令创建的对象和数组栈：基本类型的变量和对象的引用变量，还会储存对象的引用变量JRE 和 JDK
+JDK，开发java程序用的开发包，JDK里面有java的运行环境(JRE)，包括client和server端的。需要配置环境变量。。。。
+
+JRE，运行java程序的环境，JVM，JRE里面只有client运行环境，安装过程中，会自动添加PATH。
+
+
+基础语法
+对象：对象是类的一个实例，有状态和行为。例如，一条狗是一个对象，它的状态有：颜色、名字、品种；行为有：摇尾巴、叫、吃等。
+类：类是一个模板，它描述一类对象的行...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/17</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2018/07/05/暑假学习计划/" >
             
                 <span>暑假学习计划</span>
@@ -489,140 +638,6 @@ wget [参数] 下载地址
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/06/超级玛丽/" >
-            
-                <span>超级玛丽靶机渗透测试笔记</span>
-        </a>
-        <div class="abstract-content">
-            这里先是思路，有空再详细说明。
-
-nmap扫端口，8180-&gt;web，22-&gt;ssh
-
-进入没什么东西，dirb爆破目录，进入/vhosts，看到主机名
-
-vi /etc/hosts 修改 ip 主机名
-
-访问 http://主机名:8180 有页面了。
-
-爆破，进入 /luigi，思路 生成字典，爆破ssh生成关键字 cewl http://mario.supermariohost.local:8180/ -d -w /root/桌面/1.txt  -d 深度 -w 输出写入文件
-
-john --wordlist=1.txt --stdout --rules &gt; pa...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/06</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/04/jarvisoj wp/" >
-            
-                <span>jarvisoj WP</span>
-        </a>
-        <div class="abstract-content">
-            神盾局的秘密0x00 题目分析题目链接：http://web.jarvisoj.com:32768/今天把php反序列化漏洞搞得算是入门了。于是开始做ctf了。。。结果一上来就碰到了一道php反序列化，不知道是喜是忧，喜，我可能会做出来，忧，万一做不出来。。。一天的反序列化就白学了。结果做出来了。开心好了，题外话不说了，开始分析题目。首先，进入页面。发现一张神盾局的图片(帅-0-)。右键源码进入http://web.jarvisoj.com:32768/showimg.php?img=c2hpZWxkLmpwZw== 。发现一堆乱码。尝试在乱码中发现flag。存到txt中，搜索一下fla...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/04</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/05/25/内网/" >
-            
-                <span>域渗透练习</span>
-        </a>
-        <div class="abstract-content">
-            0x00 拿webshell扫目录进入网站，页面404.。。但这就是正常界面。没有任何方向，先扫目录。看到有phpmyadmin。进去，尝试直接对其进行爆破，可以看到爆破成功。
-写木马我们登陆进去，试一试能不能直接写入木马，但我们没有目录。再回去看扫出来的目录，有个test.php，进去发现是phpinfo()。便可以看到数据库根目录，我们再去写木马。发现写不进去。，这里要用到一个方法，http://www.freebuf.com/column/143125.html 在这篇文章中有讲到，12345set global general_log=&apos;on&apos;;set glo...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/25</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/05/23/empire/" >
-            
-                <span>Empire使用总结</span>
-        </a>
-        <div class="abstract-content">
-            Empire基本操作
-安装安装就不具体说了，网上一搜一大堆。
-设置监听先进入empire,这里说下我遇到的问题，打开empire时我必须要sudo ./empire才行。。使用help可以查看帮助，Empire和Metasploit的使用原理是一样的，都是先设置一个监听，然后去生成一个木马，然后在目标主机运行该木马，我们的监听就会连接上反弹回来的代理。使用listeners可以进入我们的线程界面，一开始是没有的，所以我们输入uselistener来设置模式，可以双击Tab查看，我们这里设置http监听，输入 uselistener http 进入。使用info查看参数设置.False是我...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/23</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/05/09/php反序列化学习/" >
-            
-                <span>ctf一道题目。php反序列化学习</span>
-        </a>
-        <div class="abstract-content">
-            [*]题目链接 http://web.jarvisoj.com:32784/
-0x00 学习链接这道题目实在是没见过。。一道反序列化的题目，但是没有可以让我们控制的点。于是学习了一波
-
-题目的学习链接:https://chybeta.github.io/2017/07/05/jarvisoj-web-writeup/#PHPINFOhttps://mp.weixin.qq.com/s/Z1zvcBg74T0psDGnXW-ebAhttp://www.91ri.org/15925.html
-session反序列化的学习:https://blog.spoock.com/2016/10/16/...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/09</span>
             </div>
             <!-- tags  -->
             
@@ -1974,9 +1989,88 @@ session反序列化的学习:https://blog.spoock.com/2016/10/16/...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 75
+        Total : 80
         </div>
         <!-- search  -->
         
@@ -1989,6 +2083,31 @@ session反序列化的学习:https://blog.spoock.com/2016/10/16/...
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/08</span><a class="archive-post-title" href= "/2019/09/08/php-fpm&fast-cgi学习/" >php-fpm&fast-cgi学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2019/09/06/2019护网杯esaypy/" >2019护网杯esaypy</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2019/08/21/谈.user.ini后门/" >.user.ini后门</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2416,6 +2535,8 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
+        <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
+    
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
@@ -2432,23 +2553,27 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+    
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
-    
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
-        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+    
+        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+    
+        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
@@ -2462,9 +2587,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
-        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
-    
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
         <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     

@@ -351,6 +351,135 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/02/22/OA/" >
+            
+                <span>About OAuth2.0</span>
+        </a>
+        <div class="abstract-content">
+            OAuth2.0相关OAuht2.0我们接触的并不少，在我们登陆第三方应用的时候 用到了OAuth2.0，如下场景比如我们要登陆一个网站，登陆的时候可以用QQ账号，微信账号，微博账号等进行登陆，这里的登陆就用到了OAuth2.0
+什么是OAuth2.0开放授权(OAuth)是一个开放标准,允许用户让第三方应用访问该用户在某一网站上存储的私密的资源(如照片,视频,联系人列表),而无需将用户名和密码提供给第三方应用.目前广泛使用的版本是OAuth 2.0.
+协议模式12345678授权码模式（authorization code）简化模式（implicit）密码模式（resource own...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/22</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/02/20/metinfo_sql/" >
+            
+                <span>Metinfo 6.1.2 SqlInjection</span>
+        </a>
+        <div class="abstract-content">
+            Metinfo 6.1.2 SqlInjection一个18年的洞了，有点年头了，翻出来看看。。
+Sourcehttp://www.mituo.cn/upload/file/MetInfo6.1.2.zip
+漏洞分析直接看到出现问题的代码
+12文件：app/system/message/web/message.class.php：37方法：add
+12345678910111213141516public function add($info) &#123;	global $_M;	if(!$_M[form][id])&#123;          $message=DB::get_on...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/20</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/02/16/redis/" >
+            
+                <span>初识Redis未授权访问</span>
+        </a>
+        <div class="abstract-content">
+            初识Redis未授权访问redis是一种以key-value为键值对的非关系型数据库redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。
+安装服务win下载地址：https://github.com/MSOpenTech/redis/releases测试环境：
+12操作系统：win7ip：192.168.1...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/16</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/02/15/nullcon/" >
+            
+                <span>nullcon ctf 部分web</span>
+        </a>
+        <div class="abstract-content">
+            nullcon ctf 部分web当时比赛的时候没有做出来。。真菜。。赛后学习一波，这次比赛很多的题都是nodejs的题，借此学习nodejs
+环境https://github.com/nullcon/hackim-2019
+rfv blog根据提交生成链接可以xss
+存在admin目录
+于是猜测需要通过一个类似ssrf的地方去访问admin当只访问http://52.36.15.23:8080/edge时，出现报错传了一个http://52.36.15.23:8080/edge?title=aaa&amp;description[%22a%22]爆了另一个错搜到了一篇文章，关于ESI注...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/15</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/02/14/35c3_post/" >
+            
+                <span>35c3-POST 学习</span>
+        </a>
+        <div class="abstract-content">
+            35c3-POST 学习docker环境：https://github.com/eboda/35c3/tree/master/post
+本题3个hint
+123456Hint: flag is in dbHint2: the lovely XSS is part of the beautiful design and insignificant for the challengeHint3: You probably want to get the source code, luckily for you it&apos;s rather hard to configure nginx ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/14</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/02/11/pwnhub/" >
             
                 <span>Pwnhub Pink friend 学习</span>
@@ -467,140 +596,6 @@
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/29</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/01/28/qibocms/" >
-            
-                <span>齐博CMSv7审计</span>
-        </a>
-        <div class="abstract-content">
-            齐博CMSv7太菜了。。目前暂时只找到了一些后台的洞。。既然后台不是getshell，个人感觉都较鸡肋，希望师傅们轻喷。
-初步了解数据库类$db为数据库操作类类的一些方法在inc/mysql_class.php 的MYSQL_DB 类中定义
-函数核心系统要调用的一些函数与类的文件存放在inc目录下
-过滤函数123456789101112function filtrate($msg)&#123;	//$msg = str_replace(&apos;&amp;&apos;,&apos;&amp;amp;&apos;,$msg);	//$msg = str_replace(&apos; &a...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/28</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/01/28/nginx/" >
-            
-                <span>从SCTF看nginx配置问题</span>
-        </a>
-        <div class="abstract-content">
-            从SCTF看nginx配置问题题目源码：https://github.com/cL0und/sctf2018-NginxSecret
-功能探索题目hints
-1234hint4:/editxxxxx怎么也能访问?hint3:路由嘛，扫一扫目录就知道了。views.py是读不出来的233333hint2:这个路由好生奇怪hint1:从nginx的典型错误配置入手吧
-首先注册，然后登陆，发现一些功能
-UserInfo &amp; EditMyinfo访问/user/admin
-修改后的info会在Userinfo显示
-Write_your_plan说是Write down your secr...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/28</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/01/23/Code_breaking/" >
-            
-                <span>Code-Breaking Puzzles</span>
-        </a>
-        <div class="abstract-content">
-            Code-Breaking Puzzleseasy - function1234567891011121314&lt;?php$action = $_GET[&apos;action&apos;] ?? &apos;&apos;;$arg = $_GET[&apos;arg&apos;] ?? &apos;&apos;;// i 表示不区分大小写// s 表示将字符串视为单行来匹配// D是非数字if(preg_match(&apos;/^[a-z0-9_]*$/isD&apos;, $action)) &#123;show_source(__FILE__);&#125; else &#...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/23</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/01/21/0ctf-ezdoor/" >
-            
-                <span>0ctf-ezdoor</span>
-        </a>
-        <div class="abstract-content">
-            0ctf-ezdoor今天搬砖的时候，突然看到了这道题，之前也看到过，没有深入学习。。于是想着来深入学习一下，关于非预期解/. 的绕过题目链接https://github.com/LyleMi/My-CTF-Challenges 
-环境搭建
-git clone https://github.com/LyleMi/My-CTF-Challenges.git
-切换到Dockerfile目录下在Dockerfile里添加一行 RUN mkdir /var/www/html/sandbox/
-然后运行 docker build -t 0ctf-ezdoor .
-创建容器docker run -d...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/21</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/01/18/tp5.0.0-5.0.23rce/" >
-            
-                <span>Tp5.0.0-5.0.23 RCE学习</span>
-        </a>
-        <div class="abstract-content">
-            Tp5.0.0-5.0.23 RCE学习POC1234url: http://127.0.0.1:12345/tp5.0_rce/public/index.php?s=captcha$_POST: _method=__construct&amp;filter[]=system&amp;method=get&amp;get[]=whoami
-
-分析过程位置
-12文件：thinkphp/library/think/App.php方法：run
-关键代码
-1234567891011121314151617181920212223242526272829&lt;?php/*** 执行应用程序* @...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/18</span>
             </div>
             <!-- tags  -->
             
@@ -1829,9 +1824,88 @@ git clone https://github.com/LyleMi/My-CTF-Challenges.git
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 75
+        Total : 80
         </div>
         <!-- search  -->
         
@@ -1844,6 +1918,31 @@ git clone https://github.com/LyleMi/My-CTF-Challenges.git
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/08</span><a class="archive-post-title" href= "/2019/09/08/php-fpm&fast-cgi学习/" >php-fpm&fast-cgi学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2019/09/06/2019护网杯esaypy/" >2019护网杯esaypy</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2019/08/21/谈.user.ini后门/" >.user.ini后门</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2271,6 +2370,8 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
+        <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
+    
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
@@ -2287,23 +2388,27 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+    
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
-    
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
-        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+    
+        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+    
+        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
@@ -2317,9 +2422,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
-        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
-    
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
         <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     

