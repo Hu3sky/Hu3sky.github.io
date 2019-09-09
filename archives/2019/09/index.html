@@ -351,6 +351,31 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/09/08/jndi1/" >
+            
+                <span>java反序列化由浅入深及JNDI注入理解(一)-Spring反序列化</span>
+        </a>
+        <div class="abstract-content">
+            前言刚步入大三，该接触接触JavaWeb安全了，之前试着调试过St2的漏洞，现在来入门一下java反序列化，如有什么错误的地方，还请各位师傅指出和包含
+序列化在Java中，只要一个类实现了java.io.Serializable接口，那么它就可以被序列化
+SerializeTest.java12345678910package serialize;import java.io.FileInputStream;public class DeSerializeDemo &#123;    public static void main(String[] args) throws Except...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/08</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/09/06/2019护网杯esaypy/" >
             
                 <span>2019护网杯esaypy</span>
@@ -384,10 +409,12 @@ easypy过滤及其残忍
                 <span>php-fpm&amp;fast-cgi学习</span>
         </a>
         <div class="abstract-content">
-            概念理解cgiCGI全称是“通用网关接口”(Common Gateway Interface)，它是一个协议，它可以让一个客户端，从网页浏览器向执行在Web服务器上的程序请求数据，比如发送给后端程序php，
+            PHP连接模式apache-module该状态是把php当作apache的一个模块，实际上php就相当于apache中的一个so，dll文件
+cgi该模式下php是一个独立的进程比如php-cgi.exe，web服务器也是一个独立的进程比如apache.exe
+CGI全称是“通用网关接口”(Common Gateway Interface)，它是一个协议，它可以让一个客户端，从网页浏览器向执行在Web服务器上的程序请求数据，比如发送给后端程序php，
 举个例子当访问127.0.0.1:90003/cgi-bin/user?id=1
 
-1234561：客户端访问 http://127.0.0.1:9003/cgi-bin/user?id=12：服务器监听 9003 端口的守护进程接受到该请求，通过解析 HTTP 头信息，得知是 GET 请求，并且请求的是 /cgi-bin/目录下的 user文件。3：将 uri 里的 id=1通过存...
+1234561：客户端访问 http://127.0....
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
@@ -1700,9 +1727,14 @@ easypy过滤及其残忍
     
     
     
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 80
+        Total : 81
         </div>
         <!-- search  -->
         
@@ -1718,6 +1750,11 @@ easypy过滤及其残忍
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/08</span><a class="archive-post-title" href= "/2019/09/08/jndi1/" >java反序列化由浅入深及JNDI注入理解(一)-Spring反序列化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/06</span><a class="archive-post-title" href= "/2019/09/06/2019护网杯esaypy/" >2019护网杯esaypy</a>
         </li>
     
@@ -1728,12 +1765,12 @@ easypy过滤及其残忍
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
         </li>
     
     
@@ -2163,25 +2200,25 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
+    
         <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
     
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
-        <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
     
-        <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
-    
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
@@ -2189,11 +2226,11 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
-    
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
@@ -2201,9 +2238,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
-        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
-    
         <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
+    
+        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
     
@@ -2211,19 +2248,19 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
-        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
-    
         <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+    
+        <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
-        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
-    
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
     
         <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
