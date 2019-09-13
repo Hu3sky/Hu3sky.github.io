@@ -71,6 +71,8 @@
     <link rel="preload" href= /css/style.css?v=20180824 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180824 media="(max-width: 980px)">
     
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -204,10 +206,8 @@
 </head>
 
     
-        <body class="home-body">
     
-    
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -225,34 +225,21 @@
 
 
 
-height:50vh;
-
 >
     
     <!-- 主页  -->
-    
-    
-    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/tupian/111.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Hu3sky's blog
-            <!-- 文章页  -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
-            
-            
-                Hack the World
-            
-            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -364,255 +351,18 @@ height:50vh;
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2019/03/27/认证/" >
+        <a class="abstract-title" href = "/2019/01/07/35c3部分做题记录/" >
             
-                <span>Windows安全下的一些网络认证</span>
+                <span>35C3 CTF 部分解题记录（junior）</span>
         </a>
         <div class="abstract-content">
-            NTLMNTLM HASH加密过程假设我的密码是hu3sky,先将hu3sky转换为十六进制，经过Unicode转换后，再调用MD4加密算法加密，这个加密结果的十六进制就是NTLM Hash
-在Windows中，密码Hash目前称之为NTLM Hash，其中NTLM全称是：“NT LAN Manager”。这个NTLM是一种网络认证协议，与NTLM Hash的关系就是：NTLM网络认证协议是以NTLM Hash作为根本凭证进行认证的协议。也就是说，NTLM与NTLM Hash相互对应。在本地认证的过程中，其实就是将用户输入的密码转换为NTLM Hash与SAM中的NTLM Hash进行比...
+            35C3 CTF 部分解题记录（junior）题目链接：junior.35c3ctf.ccc.ac
+flags(37points)123456789&lt;?php  highlight_file(__FILE__);  $lang = $_SERVER[&apos;HTTP_ACCEPT_LANGUAGE&apos;] ?? &apos;ot&apos;;  $lang = explode(&apos;,&apos;, $lang)[0];  $lang = str_replace(&apos;../&apos;, &apos;&apos;, $lang);  $c = file_ge...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/27</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/03/21/三层内网/" >
-            
-                <span>三层内网搭建&amp;MSF正反向代理穿透</span>
-        </a>
-        <div class="abstract-content">
-            Network topology
-Settings网卡情况
-winxpadmin@123双网卡，仅主机网卡
-win2003admin@123网卡一和NAT，NAT和本机互通
-win2008admin!@#$123网卡二
-Kali(Attacker)NAT和本机互通
-攻击过程第一层内网通过一个web漏洞，拿下边缘机win2003的shell首先进行信息搜集
-信息搜集ip情况
-1234567891011121314151617181920212223C:\phpStudy\WWW\&gt; ipconfigWindows IP ConfigurationEthernet adapter 本地...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/03/21</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/28/wp/" >
-            
-                <span>WordPress5.0 RCE 分析</span>
-        </a>
-        <div class="abstract-content">
-            WordPress5.0 RCE近日，WP爆出了一个RCE的洞，感觉利用链很diao，看了大佬的分析文章，利用链是Post Meta变量覆盖-&gt;裁剪功能文件上传目录穿越-&gt;模板任意文件包含自己再来分析分析..（不得不说 看大佬的分析都看的头要炸了 膜一波 太强了）
-漏洞需求
-版本号 &lt;= 43bdb0e193955145a5ab1137890bb798bce5f0d2https://github.com/WordPress/WordPress/tree/43bdb0e193955145a5ab1137890bb798bce5f0d2
-
-需要一个author权限的账号
-
-...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/28</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/22/OA/" >
-            
-                <span>About OAuth2.0</span>
-        </a>
-        <div class="abstract-content">
-            OAuth2.0相关OAuht2.0我们接触的并不少，在我们登陆第三方应用的时候 用到了OAuth2.0，如下场景比如我们要登陆一个网站，登陆的时候可以用QQ账号，微信账号，微博账号等进行登陆，这里的登陆就用到了OAuth2.0
-什么是OAuth2.0开放授权(OAuth)是一个开放标准,允许用户让第三方应用访问该用户在某一网站上存储的私密的资源(如照片,视频,联系人列表),而无需将用户名和密码提供给第三方应用.目前广泛使用的版本是OAuth 2.0.
-协议模式12345678授权码模式（authorization code）简化模式（implicit）密码模式（resource own...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/22</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/20/metinfo_sql/" >
-            
-                <span>Metinfo 6.1.2 SqlInjection</span>
-        </a>
-        <div class="abstract-content">
-            Metinfo 6.1.2 SqlInjection一个18年的洞了，有点年头了，翻出来看看。。
-Sourcehttp://www.mituo.cn/upload/file/MetInfo6.1.2.zip
-漏洞分析直接看到出现问题的代码
-12文件：app/system/message/web/message.class.php：37方法：add
-12345678910111213141516public function add($info) &#123;	global $_M;	if(!$_M[form][id])&#123;          $message=DB::get_on...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/20</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/16/redis/" >
-            
-                <span>初识Redis未授权访问</span>
-        </a>
-        <div class="abstract-content">
-            初识Redis未授权访问redis是一种以key-value为键值对的非关系型数据库redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。
-安装服务win下载地址：https://github.com/MSOpenTech/redis/releases测试环境：
-12操作系统：win7ip：192.168.1...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/16</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/15/nullcon/" >
-            
-                <span>nullcon ctf 部分web</span>
-        </a>
-        <div class="abstract-content">
-            nullcon ctf 部分web当时比赛的时候没有做出来。。真菜。。赛后学习一波，这次比赛很多的题都是nodejs的题，借此学习nodejs
-环境https://github.com/nullcon/hackim-2019
-rfv blog根据提交生成链接可以xss
-存在admin目录
-于是猜测需要通过一个类似ssrf的地方去访问admin当只访问http://52.36.15.23:8080/edge时，出现报错传了一个http://52.36.15.23:8080/edge?title=aaa&amp;description[%22a%22]爆了另一个错搜到了一篇文章，关于ESI注...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/15</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/14/35c3_post/" >
-            
-                <span>35c3-POST 学习</span>
-        </a>
-        <div class="abstract-content">
-            35c3-POST 学习docker环境：https://github.com/eboda/35c3/tree/master/post
-本题3个hint
-123456Hint: flag is in dbHint2: the lovely XSS is part of the beautiful design and insignificant for the challengeHint3: You probably want to get the source code, luckily for you it&apos;s rather hard to configure nginx ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/14</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/11/pwnhub/" >
-            
-                <span>Pwnhub Pink friend 学习</span>
-        </a>
-        <div class="abstract-content">
-            Pwnhub Pink friend 学习题目链接 ：https://40.73.33.181/ （有幸还没关）题目直接上代码
-12345678910111213&lt;?phpshow_source(__FILE__);if(isset($_GET[&apos;url&apos;]))&#123;    $url = parse_url($_GET[&apos;url&apos;]);    if(!$url)&#123;        die(&apos;Can not parse url: &apos;.$_GET[&apos;url&apos;]);    &#125;    $...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/11</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/09/lctf/" >
-            
-                <span>LCTF-babyphp&#39;s revenge</span>
-        </a>
-        <div class="abstract-content">
-            LCTF-babyphp’s revenge题目直接给出代码index.php
-123456789101112&lt;?phphighlight_file(__FILE__);$b = &apos;implode&apos;;call_user_func($_GET[f],$_POST);session_start();if(isset($_GET[name]))&#123;    $_SESSION[name] = $_GET[name];&#125;var_dump($_SESSION);$a = array(reset($_SESSION),&apos;welcome_to_the...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/09</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/01/07</span>
             </div>
             <!-- tags  -->
             
@@ -622,134 +372,11 @@ rfv blog根据提交生成链接可以xss
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/page/2/">&#60; PREV</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/">NEXT &#62;</a>
+        <a class="extend prev" rel="prev" href="/archives/2019/page/4/">&#60; PREV</a><a class="page-number" href="/archives/2019/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/2019/page/3/">3</a><a class="page-number" href="/archives/2019/page/4/">4</a><span class="page-number current">5</span>
     </nav>
     
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" src= /tupian/tou.png >
-    <div class="profile-name">Hu3sky</div>
-    
-    <div class="profile-signature">
-        Keep going,Get Stronger
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-            
-                <a href="mailto://hu3sky@d0g3.cn" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/Hu3sky" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-    
-        
-            
-                <span class="iconfont-archer qq" title=qq>
-                  
-                  <img class="profile-qr" src="//791683914" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= https://www.0akarma.com/ target="_black">karma</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= https://hpdoger.cn/ target="_black">hpdoger</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= http://ratten.me/ target="_black">ratten3anger</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= https://www.bak6ry.cn/ target="_black">bak6ry</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= http://0day.design/ target="_black">Passer6y</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= http://patrilic.top/ target="_black">patrilic</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= http://www.virtua1.cn target="_black">Virtua1</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">
