@@ -364,6 +364,33 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2018/05/09/php反序列化学习/" >
+            
+                <span>ctf一道题目。php反序列化学习</span>
+        </a>
+        <div class="abstract-content">
+            [*]题目链接 http://web.jarvisoj.com:32784/
+0x00 学习链接这道题目实在是没见过。。一道反序列化的题目，但是没有可以让我们控制的点。于是学习了一波
+
+题目的学习链接:https://chybeta.github.io/2017/07/05/jarvisoj-web-writeup/#PHPINFOhttps://mp.weixin.qq.com/s/Z1zvcBg74T0psDGnXW-ebAhttp://www.91ri.org/15925.html
+session反序列化的学习:https://blog.spoock.com/2016/10/16/...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/09</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2018/05/03/渗透测试/" >
             
                 <span>记一次kali渗透测试靶机</span>
@@ -583,31 +610,6 @@ MISC1-web因为a是$$a 所以直接想到全局变量http://f6f6f38751224e36bad4
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/10</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/04/01/代码执行/" >
-            
-                <span>rnpnet tiki-calendar.php页面存在代码执行漏洞</span>
-        </a>
-        <div class="abstract-content">
-            0x00emmm。最近跟着彭哥做项目，疯狂的复现一些cve，包括上传漏洞和代码执行漏洞。
-0x01因为这个漏洞是发生在calendar.php。由于exp给的源码本地没有复现成功，所以想着去外面看看能不能找到洞。于是 谷歌 inurl:tiki-calendar.php。找到一堆，试了前面几个 不行，于是在尝试到rnpnet的时候，意外的惊喜出现了。
-0x02漏洞利用1http://yoururl/tiki-calendar.php?viewmode=&apos;;print(&apos;Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu3sky牛逼Hu...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/04/01</span>
             </div>
             <!-- tags  -->
             
@@ -2137,9 +2139,20 @@ MISC1-web因为a是$$a 所以直接想到全局变量http://f6f6f38751224e36bad4
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 85
+        Total : 86
         </div>
         <!-- search  -->
         
@@ -2156,6 +2169,11 @@ MISC1-web因为a是$$a 所以直接想到全局变量http://f6f6f38751224e36bad4
     
         <li class="archive-post-item">
             <span class="archive-post-date">10/05</span><a class="archive-post-title" href= "/2019/10/05/Thinkphp多个版本注入分析/" >Fastjson反序列化漏洞以及多版本补丁分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2019/09/24/Thinkphp多版本注入分析/" >Thinkphp多个版本注入分析</a>
         </li>
     
     
@@ -2631,13 +2649,13 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
-        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
-    
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
     
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
+    
+        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
@@ -2645,27 +2663,29 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
-        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
-    
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
-    
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
+        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
-        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
+    
+        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
         <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
+    
+        <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
@@ -2677,13 +2697,11 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
-        <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
-    
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
-        <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
+        <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
     
-        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
+        <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     
         <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
