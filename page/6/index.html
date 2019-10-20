@@ -364,6 +364,57 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2018/09/12/YXcms分析/" >
+            
+                <span>YXCMS 1.4.7</span>
+        </a>
+        <div class="abstract-content">
+            CMS说明Yxcms是一款高效,灵活,实用,免费的企业建站系统,基于PHP和mysql技术,让您拥有更加专业的企业建站和企业网站制作服务
+这个cms采用mvc框架，入口文件为index.php，后台功能url为/index.php?r=admin/控制器/方法
+任意文件删除定位到photo控制器，此控制器对图片进行处理，对应的文件为photoController.php，在\protected\apps\admin\controller下。漏洞发生在第355行的delpic()方法可以看到，需要我们post传入一个picname，虽然说这里要求我们删除图片用file_exists对文件进...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/12</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2018/09/12/YXcms/" >
+            
+                <span>YXCMS 1.4.7 - Arbitrary file deletion</span>
+        </a>
+        <div class="abstract-content">
+            ExplainThe Arbitrary file deletion is on the page http://127.0.0.1/cms/YXcms/index.php?r=admin/photo/delpic
+POC
+
+1234567891011121314POST /cms/YXcms/index.php?r=admin/photo/delpic HTTP/1.1Host: 127.0.0.1User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0Accep...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/09/12</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2018/09/07/反序列化之phar学习/" >
             
                 <span>反序列化之phar://学习</span>
@@ -575,58 +626,6 @@ XSS输入
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/23</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/18/Hack the ch4inrulz of Vulnhub/" >
-            
-                <span>Hack the ch4inrulz of Vulnhub</span>
-        </a>
-        <div class="abstract-content">
-            首发于先知社区 https://xz.aliyun.com/t/2593环境说明靶机环境 192.168.107.128攻击机kali 192.168.107.129
-主机发现首先用nmap进行主机发现，因为都在同一网段，所以nmap -sP 192.168.107.1/24可以看到，本机ip是129，所以靶机自然就确定为192.168.107.128。
-端口扫描确定了靶机ip，就来确认一下开放的端口，使用nmap -sS -A 192.168.107.128靶机开放了4个端口，web80端口，ftp21端口，ssh22端口，还有一个8011端口，我们一个一个看，先从web服务入手，
-目...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/18</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/08/18/bugku sql2/" >
-            
-                <span>Bugku sql注入2</span>
-        </a>
-        <div class="abstract-content">
-            网上没有一个正常做出来了的看了叶师傅的wp，跟着学一遍username的注入，盲注根据username的返回不同fuzz，几乎都过滤完了。没过滤的 !,!=,=,+,-,^,%数字型时，可以用^进行闭合and这些也被过滤。
-需要用到-1-&#39;admin&#39;-1-&#39;&#39; =  -1&#39;admin&#39;-0-&#39;&#39; =  0
-我们发现-0的时候，为true，-1的时候为false那么这是为什么呢？我们猜想后台sql语句构造为
-$sql = select * from users where username=$username;在字符串use...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/18</span>
             </div>
             <!-- tags  -->
             
@@ -2170,9 +2169,57 @@ $sql = select * from users where username=$username;在字符串use...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 87
+        Total : 89
         </div>
         <!-- search  -->
         
@@ -2185,6 +2232,16 @@ $sql = select * from users where username=$username;在字符串use...
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2019/10/20/joomla/" >Joomla 3.4.6 远程代码执行</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/16</span><a class="archive-post-title" href= "/2019/10/16/weblogic/" >WebLogic-XMLDecoder反序列化分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2233,12 +2290,12 @@ $sql = select * from users where username=$username;在字符串use...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
         </li>
     
     
@@ -2668,39 +2725,39 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
+        <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
+    
         <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
     
-        <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
+        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
+    
+        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
     
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
-        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
-    
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
-        <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
+        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
+    
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
-        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
-    
-        <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
-    
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
