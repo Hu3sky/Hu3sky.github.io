@@ -364,6 +364,44 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2018/08/23/Hooskcms/" >
+            
+                <span>Hooskcms 几个小洞</span>
+        </a>
+        <div class="abstract-content">
+            没什么用的代码执行。。这个洞之所以说没用，是因为。先看吧
+漏洞出现在/install/index.php
+
+对我们的输入没有做任何过滤
+
+接着直接写入config.php。
+
+访问/config.php
+
+但是安装完后删除了install，所以说没什么用，本地拿着玩吧。。
+XSS输入 
+在page_new.php的90行。
+我们输入的navTitle，也没有过滤，之后直接输出在页面上
+
+只要是添加新的项目，都存在XSS
+
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/08/23</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2018/08/18/Hack the ch4inrulz of Vulnhub/" >
             
                 <span>Hack the ch4inrulz of Vulnhub</span>
@@ -600,41 +638,6 @@ wget [参数] 下载地址
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/11</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/06/超级玛丽/" >
-            
-                <span>超级玛丽靶机渗透测试笔记</span>
-        </a>
-        <div class="abstract-content">
-            这里先是思路，有空再详细说明。
-
-nmap扫端口，8180-&gt;web，22-&gt;ssh
-
-进入没什么东西，dirb爆破目录，进入/vhosts，看到主机名
-
-vi /etc/hosts 修改 ip 主机名
-
-访问 http://主机名:8180 有页面了。
-
-爆破，进入 /luigi，思路 生成字典，爆破ssh生成关键字 cewl http://mario.supermariohost.local:8180/ -d -w /root/桌面/1.txt  -d 深度 -w 输出写入文件
-
-john --wordlist=1.txt --stdout --rules &gt; pa...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/06</span>
             </div>
             <!-- tags  -->
             
@@ -2226,9 +2229,28 @@ john --wordlist=1.txt --stdout --rules &gt; pa...
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 89
+        Total : 90
         </div>
         <!-- search  -->
         
@@ -2241,6 +2263,11 @@ john --wordlist=1.txt --stdout --rules &gt; pa...
     
     <div class="archive-year"> 2019 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/20</span><a class="archive-post-title" href= "/2019/12/20/CVE-2018-1270 Remote Code Execution with spring-messaging 分析/" >CVE-2018-1270 Remote Code Execution with spring-messaging 分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2740,27 +2767,27 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
     
-        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
+        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
-        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
+        <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
+        <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
+    
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
+    
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
+    
+        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
-        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
     
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
-    
-        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
-    
-        <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
-    
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
@@ -2772,8 +2799,6 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
     
-        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
-    
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
         <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
@@ -2781,6 +2806,8 @@ jsonContent:
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
+    
+        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
         <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
@@ -2792,9 +2819,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
     
-        <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
-    
         <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
+    
+        <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
