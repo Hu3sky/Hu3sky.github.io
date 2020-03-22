@@ -271,7 +271,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">3,837</span> / Reading time: <span class="post-count">17 min</span></span>
+                        <span>Word count: <span class="post-count">3,835</span> / Reading time: <span class="post-count">17 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -427,18 +427,18 @@ height:50vh;
 <p>其中第二到九部分序列化的类是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">weblogic.rjvm.ClassTableEntry</span><br><span class="line">weblogic.rjvm.ClassTableEntry</span><br><span class="line">weblogic.rjvm.ClassTableEntry</span><br><span class="line">weblogic.rjvm.JVMID</span><br><span class="line">weblogic.rjvm.JVMID  </span><br><span class="line">weblogic.rjvm.ClassTableEntry</span><br><span class="line">weblogic.rjvm.ImmutableServiceContext</span><br><span class="line">weblogic.rjvm.ImmutableServiceContext</span><br></pre></td></tr></table></figure></p>
 <p>从这里的红框部分开始，为第一个部分，后面的都是以 <code>ac ed 00 05</code> 开头的魔术头的反序列化部分<br><img src="/weblogic t3 协议利用与防御.resources/50B55954-2573-4904-BC87-EB5DB4641F0C.png" alt="b09999688b2a90910b10b934f9e82a5e"><br>中间其他部分就省略了<br><img src="/weblogic t3 协议利用与防御.resources/E463DB5D-6BA0-4CF4-B608-21C457926893.png" alt="9a9d35261f9e814c8559c55eba0385cf"></p>
 <h2 id="利用t3协议进行恶意序列化"><a href="#利用t3协议进行恶意序列化" class="headerlink" title="利用t3协议进行恶意序列化"></a>利用t3协议进行恶意序列化</h2><p>在编写利用的过程中，需要发送两部分的数据</p>
-<ol>
+<ul>
 <li>请求包头，也就是<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t3 12.2.1\nAS:255\nHL:19\nMS:10000000\nPU:t3://localhost:7001\nLP:DOMAIN\n\n</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
+</ul>
 <p>以<code>\n</code>结束</p>
-<ol>
+<ul>
 <li>序列化数据部分，序列化部分的构成方式有两种：<ul>
 <li>第一种生成方式为，将前文所述的weblogic发送的JAVA序列化数据的第二到九部分的JAVA序列化数据的任意一个替换为恶意的序列化数据。</li>
 <li>第二种生成方式为，将前文所述的weblogic发送的JAVA序列化数据的第一部分与恶意的序列化数据进行拼接</li>
 </ul>
 </li>
-</ol>
+</ul>
 <p>必须先发送<code>T3</code>协议头数据包，再发送<code>JAVA</code>序列化数据包，才能使<code>weblogic</code>进行<code>JAVA</code>反序列化，进而触发漏洞。如果只发送<code>JAVA</code>序列化数据包，不先发送<code>T3</code>协议头数据包，无法触发漏洞</p>
 <h3 id="脚本编写"><a href="#脚本编写" class="headerlink" title="脚本编写"></a>脚本编写</h3><p>这里我采取第二种方法进行脚本的编写，思路是：</p>
 <ol>
@@ -2088,9 +2088,41 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 92
+        Total : 94
         </div>
         <!-- search  -->
         
@@ -2112,6 +2144,16 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/08</span><a class="archive-post-title" href= "/2020/03/08/CVE-2020-2555 漏洞分析/" >CVE-2020-2555 漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2020/03/06/JMX-RMI/" >JMX-RMI</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span><a class="archive-post-title" href= "/2020/01/06/shiro-1.2.4-rememberMe反序列化分析与基于Commons-Collections3.2.1下的payload构造/" >shiro-1.2.4-rememberMe反序列化分析与基于Commons-Collections3.2.1下的payload构造</a>
         </li>
     
     
@@ -2622,47 +2664,47 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
     
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
         <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
     
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
+    
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
+    
+        <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
     
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
-        <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
-    
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
     
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
-    
-        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
+        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
+    
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
-    
-        <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
-    
-        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
+        <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
         <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
+    
+        <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
-        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
-    
         <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
-        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
-    
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+    
+        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
+    
+        <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
