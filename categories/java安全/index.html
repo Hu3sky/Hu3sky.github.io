@@ -341,6 +341,35 @@
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2021/01/18/CVE-2020-17518_17519：Apache Flink 目录遍历漏洞&路由分析/" >
+            
+                <span>CVE-2020-17518/17519：Apache Flink 目录遍历漏洞&amp;路由分析</span>
+        </a>
+        <div class="abstract-content">
+            简介CVE-2020-17518: 文件写入漏洞攻击者利用REST API，可以修改HTTP头，将上传的文件写入到本地文件系统上的任意位置（Flink 1.5.1进程能访问到的），网上给出的上传是/jars/upload，上传并不限于这个路径，任意路径都可触发上传操作，后面会说明原理。
+commit：
+https://github.com/apache/flink/commit/a5264a6f41524afe8ceadf1d8ddc8c80f323ebc4
+diff：
+
+poc
+1234567891011121314151617181920POST /xxxxx HTTP/1.1Hos...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/18</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2020/12/11/S2-061/" >
             
                 <span>浅析 S2-061</span>
@@ -562,31 +591,6 @@ fastjson是阿里巴巴的开源JSON解析库，它可以解析JSON格式的字�
             <!-- date  -->
             <div class="abstract-date">
                 <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/05</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/10/02/JAVAXXE/" >
-            
-                <span>JAVA XXE</span>
-        </a>
-        <div class="abstract-content">
-            前言没接触过java xxe，于是学习一下java xxe
-关于XXE这个和php里的xxe几乎没什么差别，都是外部实体的引用，payload也一样
-12345&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE lltest[&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;]&gt; &lt;user&gt;&lt;username&gt;&amp;xxe;&lt;/username&gt;&lt;password&gt;123456&lt;/password&gt;&lt;/us...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/02</span>
             </div>
             <!-- tags  -->
             
@@ -2240,9 +2244,30 @@ fastjson是阿里巴巴的开源JSON解析库，它可以解析JSON格式的字�
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 99
+        Total : 100
         </div>
         <!-- search  -->
         
@@ -2255,6 +2280,11 @@ fastjson是阿里巴巴的开源JSON解析库，它可以解析JSON格式的字�
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/18</span><a class="archive-post-title" href= "/2021/01/18/CVE-2020-17518_17519：Apache Flink 目录遍历漏洞&路由分析/" >CVE-2020-17518/17519：Apache Flink 目录遍历漏洞&路由分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2715,12 +2745,12 @@ fastjson是阿里巴巴的开源JSON解析库，它可以解析JSON格式的字�
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/i春秋/" >i春秋WP</a>
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/实验吧/" >实验吧WP</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/实验吧/" >实验吧WP</a>
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/i春秋/" >i春秋WP</a>
         </li>
     
     
@@ -2826,17 +2856,17 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
+        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
+    
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
     
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
-        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
-    
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
-        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
-    
         <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
+    
+        <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
     
@@ -2846,23 +2876,23 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
-        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
-    
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
+    
+        <span class="sidebar-category-name" data-categories="http协议"><span class="iconfont-archer">&#xe60a;</span>http协议</span>
     
         <span class="sidebar-category-name" data-categories="内网渗透"><span class="iconfont-archer">&#xe60a;</span>内网渗透</span>
     
-        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
-    
         <span class="sidebar-category-name" data-categories="Empire"><span class="iconfont-archer">&#xe60a;</span>Empire</span>
     
+        <span class="sidebar-category-name" data-categories="git"><span class="iconfont-archer">&#xe60a;</span>git</span>
+    
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
+    
+        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
         <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
     
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
-    
-        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
@@ -2874,11 +2904,11 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
     
-        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
-    
         <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
