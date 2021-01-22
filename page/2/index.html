@@ -354,6 +354,33 @@ height:50vh;
     
     
     <article class="index-post">
+        <a class="abstract-title" href = "/2020/01/06/shiro-1.2.4-rememberMe反序列化分析与基于Commons-Collections3.2.1下的payload构造/" >
+            
+                <span>shiro-1.2.4-rememberMe反序列化分析与基于Commons-Collections3.2.1下的payload构造</span>
+        </a>
+        <div class="abstract-content">
+            前言最近学了基于ysoserial工具的Commons-Collections3和4的几条反序列化攻击链，因为shiro-1.2.4的默认示例也是自带Commons-Collections3.2.1的包的，虽然是个老洞了，不过结合自己刚学的东西，来分析并研究一下这个洞，希望有所收获。
+漏洞预警https://issues.apache.org/jira/browse/SHIRO-550
+漏洞详情默认情况下，shiro使用CookieRememberMeManager，这将对用户身份进行序列化，加密和编码，以供以后检索，因此当其接收到一个用户的验证请求时，会做如下操作：
+
+检索Rememb...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/06</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
         <a class="abstract-title" href = "/2019/12/20/CVE-2018-1270 Remote Code Execution with spring-messaging 分析/" >
             
                 <span>CVE-2018-1270 Remote Code Execution with spring-messaging 分析</span>
@@ -577,35 +604,10 @@ index.php12345678910111213141516171819202122232425262728293031323334353637383940
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2019/09/08/jndi1/" >
-            
-                <span>java反序列化由浅入深及JNDI注入理解(一)-Spring反序列化</span>
-        </a>
-        <div class="abstract-content">
-            前言刚步入大三，该接触接触JavaWeb安全了，之前试着调试过St2的漏洞，现在来入门一下java反序列化，如有什么错误的地方，还请各位师傅指出和包含
-序列化在Java中，只要一个类实现了java.io.Serializable接口，那么它就可以被序列化
-SerializeTest.java12345678910package serialize;import java.io.FileInputStream;public class DeSerializeDemo &#123;    public static void main(String[] args) throws Except...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/08</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/">NEXT &#62;</a>
+        <a class="extend prev" rel="prev" href="/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -2384,9 +2386,30 @@ SerializeTest.java12345678910package serialize;import java.io.FileInputStream;pu
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 100
+        Total : 101
         </div>
         <!-- search  -->
         
@@ -2399,6 +2422,11 @@ SerializeTest.java12345678910package serialize;import java.io.FileInputStream;pu
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/22</span><a class="archive-post-title" href= "/2021/01/22/Oracle补丁日 ：CVE-2020-14756 漏洞利用及补丁分析/" >Oracle补丁日 ：CVE-2020-14756 漏洞利用及补丁分析</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2530,12 +2558,12 @@ SerializeTest.java12345678910package serialize;import java.io.FileInputStream;pu
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-003&s2-005/" >java安全漏洞入门之 s2-003&s2-005</a>
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/java安全漏洞入门之 s2-001/" >java安全漏洞入门之 s2-001</a>
         </li>
     
     
@@ -2864,12 +2892,12 @@ SerializeTest.java12345678910package serialize;import java.io.FileInputStream;pu
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/实验吧/" >实验吧WP</a>
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/i春秋/" >i春秋WP</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/i春秋/" >i春秋WP</a>
+            <span class="archive-post-date">04/24</span><a class="archive-post-title" href= "/2018/04/24/实验吧/" >实验吧WP</a>
         </li>
     
     
@@ -2965,9 +2993,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
-    
         <span class="sidebar-category-name" data-categories="CTF"><span class="iconfont-archer">&#xe60a;</span>CTF</span>
+    
+        <span class="sidebar-category-name" data-categories="学习计划"><span class="iconfont-archer">&#xe60a;</span>学习计划</span>
     
         <span class="sidebar-category-name" data-categories="writeup"><span class="iconfont-archer">&#xe60a;</span>writeup</span>
     
@@ -2975,25 +3003,25 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="渗透测试"><span class="iconfont-archer">&#xe60a;</span>渗透测试</span>
     
-        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
-    
         <span class="sidebar-category-name" data-categories="浏览器安全"><span class="iconfont-archer">&#xe60a;</span>浏览器安全</span>
+    
+        <span class="sidebar-category-name" data-categories="java安全"><span class="iconfont-archer">&#xe60a;</span>java安全</span>
     
         <span class="sidebar-category-name" data-categories="漏洞分析"><span class="iconfont-archer">&#xe60a;</span>漏洞分析</span>
     
         <span class="sidebar-category-name" data-categories="备忘录"><span class="iconfont-archer">&#xe60a;</span>备忘录</span>
     
-        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
-    
         <span class="sidebar-category-name" data-categories="write-up"><span class="iconfont-archer">&#xe60a;</span>write-up</span>
     
+        <span class="sidebar-category-name" data-categories="代码审计"><span class="iconfont-archer">&#xe60a;</span>代码审计</span>
+    
         <span class="sidebar-category-name" data-categories="学习笔记"><span class="iconfont-archer">&#xe60a;</span>学习笔记</span>
+    
+        <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
         <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
     
         <span class="sidebar-category-name" data-categories="Arbitrary-File-Upload"><span class="iconfont-archer">&#xe60a;</span>Arbitrary-File-Upload</span>
-    
-        <span class="sidebar-category-name" data-categories="CVE-Request"><span class="iconfont-archer">&#xe60a;</span>CVE-Request</span>
     
         <span class="sidebar-category-name" data-categories="sql注入"><span class="iconfont-archer">&#xe60a;</span>sql注入</span>
     
@@ -3007,27 +3035,27 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="php反序列化"><span class="iconfont-archer">&#xe60a;</span>php反序列化</span>
     
-        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
-    
         <span class="sidebar-category-name" data-categories="JavaScript"><span class="iconfont-archer">&#xe60a;</span>JavaScript</span>
     
-        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+        <span class="sidebar-category-name" data-categories="php魔法"><span class="iconfont-archer">&#xe60a;</span>php魔法</span>
     
         <span class="sidebar-category-name" data-categories="scrapy"><span class="iconfont-archer">&#xe60a;</span>scrapy</span>
     
-        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
         <span class="sidebar-category-name" data-categories="xxe"><span class="iconfont-archer">&#xe60a;</span>xxe</span>
     
         <span class="sidebar-category-name" data-categories="内网"><span class="iconfont-archer">&#xe60a;</span>内网</span>
     
+        <span class="sidebar-category-name" data-categories="代码执行"><span class="iconfont-archer">&#xe60a;</span>代码执行</span>
+    
         <span class="sidebar-category-name" data-categories="后门"><span class="iconfont-archer">&#xe60a;</span>后门</span>
+    
+        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
         <span class="sidebar-category-name" data-categories="域渗透"><span class="iconfont-archer">&#xe60a;</span>域渗透</span>
     
         <span class="sidebar-category-name" data-categories="线下赛"><span class="iconfont-archer">&#xe60a;</span>线下赛</span>
-    
-        <span class="sidebar-category-name" data-categories="前端"><span class="iconfont-archer">&#xe60a;</span>前端</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
